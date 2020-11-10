@@ -1,0 +1,83 @@
+{
+  "name": "@nelsongomes/ts-timeframe",
+  "author": "Nelson Gomes <nelson.ricardo.gomes@gmail.com>",
+  "license": "ISC",
+  "version": "0.3.1",
+  "description": "Benchmark framework to collect code time metrics and excel in precision.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "benchmark",
+    "backend",
+    "typescript"
+  ],
+  "scripts": {
+    "test": "jest --verbose --runInBand",
+    "clean": "rm -rf lib coverage",
+    "prettier": "prettier --write '{.,{src,test}/**}/*.{js,jsx,ts,tsx,json,md}'",
+    "prettier:check": "prettier --check '{.,{src,test}/**}/*.{js,jsx,ts,tsx,json,md}'",
+    "tslint": "tslint-config-prettier-check ./tslint.json",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage --runInBand",
+    "start": "'ts-node' src/index.ts",
+    "build": "tsc --pretty -p .",
+    "build:watch": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "update": "ncu -u && npm i"
+  },
+  "dependencies": {
+    "joi": "17.3.0"
+  },
+  "devDependencies": {
+    "@types/jest": "25.1.3",
+    "@types/node": "13.7.4",
+    "jest": "25.1.0",
+    "nodemon": "2.0.2",
+    "prettier": "1.19.1",
+    "ts-jest": "26.4.1",
+    "ts-node": "8.6.2",
+    "tslint": "6.0.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-eslint-rules": "5.4.0",
+    "tslint-react": "4.2.0",
+    "typescript": "3.7.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nelsongomes/ts-timeframe.git"
+  },
+  "engines": {
+    "node": ">=10",
+    "npm": ">=5.5 <6"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/test"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.[tj]sx?$",
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
+      }
+    },
+    "coverageDirectory": "test-coverage/",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

@@ -1,0 +1,609 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/openapi/openapi String string enum 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "repeated",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "Parameter without description.",
+            "in": "query",
+            "name": "option",
+            "required": false,
+            "schema": Object {
+              "enum": Array [
+                "aaa",
+                "bbb",
+                "ccc",
+              ],
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi String string enum all options 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "repeated",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "Select vehicle type",
+            "example": "planes",
+            "in": "query",
+            "name": "category",
+            "required": true,
+            "schema": Object {
+              "default": "cars",
+              "enum": Array [
+                "cars",
+                "boats",
+                "planes",
+              ],
+              "nullable": true,
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi String string enum default is part of enum 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "repeated",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "String options from enum",
+            "in": "query",
+            "name": "option",
+            "required": false,
+            "schema": Object {
+              "default": "bbb",
+              "enum": Array [
+                "aaa",
+                "bbb",
+                "ccc",
+              ],
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi String string enum default is undefined because is NOT in enum 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "repeated",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "String options from enum",
+            "in": "query",
+            "name": "option",
+            "required": false,
+            "schema": Object {
+              "enum": Array [
+                "aaa",
+                "bbb",
+                "ccc",
+              ],
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi String string enum min and max should be skipped (the values are already limited) 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "repeated",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "String options from enum",
+            "in": "query",
+            "name": "option",
+            "required": false,
+            "schema": Object {
+              "enum": Array [
+                "aaa",
+                "bbb",
+                "ccc",
+              ],
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi String string simple 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "repeated",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "Parameter without description.",
+            "in": "query",
+            "name": "user_name",
+            "required": false,
+            "schema": Object {
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi String string simple all options 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "repeated",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "Complete user name. (min:5 chars, max:100 chars)",
+            "example": "John Doe",
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "schema": Object {
+              "default": "name",
+              "maxLength": 100,
+              "minLength": 5,
+              "nullable": true,
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;

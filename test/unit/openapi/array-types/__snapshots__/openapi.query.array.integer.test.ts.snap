@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/openapi/openapi Array of integer integer array all options 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "Array of integers (minItems:1, maxItems:10)",
+            "example": Array [
+              4,
+              5,
+              6,
+            ],
+            "in": "query",
+            "name": "integerList",
+            "required": true,
+            "schema": Object {
+              "default": Array [
+                1,
+                2,
+                3,
+              ],
+              "items": Object {
+                "format": "int64",
+                "type": "integer",
+              },
+              "maxItems": 10,
+              "minItems": 1,
+              "nullable": true,
+              "type": "array",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Array of integer integer array minimal options 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "Parameter without description.",
+            "in": "query",
+            "name": "integerList",
+            "required": false,
+            "schema": Object {
+              "items": Object {
+                "format": "int64",
+                "type": "integer",
+              },
+              "type": "array",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;

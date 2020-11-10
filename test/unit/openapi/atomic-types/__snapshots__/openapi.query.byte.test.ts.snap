@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/openapi/openapi Byte byte all options 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "repeated",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "some binary base64 value (min:512 chars, max:1024 chars, base64 encoded string)",
+            "example": "c2FtcGxlMQ==",
+            "in": "query",
+            "name": "base64string",
+            "required": true,
+            "schema": Object {
+              "default": "c2FtcGxlMQ==",
+              "format": "byte",
+              "maxLength": 1024,
+              "minLength": 512,
+              "nullable": true,
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Byte byte simple 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "repeated",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "Parameter without description. (base64 encoded string)",
+            "in": "query",
+            "name": "base64string",
+            "required": false,
+            "schema": Object {
+              "format": "byte",
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
