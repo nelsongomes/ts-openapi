@@ -55,6 +55,7 @@ Object {
             "required": true,
             "schema": Object {
               "items": Object {
+                "description": "Parameter without description. (min:11 chars, max:20 chars)",
                 "type": "string",
               },
               "maxItems": 50,
@@ -143,6 +144,7 @@ Object {
             "required": false,
             "schema": Object {
               "items": Object {
+                "description": "Parameter without description.",
                 "enum": Array [
                   "a",
                   "b",
@@ -241,6 +243,7 @@ Object {
                 "b",
               ],
               "items": Object {
+                "description": "Just a string",
                 "enum": Array [
                   "a",
                   "b",
@@ -338,6 +341,7 @@ Object {
                 "b",
               ],
               "items": Object {
+                "description": "Parameter without description.",
                 "enum": Array [
                   "a",
                   "b",
@@ -428,6 +432,7 @@ Object {
             "required": false,
             "schema": Object {
               "items": Object {
+                "description": "Parameter without description.",
                 "enum": Array [
                   "a",
                   "b",
@@ -518,6 +523,7 @@ Object {
             "required": true,
             "schema": Object {
               "items": Object {
+                "description": "Parameter without description.",
                 "enum": Array [
                   "a",
                   "b",
@@ -608,6 +614,7 @@ Object {
             "required": false,
             "schema": Object {
               "items": Object {
+                "description": "Parameter without description.",
                 "type": "string",
               },
               "type": "array",

@@ -59,6 +59,7 @@ Object {
                 "b@b.com",
               ],
               "items": Object {
+                "description": "email (max:999 chars)",
                 "format": "email",
                 "type": "string",
               },
@@ -148,6 +149,7 @@ Object {
             "required": false,
             "schema": Object {
               "items": Object {
+                "description": "Parameter without description.",
                 "format": "email",
                 "type": "string",
               },

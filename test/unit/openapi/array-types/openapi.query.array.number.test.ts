@@ -35,7 +35,7 @@ describe("src/openapi/openapi", () => {
                 .min(1)
                 .max(50)
                 .required()
-                .description("ignore")
+                .description("Some integer")
                 .example(1)
                 .default(2)
                 .allow(null)

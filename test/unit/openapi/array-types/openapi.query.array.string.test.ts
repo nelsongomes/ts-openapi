@@ -264,7 +264,7 @@ describe("src/openapi/openapi", () => {
             Joi.string()
               .valid(...Object.values(EnumValues))
               // ignore these
-              .description("ignore this")
+              .description("Just a string")
               .min(10)
               .max(20)
               .example("ignore")

@@ -66,7 +66,7 @@ describe("src/openapi/openapi", () => {
       expect(openApi.generateJson()).toMatchSnapshot();
     });
 
-    test("passord array all options", async () => {
+    test("password array all options", async () => {
       const parameters: Parameters = [];
       const query = Joi.object()
         .keys({
@@ -75,7 +75,7 @@ describe("src/openapi/openapi", () => {
               Joi.string()
                 .meta({ format: "password" })
                 // ignore these
-                .description("ignore")
+                .description("password string")
                 .max(999)
                 .allow(null)
                 .required()

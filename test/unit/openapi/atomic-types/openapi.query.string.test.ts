@@ -37,14 +37,6 @@ describe("src/openapi/openapi", () => {
         true
       );
     });
-
-    test("no generic parameters", async () => {
-      const parameters: Parameters = [];
-
-      openApi.genericParams(parameters, undefined, ParameterIn.Query);
-
-      expect(parameters).toEqual([]);
-    });
   });
 
   describe("String", () => {

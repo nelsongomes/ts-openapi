@@ -53,6 +53,7 @@ Object {
             "required": true,
             "schema": Object {
               "default": false,
+              "description": "Is this user an administrator?",
               "nullable": true,
               "type": "boolean",
             },
@@ -136,6 +137,7 @@ Object {
             "name": "administrator",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "type": "boolean",
             },
           },

@@ -51,6 +51,7 @@ Object {
             "name": "option",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "enum": Array [
                 "aaa",
                 "bbb",
@@ -140,6 +141,7 @@ Object {
             "required": true,
             "schema": Object {
               "default": "cars",
+              "description": "Select vehicle type",
               "enum": Array [
                 "cars",
                 "boats",
@@ -229,6 +231,7 @@ Object {
             "required": false,
             "schema": Object {
               "default": "bbb",
+              "description": "String options from enum",
               "enum": Array [
                 "aaa",
                 "bbb",
@@ -316,6 +319,7 @@ Object {
             "name": "option",
             "required": false,
             "schema": Object {
+              "description": "String options from enum",
               "enum": Array [
                 "aaa",
                 "bbb",
@@ -403,6 +407,7 @@ Object {
             "name": "option",
             "required": false,
             "schema": Object {
+              "description": "String options from enum",
               "enum": Array [
                 "aaa",
                 "bbb",
@@ -490,6 +495,7 @@ Object {
             "name": "user_name",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "type": "string",
             },
           },
@@ -574,6 +580,7 @@ Object {
             "required": true,
             "schema": Object {
               "default": "name",
+              "description": "Complete user name. (min:5 chars, max:100 chars)",
               "maxLength": 100,
               "minLength": 5,
               "nullable": true,

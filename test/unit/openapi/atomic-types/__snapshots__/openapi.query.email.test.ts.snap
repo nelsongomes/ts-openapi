@@ -53,6 +53,7 @@ Object {
             "required": true,
             "schema": Object {
               "default": "john.doe@domain.com",
+              "description": "User email. (min:50 chars, max:255 chars)",
               "format": "email",
               "maxLength": 255,
               "minLength": 50,
@@ -139,6 +140,7 @@ Object {
             "name": "email",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "format": "email",
               "type": "string",
             },

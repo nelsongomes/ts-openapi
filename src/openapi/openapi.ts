@@ -1,7 +1,8 @@
-import { Schema } from "joi";
+import Joi, { Schema } from "joi";
 // import joiToSwagger, { SwaggerSchema } from "joi-to-swagger";
 import { ApplicationError } from "../errors/application-error";
 import joiToSwagger, { SwaggerSchema } from "../joi-conversion";
+import { validateParameters } from "./openapi-validation";
 import {
   IntegerFormats,
   NumberFormats,
@@ -18,13 +19,13 @@ import {
   Servers,
   StringFormats,
   SchemaTypeObject,
+  RequestBody,
 } from "./openapi.types";
 
 const REQUIRED_TYPES = [ParameterIn.Path];
 
 export class OpenApi {
   private schema: OpenApiSchema;
-  private components: SwaggerSchema;
   private operationIds: string[] = [];
 
   constructor(
@@ -51,8 +52,6 @@ export class OpenApi {
       paths: {},
       servers: [],
     };
-
-    this.components = {};
   }
 
   public setServers(servers: Servers) {
@@ -72,7 +71,7 @@ export class OpenApi {
       definition.get ||
       definition.post ||
       definition.put ||
-      definition.delete || { operationId: undefined }
+      definition.delete || { operationId: "unknownOperationId" }
     ).operationId;
 
     const responses = (
@@ -104,13 +103,49 @@ export class OpenApi {
     this.schema.info.termsOfService = termsOfService;
   }
 
+  public bodyParams(schema: Schema, description: string): RequestBody {
+    const query = joiToSwagger(schema, {});
+
+    if (!schema || Object.keys(query.swagger.properties).length === 0) {
+      throw new Error("Empty object body.");
+    }
+
+    if (Object.keys(query.swagger.properties).length > 1) {
+      throw new Error("It's only possible to have one body object definition.");
+    }
+
+    const key = Object.keys(query.swagger.properties)[0];
+    const parameter = query.swagger.properties[key];
+    const isRequired =
+      query.swagger.required && query.swagger.required.includes(key);
+
+    if (parameter.type !== "object") {
+      throw new Error("Request body must be an object definition.");
+    }
+
+    if (!isRequired) {
+      throw new Error("Request body must be always required, even if empty.");
+    }
+
+    return {
+      description,
+      content: {
+        "application/json": {
+          schema: this.objectSchema(parameter),
+          ...(parameter.example && { example: parameter.example }),
+        },
+      },
+      required: true,
+    };
+  }
+
   public genericParams(
     parameters: Parameters,
-    schema: Schema | undefined,
+    schema: Schema,
     type: ParameterIn
   ) {
-    if (!schema) {
-      return;
+    if (type === ParameterIn.Body) {
+      throw new Error("body content must declared with function bodyParams");
     }
 
     // added line 345:
@@ -119,73 +154,52 @@ export class OpenApi {
 		Object.assign(swagger, { meta: flattenMeta })
 	  }
      */
-
-    const query = joiToSwagger(schema, this.components);
+    const query = joiToSwagger(schema, {});
 
     for (const key of Object.keys(query.swagger.properties)) {
       const parameter = query.swagger.properties[key];
+      const isParameterRequired = this.isRequiredProperty(query.swagger, key);
+
+      // specific parameter context validation
+      validateParameters(
+        type,
+        parameter,
+        key,
+        parameter.type,
+        isParameterRequired
+      );
 
       switch (parameter.type) {
         case "string":
           parameters.push(
-            this.stringParameter(
-              key,
-              parameter,
-              this.isRequiredProperty(query.swagger, key),
-              type
-            )
+            this.stringParameter(key, parameter, isParameterRequired, type)
           );
           break;
         case "number":
         case "integer":
           if (parameter.format && parameter.format === "float") {
             parameters.push(
-              this.numberParameter(
-                key,
-                parameter,
-                this.isRequiredProperty(query.swagger, key),
-                type
-              )
+              this.numberParameter(key, parameter, isParameterRequired, type)
             );
           } else {
             parameters.push(
-              this.integerParameter(
-                key,
-                parameter,
-                this.isRequiredProperty(query.swagger, key),
-                type
-              )
+              this.integerParameter(key, parameter, isParameterRequired, type)
             );
           }
           break;
         case "boolean":
           parameters.push(
-            this.booleanParameter(
-              key,
-              parameter,
-              this.isRequiredProperty(query.swagger, key),
-              type
-            )
+            this.booleanParameter(key, parameter, isParameterRequired, type)
           );
           break;
         case "array":
           parameters.push(
-            this.arrayParameter(
-              key,
-              parameter,
-              this.isRequiredProperty(query.swagger, key),
-              type
-            )
+            this.arrayParameter(key, parameter, isParameterRequired, type)
           );
           break;
         case "object":
           parameters.push(
-            this.objectParameter(
-              key,
-              parameter,
-              this.isRequiredProperty(query.swagger, key),
-              type
-            )
+            this.objectParameter(key, parameter, isParameterRequired, type)
           );
           break;
         default:
@@ -209,7 +223,7 @@ export class OpenApi {
     if (Object.getOwnPropertyNames(this.schema.paths).length === 0) {
       throw new ApplicationError(
         500,
-        "No paths were added to OpenApi definition"
+        "No paths were added to OpenApi definition."
       );
     }
 

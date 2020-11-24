@@ -36,7 +36,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("simple, but no paths were added", async () => {
+    test("simple, but no paths were added", (done) => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -47,9 +47,12 @@ describe("src/openapi/openapi", () => {
       try {
         openApi.setServers([{ url: "https://server.com" }]);
         openApi.generateJson();
-        fail("Should have thrown exception");
+
+        done.fail("Should have thrown exception");
       } catch (e) {
-        expect(e.message).toBe("No paths were added to OpenApi definition");
+        expect(e.message).toBe("No paths were added to OpenApi definition.");
+
+        done();
       }
     });
 
@@ -104,8 +107,20 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               parameters: [],
               requestBody: {
-                content: { ss: { schema: { $ref: "" } } },
-                description: "",
+                required: true,
+                description: "some description",
+                content: {
+                  "application/json": {
+                    schema: {
+                      type: "object",
+                      properties: {
+                        aaa: {
+                          type: "string",
+                        },
+                      },
+                    },
+                  },
+                },
               },
               responses: {
                 200: textPlain("Successful operation."),

@@ -52,6 +52,7 @@ Object {
             "required": false,
             "schema": Object {
               "items": Object {
+                "description": "Parameter without description. (min:10, max:10, date:yyyy-mm-dd)",
                 "format": "date",
                 "type": "string",
               },
@@ -145,6 +146,7 @@ Object {
                 "2020-10-14T22:12:53.065Z",
               ],
               "items": Object {
+                "description": "ignore (max:999 chars, ISO8601 date-time format)",
                 "format": "date-time",
                 "type": "string",
               },
@@ -234,6 +236,7 @@ Object {
             "required": false,
             "schema": Object {
               "items": Object {
+                "description": "Parameter without description. (ISO8601 date-time format)",
                 "format": "date-time",
                 "type": "string",
               },

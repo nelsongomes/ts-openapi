@@ -9,9 +9,7 @@ export type RequestBody = {
   description: string;
   content: {
     [mimetype: string]: {
-      schema: {
-        $ref: string;
-      };
+      schema: SchemaTypeObject;
     };
   };
   required?: boolean;
@@ -38,6 +36,7 @@ export enum ParameterIn {
   Path = "path",
   Header = "header",
   Cookie = "cookie",
+  Body = "requestBody",
 }
 
 export enum StringFormats {
@@ -130,7 +129,7 @@ export type Path = {
     summary: string;
     description: string;
     operationId: string;
-    parameters: Parameters;
+    parameters?: Parameters;
     requestBody?: RequestBody;
     responses: Responses;
   };

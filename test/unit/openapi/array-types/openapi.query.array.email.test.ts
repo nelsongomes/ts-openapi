@@ -75,7 +75,7 @@ describe("src/openapi/openapi", () => {
               Joi.string()
                 .email()
                 // ignore these
-                .description("ignore")
+                .description("email")
                 .max(999)
                 .allow(null)
                 .required()

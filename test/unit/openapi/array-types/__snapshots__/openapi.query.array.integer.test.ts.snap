@@ -39,6 +39,7 @@ Object {
                 3,
               ],
               "items": Object {
+                "description": "Integer description, age (min:1, max:50)",
                 "format": "int64",
                 "type": "integer",
               },
@@ -105,6 +106,7 @@ Object {
             "required": false,
             "schema": Object {
               "items": Object {
+                "description": "Parameter without description.",
                 "format": "int64",
                 "type": "integer",
               },
