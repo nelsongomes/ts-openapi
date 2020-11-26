@@ -19,7 +19,7 @@ describe("src/openapi/openapi", () => {
       openApi.setServers([{ url: "https://server.com" }]);
     });
 
-    test.only("should succeed with an object", (done) => {
+    test("should succeed with an object", (done) => {
       const query = Joi.object().keys({
         anyObjectParameter: Joi.object()
           .keys({
@@ -29,7 +29,7 @@ describe("src/openapi/openapi", () => {
               .description("User password"),
           })
           .required()
-          .description("IGNORED")
+          .description("User login")
           .example({ username: "johndoe@acme.com", password: "*******" }),
       });
 

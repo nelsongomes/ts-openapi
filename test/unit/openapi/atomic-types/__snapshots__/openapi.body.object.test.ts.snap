@@ -1,0 +1,222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/openapi/openapi Object object all options 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/test": Object {
+      "get": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
+            "example": "c2FtcGxlMQ==",
+            "in": "query",
+            "name": "base64string",
+            "required": true,
+            "schema": Object {
+              "default": "c2FtcGxlMQ==",
+              "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
+              "format": "binary",
+              "maxLength": 1024,
+              "minLength": 512,
+              "nullable": true,
+              "type": "string",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Object object simple 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/test": Object {
+      "post": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [],
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "schema": Object {
+                "description": "Parameter without description.",
+                "properties": Object {
+                  "base64array": Object {
+                    "items": Object {
+                      "description": "Parameter without description. (base64 encoded string)",
+                      "format": "byte",
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                  "binary": Object {
+                    "description": "Parameter without description. (binary string)",
+                    "format": "binary",
+                    "type": "string",
+                  },
+                  "boolean": Object {
+                    "description": "Parameter without description.",
+                    "type": "boolean",
+                  },
+                  "byte": Object {
+                    "description": "Parameter without description. (base64 encoded string)",
+                    "format": "byte",
+                    "type": "string",
+                  },
+                  "date": Object {
+                    "description": "Parameter without description. (min:10, max:10, date:yyyy-mm-dd)",
+                    "format": "date",
+                    "type": "string",
+                  },
+                  "dateTime": Object {
+                    "description": "Parameter without description. (ISO8601 date-time format)",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "float": Object {
+                    "description": "Parameter without description.",
+                    "format": "double",
+                    "type": "number",
+                  },
+                  "integer": Object {
+                    "description": "Parameter without description.",
+                    "format": "int64",
+                    "type": "integer",
+                  },
+                  "internalobject": Object {
+                    "description": "Parameter without description.",
+                    "properties": Object {
+                      "boolean": Object {
+                        "description": "Parameter without description.",
+                        "type": "boolean",
+                      },
+                      "uuid": Object {
+                        "description": "Parameter without description.",
+                        "format": "uuid",
+                        "type": "string",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "objectArray": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "properties": Object {
+                        "obj": Object {
+                          "description": "Parameter without description.",
+                          "properties": Object {
+                            "boolean": Object {
+                              "description": "Parameter without description.",
+                              "type": "boolean",
+                            },
+                            "uuid": Object {
+                              "description": "Parameter without description.",
+                              "format": "uuid",
+                              "type": "string",
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                      "type": "object",
+                    },
+                    "type": "array",
+                  },
+                  "string": Object {
+                    "description": "Parameter without description.",
+                    "type": "string",
+                  },
+                  "stringarray": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "Just an object description",
+          "required": true,
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text/plain": Object {
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;

@@ -1,5 +1,4 @@
-import Joi, { Schema } from "joi";
-// import joiToSwagger, { SwaggerSchema } from "joi-to-swagger";
+import { Schema } from "joi";
 import { ApplicationError } from "../errors/application-error";
 import joiToSwagger, { SwaggerSchema } from "../joi-conversion";
 import { validateParameters } from "./openapi-validation";
@@ -318,7 +317,12 @@ export class OpenApi {
 
   private stringSchema(parameter: any): SchemaTypeString {
     const supportedFormats = Object.values(StringFormats);
+    const description =
+      (parameter.description || "Parameter without description.") +
+      (this.limitations(parameter) || "");
+
     const output: SchemaTypeString = {
+      description,
       ...(parameter.default && { default: parameter.default }),
       ...(parameter.format &&
         supportedFormats.includes(parameter.format) && {
@@ -391,7 +395,12 @@ export class OpenApi {
   }
 
   private numberSchema(parameter: any): SchemaTypeNumber {
+    const description =
+      (parameter.description || "Parameter without description.") +
+      (this.limitations(parameter) || "");
+
     const output: SchemaTypeNumber = {
+      description,
       ...(parameter.default && { default: parameter.default }),
       ...(parameter.enum && { enum: parameter.enum }),
       ...(parameter.minimum && { minimum: parameter.minimum }),
@@ -429,7 +438,12 @@ export class OpenApi {
   }
 
   private integerSchema(parameter: any): SchemaTypeInteger {
+    const description =
+      (parameter.description || "Parameter without description.") +
+      (this.limitations(parameter) || "");
+
     const output: SchemaTypeInteger = {
+      description,
       ...(parameter.default && { default: parameter.default }),
       ...(parameter.enum && { enum: parameter.enum }),
       ...(parameter.minimum && { minimum: parameter.minimum }),
@@ -477,7 +491,12 @@ export class OpenApi {
   }
 
   private booleanSchema(parameter: any): SchemaTypeBoolean {
+    const description =
+      (parameter.description || "Parameter without description.") +
+      (this.limitations(parameter) || "");
+
     const output: SchemaTypeBoolean = {
+      description,
       ...(typeof parameter.default === "boolean" && {
         default: parameter.default,
       }),
@@ -618,7 +637,12 @@ export class OpenApi {
   }
 
   private objectSchema(parameter: any): SchemaTypeObject {
+    const description =
+      (parameter.description || "Parameter without description.") +
+      (this.limitations(parameter) || "");
+
     const output: SchemaTypeObject = {
+      description,
       ...(typeof parameter.default === "object" && {
         default: parameter.default,
       }),

@@ -29,6 +29,7 @@ Object {
                 "username": "johndoe@acme.com",
               },
               "schema": Object {
+                "description": "User login",
                 "properties": Object {
                   "password": Object {
                     "description": "User password",

@@ -68,11 +68,13 @@ export type SchemaTypeString = {
   nullable?: boolean;
   minLength?: number;
   maxLength?: number;
+  description?: string;
 };
 export type SchemaTypeBoolean = {
   type: "boolean";
   default?: number;
   nullable?: boolean;
+  description?: string;
 };
 export type SchemaTypeInteger = {
   type: "integer";
@@ -81,6 +83,7 @@ export type SchemaTypeInteger = {
   maximum?: number;
   default?: number;
   nullable?: boolean;
+  description?: string;
 };
 export type SchemaTypeNumber = {
   type: "number";
@@ -89,6 +92,7 @@ export type SchemaTypeNumber = {
   maximum?: number;
   default?: number;
   nullable?: boolean;
+  description?: string;
 };
 export type SchemaTypeArray = {
   type: "array";
@@ -103,6 +107,7 @@ export type SchemaTypeObject = {
   default?: string;
   nullable?: boolean;
   $ref?: string;
+  description: string;
 };
 export type SchemaTypes =
   | SchemaTypeString
