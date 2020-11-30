@@ -1,7 +1,7 @@
 import { doesNotMatch, strict } from "assert";
 import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
-import { textPlain } from "../../../src/openapi/openapi-helpers";
+import { textPlain } from "../../../src/openapi/helpers/openapi-helpers";
 import {
   Parameters,
   ParameterIn,

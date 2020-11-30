@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
-import { textPlain } from "../../../../src/openapi/openapi-helpers";
+import { textPlain } from "../../../../src/openapi/helpers/openapi-helpers";
 import {
   Parameters,
   ParameterIn,
@@ -67,7 +67,9 @@ describe("src/openapi/openapi", () => {
     test("date-time downgrades to date if format = 'date' (2017-07-21)", async () => {
       const parameters: Parameters = [];
       const query = Joi.object().keys({
-        timestamp: Joi.string().isoDate().meta({ format: "date" }),
+        timestamp: Joi.string()
+          .isoDate()
+          .meta({ format: "date" }),
       });
 
       openApi.genericParams(parameters, query, ParameterIn.Query);

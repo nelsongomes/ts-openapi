@@ -393,7 +393,4 @@ function parse (schema, existingComponents) {
 module.exports = exports = parse;
 exports.default = parse;
 
-// const inspectU = require('util').inspect;
-// function inspect (value) {
-// 	console.error(inspectU(value, { colors: true, depth: 10 }));
-// }
+

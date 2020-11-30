@@ -1,6 +1,6 @@
 import * as Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
-import { textPlain } from "../../../src/openapi/openapi-helpers";
+import { textPlain } from "../../../src/openapi/helpers/openapi-helpers";
 import {
   Parameters,
   ParameterIn,
@@ -112,6 +112,7 @@ describe("src/openapi/openapi", () => {
                 content: {
                   "application/json": {
                     schema: {
+                      description: "description",
                       type: "object",
                       properties: {
                         aaa: {
