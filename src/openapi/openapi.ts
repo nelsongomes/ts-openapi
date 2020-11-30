@@ -144,15 +144,9 @@ export class OpenApi {
     type: ParameterIn
   ) {
     if (type === ParameterIn.Body) {
-      throw new Error("body content must declared with function bodyParams");
+      throw new Error("Body content must declared with function bodyParams.");
     }
 
-    // added line 345:
-    /**
-     * if(flattenMeta) {
-		Object.assign(swagger, { meta: flattenMeta })
-	  }
-     */
     const query = joiToSwagger(schema, {});
 
     for (const key of Object.keys(query.swagger.properties)) {
@@ -194,11 +188,6 @@ export class OpenApi {
         case "array":
           parameters.push(
             this.arrayParameter(key, parameter, isParameterRequired, type)
-          );
-          break;
-        case "object":
-          parameters.push(
-            this.objectParameter(key, parameter, isParameterRequired, type)
           );
           break;
         default:
@@ -611,29 +600,6 @@ export class OpenApi {
     }
 
     return output;
-  }
-
-  private objectParameter(
-    name: string,
-    parameter: any,
-    required: boolean,
-    type: ParameterIn
-  ): Parameter {
-    const limitationDetail = this.limitations(parameter);
-    const schema = this.objectSchema(parameter);
-
-    const p: Parameter = {
-      description:
-        (parameter.description || "Parameter without description.") +
-        (limitationDetail || ""),
-      in: type,
-      name,
-      required: isRequiredParameter(required, type),
-      schema,
-      ...(parameter.example && { example: parameter.example }),
-    };
-
-    return p;
   }
 
   private objectSchema(parameter: any): SchemaTypeObject {

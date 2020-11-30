@@ -16,9 +16,9 @@ function meta (schema, key) {
 	return get(flattened, key);
 }
 
-function refDef (type, name) {
+/*function refDef (type, name) {
 	return { $ref: '#/components/' + type + '/' + name };
-}
+}*/
 
 function getMinMax (schema, suffix = 'Length') {
 	const swagger = {};
@@ -32,15 +32,15 @@ function getMinMax (schema, suffix = 'Length') {
 			swagger[`max${suffix}`] = test.args.limit;
 		}
 
-		if (test.name === 'length') {
+		/*if (test.name === 'length') {
 			swagger[`min${suffix}`] = test.args.limit;
 			swagger[`max${suffix}`] = test.args.limit;
-		}
+		}*/
 	}
 	return swagger;
 }
 
-function getCaseSuffix (schema) {
+/*function getCaseSuffix (schema) {
 	const caseRule = find(schema._rules, { name: 'case' });
 	if (caseRule && caseRule.args.direction === 'lower') {
 		return 'Lower';
@@ -48,9 +48,9 @@ function getCaseSuffix (schema) {
 		return 'Upper';
 	}
 	return '';
-}
+}*/
 
-function parseWhens (schema, existingComponents, newComponentsByRef) {
+/*function parseWhens (schema, existingComponents, newComponentsByRef) {
 	const whens = get(schema, '$_terms.whens');
 	const mode = whens.length > 1 ? 'anyOf' : 'oneOf';
 
@@ -67,9 +67,9 @@ function parseWhens (schema, existingComponents, newComponentsByRef) {
 	}
 
 	return schemaForAlternatives(alternatives, existingComponents, newComponentsByRef, mode);
-}
+}*/
 
-function schemaForAlternatives (alternatives, existingComponents, newComponentsByRef, mode) {
+/*function schemaForAlternatives (alternatives, existingComponents, newComponentsByRef, mode) {
 	let swaggers = [];
 	for (const joiSchema of alternatives) {
 		const { swagger, components } = parse(joiSchema, merge({}, existingComponents || {}, newComponentsByRef || {}));
@@ -84,7 +84,7 @@ function schemaForAlternatives (alternatives, existingComponents, newComponentsB
 	swaggers = uniqWith(swaggers, isEqual);
 
 	return swaggers.length > 0 ? { [mode]: swaggers } : {};
-}
+}*/
 
 function parseValidsAndInvalids (schema, filterFunc) {
 	const swagger = {};
@@ -95,12 +95,12 @@ function parseValidsAndInvalids (schema, filterFunc) {
 		}
 	}
 
-	if (schema._invalids) {
+	/*if (schema._invalids) {
 		const invalids = schema._invalids.values().filter(filterFunc);
 		if (invalids.length) {
 			swagger.not = { enum: invalids };
 		}
-	}
+	}*/
 
 	return swagger;
 }
@@ -113,21 +113,21 @@ const parseAsType = {
 			swagger.type = 'integer';
 		} else {
 			swagger.type = 'number';
-			if (find(schema._rules, { name: 'precision' })) {
-				swagger.format = 'double';
-			} else {
+			//if (find(schema._rules, { name: 'precision' })) {
+			//	swagger.format = 'double';
+			//} else {
 				swagger.format = 'float';
-			}
+			//}
 		}
 
 		const sign = find(schema._rules, { name: 'sign' });
-		if (sign) {
+		/*if (sign) {
 			if (sign.args.sign === 'positive') {
 				swagger.minimum = 1;
 			} else if (sign.args.sign === 'negative') {
 				swagger.maximum = -1;
 			}
-		}
+		}*/
 
 		const min = find(schema._rules, { name: 'min' });
 		if (min) {
@@ -146,14 +146,14 @@ const parseAsType = {
 	string: (schema) => {
 		const swagger = { type: 'string' };
 
-		if (find(schema._rules, { name: 'alphanum' })) {
+		/*if (find(schema._rules, { name: 'alphanum' })) {
 			const strict = get(schema, '_preferences.convert') === false;
 			swagger.pattern = patterns[`alphanum${strict ? getCaseSuffix(schema) : ''}`];
-		}
+		}*/
 
-		if (find(schema._rules, { name: 'token' })) {
+		/*if (find(schema._rules, { name: 'token' })) {
 			swagger.pattern = patterns.token;
-		}
+		}*/
 
 		if (find(schema._rules, { name: 'email' })) {
 			swagger.format = 'email';
@@ -165,15 +165,15 @@ const parseAsType = {
 			if (swagger.pattern) delete swagger.pattern;
 		}
 
-		if (find(schema._rules, { name: 'guid' })) {
+		/*if (find(schema._rules, { name: 'guid' })) {
 			swagger.format = 'uuid';
 			if (swagger.pattern) delete swagger.pattern;
-		}
+		}*/
 
-		const pattern = find(schema._rules, { name: 'pattern' });
+		/*const pattern = find(schema._rules, { name: 'pattern' });
 		if (pattern) {
 			swagger.pattern = pattern.args.regex.toString().slice(1, -1);
-		}
+		}*/
 
 		Object.assign(swagger, getMinMax(schema));
 		Object.assign(swagger, parseValidsAndInvalids(schema, (s) => isString(s)));
@@ -191,9 +191,9 @@ const parseAsType = {
 
 		return swagger;
 	},
-	date: (/* schema */) => ({ type: 'string', format: 'date-time' }),
+//	date: (/* schema */) => ({ type: 'string', format: 'date-time' }),
 	boolean: (/* schema */) => ({ type: 'boolean' }),
-	alternatives: (schema, existingComponents, newComponentsByRef) => {
+	/*alternatives: (schema, existingComponents, newComponentsByRef) => {
 		const matches = get(schema, '$_terms.matches');
 		const mode = `${get(schema, '_flags.match') || 'any'}Of`;
 
@@ -214,7 +214,7 @@ const parseAsType = {
 		}
 
 		return schemaForAlternatives(alternatives, existingComponents, newComponentsByRef, mode);
-	},
+	},*/
 	array: (schema, existingComponents, newComponentsByRef) => {
 		const items = get(schema, '$_terms.items');
 		const mode = 'oneOf';
@@ -243,9 +243,9 @@ const parseAsType = {
 
 		Object.assign(openapi, getMinMax(schema, 'Items'));
 
-		if (find(schema._rules, { name: 'unique' })) {
+		/*if (find(schema._rules, { name: 'unique' })) {
 			openapi.uniqueItems = true;
-		}
+		}*/
 
 		return openapi;
 	},
@@ -260,9 +260,9 @@ const parseAsType = {
 		children.forEach((child) => {
 			const key = child.key;
 			const { swagger, components } = parse(child.schema, combinedComponents);
-			if (!swagger) { // swagger is falsy if joi.forbidden()
+			/*if (!swagger) { // swagger is falsy if joi.forbidden()
 				return;
-			}
+			}*/
 
 			merge(newComponentsByRef, components || {});
 			merge(combinedComponents, components || {});
@@ -283,13 +283,13 @@ const parseAsType = {
 			swagger.required = requireds;
 		}
 
-		if (get(schema, '_flags.unknown') !== true) {
+		/*if (get(schema, '_flags.unknown') !== true) {
 			swagger.additionalProperties = false;
-		}
+		}*/
 
 		return swagger;
 	},
-	any: (schema) => {
+/*	any: (schema) => {
 		const swagger = {};
 		// convert property to file upload, if indicated by meta property
 		if (meta(schema, 'swaggerType') === 'file') {
@@ -300,7 +300,7 @@ const parseAsType = {
 		Object.assign(swagger, parseValidsAndInvalids(schema, (s) => isString(s) || isNumber(s)));
 
 		return swagger;
-	},
+	},*/
 };
 
 function parse (schema, existingComponents) {
@@ -308,48 +308,48 @@ function parse (schema, existingComponents) {
 
 	if (!schema) throw new Error('No schema was passed.');
 
-	if (isPlainObject(schema)) {
+	/*if (isPlainObject(schema)) {
 		schema = joi.object().keys(schema);
-	}
+	}*/
 
 	if (!joi.isSchema(schema)) throw new TypeError('Passed schema does not appear to be a joi schema.');
 
 	const flattenMeta = Object.assign.apply(null, [ {} ].concat(schema.$_terms.metas));
 
-	const override = flattenMeta.swagger;
+	/*const override = flattenMeta.swagger;
 	if (override && flattenMeta.swaggerOverride) {
 		return { swagger: override, components: {} };
-	}
+	}*/
 
 	const metaDefName = flattenMeta.className;
 	const metaDefType = flattenMeta.classTarget || 'schemas';
 
 	// if the schema has a definition class name, and that
 	// definition is already defined, just use that definition
-	if (metaDefName && get(existingComponents, [ metaDefType, metaDefName ])) {
+	/*if (metaDefName && get(existingComponents, [ metaDefType, metaDefName ])) {
 		return { swagger: refDef(metaDefType, metaDefName) };
-	}
+	}*/
 
-	if (get(schema, '_flags.presence') === 'forbidden') {
+	/*if (get(schema, '_flags.presence') === 'forbidden') {
 		return false;
-	}
+	}*/
 
 	const type = meta(schema, 'baseType') || schema.type;
 
-	if (!parseAsType[type]) {
+	/*if (!parseAsType[type]) {
 		throw new TypeError(`${type} is not a recognized Joi type.`);
-	}
+	}*/
 
 	const components = {};
 	const swagger =  parseAsType[type](schema, existingComponents, components);
-	if(flattenMeta) {
+	//if(flattenMeta) {
 		Object.assign(swagger, { meta: flattenMeta })
-	}
-	if (get(schema, '$_terms.whens')) {
+	//}
+	/*if (get(schema, '$_terms.whens')) {
 		Object.assign(swagger, parseWhens(schema, existingComponents, components));
-	}
+	}*/
 
-	if (!swagger) return { swagger, components };
+	//if (!swagger) return { swagger, components };
 
 	if (schema._valids && schema._valids.has(null)) {
 		swagger.nullable = true;
@@ -361,31 +361,31 @@ function parse (schema, existingComponents) {
 	}
 
 	if (schema.$_terms.examples) {
-		if (schema.$_terms.examples.length === 1) {
+		//if (schema.$_terms.examples.length === 1) {
 			swagger.example = schema.$_terms.examples[0];
-		} else {
+		/*} else {
 			swagger.examples = schema.$_terms.examples;
-		}
+		}*/
 	}
 
-	const label = get(schema, '_flags.label');
+	/*const label = get(schema, '_flags.label');
 	if (label) {
 		swagger.title = label;
-	}
+	}*/
 
 	const defaultValue = get(schema, '_flags.default');
 	if ((defaultValue || typeof defaultValue === 'boolean') && typeof defaultValue !== 'function') {
 		swagger.default = defaultValue;
 	}
 
-	if (metaDefName) {
+/*	if (metaDefName) {
 		set(components, [ metaDefType, metaDefName ], swagger);
 		return { swagger: refDef(metaDefType, metaDefName), components };
-	}
+	}*/
 
-	if (override) {
+	/*if (override) {
 		Object.assign(swagger, override);
-	}
+	}*/
 
 	return { swagger, components };
 }
