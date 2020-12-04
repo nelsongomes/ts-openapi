@@ -102,7 +102,7 @@ export class OpenApi {
     this.schema.info.termsOfService = termsOfService;
   }
 
-  public bodyParams(schema: Schema, description: string): RequestBody {
+  public bodyParams(schema: Schema): RequestBody {
     const query = joiToSwagger(schema, {});
 
     if (!schema || Object.keys(query.swagger.properties).length === 0) {
@@ -127,7 +127,9 @@ export class OpenApi {
     }
 
     return {
-      description,
+      description:
+        query.swagger.properties[key].description ||
+        "Body does not have a description.",
       content: {
         "application/json": {
           schema: this.objectSchema(parameter),

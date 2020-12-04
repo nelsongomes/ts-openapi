@@ -5,7 +5,7 @@ import { textPlain } from "../../../src/openapi/helpers/openapi-helpers";
 import { ParameterIn, Parameters } from "../../../src/openapi/openapi.types";
 import joiToSwagger from "../../../src/joi-conversion";
 
-describe("src/openapi/openapi", () => {
+describe.only("src/openapi/openapi", () => {
   let openApi: OpenApi;
 
   describe("Body parameters", () => {
@@ -20,7 +20,7 @@ describe("src/openapi/openapi", () => {
       openApi.setServers([{ url: "https://server.com" }]);
     });
 
-    test("should succeed with an object", (done) => {
+    test("should succeed with an object, without description", (done) => {
       const query = Joi.object().keys({
         anyObjectParameter: Joi.object()
           .keys({
@@ -30,7 +30,6 @@ describe("src/openapi/openapi", () => {
               .description("User password"),
           })
           .required()
-          .description("User login")
           .example({ username: "johndoe@acme.com", password: "*******" }),
       });
 
@@ -40,7 +39,7 @@ describe("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            requestBody: openApi.bodyParams(query, "Login request body."),
+            requestBody: openApi.bodyParams(query),
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -68,7 +67,7 @@ describe("src/openapi/openapi", () => {
             post: {
               description: "Test endpoint",
               operationId: "id",
-              requestBody: openApi.bodyParams(query, "desc"),
+              requestBody: openApi.bodyParams(query),
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -100,7 +99,7 @@ describe("src/openapi/openapi", () => {
             post: {
               description: "Test endpoint",
               operationId: "id",
-              requestBody: openApi.bodyParams(query, "desc"),
+              requestBody: openApi.bodyParams(query),
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -141,7 +140,7 @@ describe("src/openapi/openapi", () => {
             post: {
               description: "Test endpoint",
               operationId: "id",
-              requestBody: openApi.bodyParams(query, "desc"),
+              requestBody: openApi.bodyParams(query),
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -197,7 +196,7 @@ describe("src/openapi/openapi", () => {
             post: {
               description: "Test endpoint",
               operationId: "id",
-              requestBody: openApi.bodyParams(query, "desc"),
+              requestBody: openApi.bodyParams(query),
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -233,7 +232,8 @@ describe("src/openapi/openapi", () => {
           })
           .required()
           .description("User login")
-          .example({ username: "johndoe@acme.com", password: "*******" }),
+          .example({ username: "johndoe@acme.com", password: "*******" })
+          .description("Full body description."),
       });
 
       openApi.addPath(
@@ -242,7 +242,7 @@ describe("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            requestBody: openApi.bodyParams(query, "Login request body."),
+            requestBody: openApi.bodyParams(query),
             responses: {
               200: textPlain("Successful operation."),
             },
