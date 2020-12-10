@@ -1,4 +1,4 @@
-import { Schema } from "joi";
+import Joi, { ObjectSchema, Schema } from "joi";
 import { ApplicationError } from "../errors/application-error";
 import joiToSwagger, { SwaggerSchema } from "../joi-conversion";
 import { validateParameters } from "./openapi-validation";
@@ -18,7 +18,8 @@ import {
   Servers,
   StringFormats,
   SchemaTypeObject,
-  RequestBody,
+  Body,
+  WebRequestSchema,
 } from "./openapi.types";
 
 const REQUIRED_TYPES = [ParameterIn.Path];
@@ -102,29 +103,61 @@ export class OpenApi {
     this.schema.info.termsOfService = termsOfService;
   }
 
-  public bodyParams(schema: Schema): RequestBody {
-    const query = joiToSwagger(schema, {});
+  public parametersAndBodyFromSchema(validationSchema?: WebRequestSchema) {
+    let parameters: Parameters = [];
+    let requestBody;
 
-    if (!schema || Object.keys(query.swagger.properties).length === 0) {
-      throw new Error("Empty object body.");
+    if (validationSchema) {
+      if (validationSchema.query) {
+        // get parameters
+        this.genericParams(
+          parameters,
+          validationSchema.query,
+          ParameterIn.Query
+        );
+      }
+
+      if (validationSchema.params) {
+        // uri params
+        this.genericParams(
+          parameters,
+          validationSchema.params,
+          ParameterIn.Path
+        );
+      }
+
+      if (validationSchema.headers) {
+        // header params
+        this.genericParams(
+          parameters,
+          validationSchema.headers,
+          ParameterIn.Header
+        );
+      }
+
+      if (validationSchema.body) {
+        // request body
+        requestBody = this.bodyParams(validationSchema.body);
+      }
+
+      return {
+        parameters: parameters.length > 0 ? parameters : undefined,
+        requestBody,
+      };
     }
 
-    if (Object.keys(query.swagger.properties).length > 1) {
-      throw new Error("It's only possible to have one body object definition.");
-    }
+    return { parameters: undefined, requestBody: undefined };
+  }
+
+  public bodyParams(schema: ObjectSchema): Body {
+    const internalSchema = Joi.object().keys({ object: schema.required() });
+
+    const query = joiToSwagger(internalSchema, {});
 
     const key = Object.keys(query.swagger.properties)[0];
     const parameter = query.swagger.properties[key];
     const isRequired =
       query.swagger.required && query.swagger.required.includes(key);
-
-    if (parameter.type !== "object") {
-      throw new Error("Request body must be an object definition.");
-    }
-
-    if (!isRequired) {
-      throw new Error("Request body must be always required, even if empty.");
-    }
 
     return {
       description:
@@ -699,4 +732,10 @@ export class OpenApi {
 // all required parameters or path parameters are parameters are required
 function isRequiredParameter(required: boolean, type: ParameterIn) {
   return required || REQUIRED_TYPES.includes(type);
+}
+
+export function bodySchema(schema: ObjectSchema): Body {
+  const localOpenApi = new OpenApi("", "", "", "");
+
+  return localOpenApi.bodyParams(schema);
 }

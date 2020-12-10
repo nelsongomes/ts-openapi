@@ -25,11 +25,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -65,11 +61,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -114,11 +106,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -157,11 +145,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -206,11 +190,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -247,11 +227,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -296,11 +272,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -336,11 +308,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -385,11 +353,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -425,11 +389,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -474,11 +434,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -509,11 +465,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -558,11 +510,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -598,11 +546,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },

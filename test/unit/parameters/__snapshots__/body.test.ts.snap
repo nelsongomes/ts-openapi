@@ -38,6 +38,19 @@ Object {
                     },
                     "type": "array",
                   },
+                  "arrayOfObjects": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "properties": Object {
+                        "internalString": Object {
+                          "description": "Parameter without description.",
+                          "type": "string",
+                        },
+                      },
+                      "type": "object",
+                    },
+                    "type": "array",
+                  },
                   "boolean": Object {
                     "description": "Parameter without description.",
                     "type": "boolean",
@@ -87,11 +100,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -162,11 +171,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },

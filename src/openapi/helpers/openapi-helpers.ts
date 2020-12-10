@@ -1,12 +1,8 @@
-export function textPlain(description: string) {
+import { Body } from "../openapi.types";
+
+export function textPlain(description: string): Body {
   return {
-    content: {
-      "text/plain": {
-        schema: {
-          type: "string",
-        },
-      },
-    },
     description,
+    content: { "text-plain": {} },
   };
 }

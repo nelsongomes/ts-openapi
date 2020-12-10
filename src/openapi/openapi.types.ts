@@ -5,21 +5,19 @@ export type Servers = Server[];
 export type Method = "put" | "get" | "post" | "delete";
 export type Tags = string[];
 
-export type RequestBody = {
+export type Body = {
   description: string;
+  schema?: SchemaTypes;
   content: {
     [mimetype: string]: {
-      schema: SchemaTypeObject;
+      schema?: SchemaTypeObject;
     };
   };
   required?: boolean;
 };
 
 export type Responses = {
-  [statusCode: number]: {
-    description: string;
-    content: object;
-  };
+  [statusCode: number]: Body;
 };
 
 export type EnumArray = {
@@ -135,7 +133,7 @@ export type Path = {
     description: string;
     operationId: string;
     parameters?: Parameters;
-    requestBody?: RequestBody;
+    requestBody?: Body;
     responses: Responses;
   };
 };

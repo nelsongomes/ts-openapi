@@ -21,17 +21,15 @@ describe.only("src/openapi/openapi", () => {
     });
 
     test("should succeed with an object, without description", (done) => {
-      const query = Joi.object().keys({
-        anyObjectParameter: Joi.object()
-          .keys({
-            username: Joi.string().description("Username"),
-            password: Joi.string()
-              .meta({ format: "password" })
-              .description("User password"),
-          })
-          .required()
-          .example({ username: "johndoe@acme.com", password: "*******" }),
-      });
+      const query = Joi.object()
+        .keys({
+          username: Joi.string().description("Username"),
+          password: Joi.string()
+            .meta({ format: "password" })
+            .description("User password"),
+        })
+        .required()
+        .example({ username: "johndoe@acme.com", password: "*******" });
 
       openApi.addPath(
         "/test",
@@ -52,115 +50,6 @@ describe.only("src/openapi/openapi", () => {
 
       expect(openApi.generateJson()).toMatchSnapshot();
       done();
-    });
-
-    test("should throw an exception if body is NOT an object", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({
-        test: Joi.string(),
-      });
-
-      try {
-        openApi.addPath(
-          "/test",
-          {
-            post: {
-              description: "Test endpoint",
-              operationId: "id",
-              requestBody: openApi.bodyParams(query),
-              responses: {
-                200: textPlain("Successful operation."),
-              },
-              summary: "Server Test",
-              tags: ["Internals"],
-            },
-          },
-          true
-        );
-
-        done.fail("It should have thrown an exception it's an object");
-      } catch (e) {
-        expect(e).toBeInstanceOf(Error);
-        expect(e.message).toBe("Request body must be an object definition.");
-        done();
-      }
-    });
-
-    test("should throw an exception if body is NOT required", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({
-        test: Joi.object().keys({ name: Joi.string() }),
-      });
-
-      try {
-        openApi.addPath(
-          "/test",
-          {
-            post: {
-              description: "Test endpoint",
-              operationId: "id",
-              requestBody: openApi.bodyParams(query),
-              responses: {
-                200: textPlain("Successful operation."),
-              },
-              summary: "Server Test",
-              tags: ["Internals"],
-            },
-          },
-          true
-        );
-
-        done.fail(
-          "It should have thrown an exception because body is not required."
-        );
-      } catch (e) {
-        expect(e).toBeInstanceOf(Error);
-        expect(e.message).toBe(
-          "Request body must be always required, even if empty."
-        );
-        done();
-      }
-    });
-
-    test("should throw an exception if multiple objects in body", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({
-        test: Joi.object()
-          .keys({ name: Joi.string() })
-          .required(),
-        secondObject: Joi.object()
-          .keys({ name: Joi.string() })
-          .required(),
-      });
-
-      try {
-        openApi.addPath(
-          "/test",
-          {
-            post: {
-              description: "Test endpoint",
-              operationId: "id",
-              requestBody: openApi.bodyParams(query),
-              responses: {
-                200: textPlain("Successful operation."),
-              },
-              summary: "Server Test",
-              tags: ["Internals"],
-            },
-          },
-          true
-        );
-
-        done.fail(
-          "It should have thrown an exception because it's only possible to have one body object definition."
-        );
-      } catch (e) {
-        expect(e).toBeInstanceOf(Error);
-        expect(e.message).toBe(
-          "It's only possible to have one body object definition."
-        );
-        done();
-      }
     });
 
     test("should throw an exception if body is declared as parameter", (done) => {
@@ -185,56 +74,27 @@ describe.only("src/openapi/openapi", () => {
       }
     });
 
-    test("should throw an exception if body is empty", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({});
-
-      try {
-        openApi.addPath(
-          "/test",
-          {
-            post: {
-              description: "Test endpoint",
-              operationId: "id",
-              requestBody: openApi.bodyParams(query),
-              responses: {
-                200: textPlain("Successful operation."),
-              },
-              summary: "Server Test",
-              tags: ["Internals"],
-            },
-          },
-          true
-        );
-
-        done.fail("It should have thrown an exception when body is empty.");
-      } catch (e) {
-        expect(e).toBeInstanceOf(Error);
-        expect(e.message).toBe("Empty object body.");
-        done();
-      }
-    });
-
     test("should succeed with an object with all types", (done) => {
-      const query = Joi.object().keys({
-        anyObjectParameter: Joi.object()
-          .keys({
-            string: Joi.string().description("Username"),
-            number: Joi.number(),
-            integer: Joi.number().integer(),
-            object: Joi.object().keys({ internalString: Joi.string() }),
-            array: Joi.array().items(Joi.string()),
-            boolean: Joi.boolean(),
-            date: Joi.string()
-              .isoDate()
-              .meta({ format: "date" }),
-            dateTime: Joi.string().isoDate(),
-          })
-          .required()
-          .description("User login")
-          .example({ username: "johndoe@acme.com", password: "*******" })
-          .description("Full body description."),
-      });
+      const query = Joi.object()
+        .keys({
+          string: Joi.string().description("Username"),
+          number: Joi.number(),
+          integer: Joi.number().integer(),
+          object: Joi.object().keys({ internalString: Joi.string() }),
+          array: Joi.array().items(Joi.string()),
+          arrayOfObjects: Joi.array().items(
+            Joi.object().keys({ internalString: Joi.string() })
+          ),
+          boolean: Joi.boolean(),
+          date: Joi.string()
+            .isoDate()
+            .meta({ format: "date" }),
+          dateTime: Joi.string().isoDate(),
+        })
+        .required()
+        .description("User login")
+        .example({ username: "johndoe@acme.com", password: "*******" })
+        .description("Full body description.");
 
       openApi.addPath(
         "/test",

@@ -42,11 +42,7 @@ Object {
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },
@@ -191,17 +187,13 @@ Object {
               },
             },
           },
-          "description": "Just an object description",
+          "description": "Body does not have a description.",
           "required": true,
         },
         "responses": Object {
           "200": Object {
             "content": Object {
-              "text/plain": Object {
-                "schema": Object {
-                  "type": "string",
-                },
-              },
+              "text-plain": Object {},
             },
             "description": "Successful operation.",
           },

@@ -1,12 +1,7 @@
 import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/openapi-helpers";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema,
-  RequestBody,
-} from "../../../../src/openapi/openapi.types";
+import { Parameters, ParameterIn } from "../../../../src/openapi/openapi.types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -25,32 +20,28 @@ describe("src/openapi/openapi", () => {
 
     test("object simple", async () => {
       const bodySchema = Joi.object().keys({
-        object: Joi.object()
-          .keys({
-            float: Joi.number(),
-            integer: Joi.number().integer(),
-            string: Joi.string(),
-            binary: Joi.binary(),
-            byte: Joi.binary().encoding("base64"),
+        float: Joi.number(),
+        integer: Joi.number().integer(),
+        string: Joi.string(),
+        binary: Joi.binary(),
+        byte: Joi.binary().encoding("base64"),
+        boolean: Joi.boolean(),
+        date: Joi.string()
+          .isoDate()
+          .meta({ format: "date" }),
+        dateTime: Joi.string().isoDate(),
+        stringarray: Joi.array().items(Joi.string()),
+        base64array: Joi.array().items(Joi.binary().encoding("base64")),
+        internalobject: Joi.object().keys({
+          uuid: Joi.string().meta({ format: "uuid" }),
+          boolean: Joi.boolean(),
+        }),
+        objectArray: Joi.array().items({
+          obj: Joi.object().keys({
+            uuid: Joi.string().meta({ format: "uuid" }),
             boolean: Joi.boolean(),
-            date: Joi.string()
-              .isoDate()
-              .meta({ format: "date" }),
-            dateTime: Joi.string().isoDate(),
-            stringarray: Joi.array().items(Joi.string()),
-            base64array: Joi.array().items(Joi.binary().encoding("base64")),
-            internalobject: Joi.object().keys({
-              uuid: Joi.string().meta({ format: "uuid" }),
-              boolean: Joi.boolean(),
-            }),
-            objectArray: Joi.array().items({
-              obj: Joi.object().keys({
-                uuid: Joi.string().meta({ format: "uuid" }),
-                boolean: Joi.boolean(),
-              }),
-            }),
-          })
-          .required(),
+          }),
+        }),
       });
 
       const parameters: Parameters = [];
@@ -62,10 +53,7 @@ describe("src/openapi/openapi", () => {
             description: "Test endpoint",
             operationId: "id",
             parameters,
-            requestBody: openApi.bodyParams(
-              bodySchema,
-              "Just an object description"
-            ),
+            requestBody: openApi.bodyParams(bodySchema),
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -78,7 +66,7 @@ describe("src/openapi/openapi", () => {
       expect(openApi.generateJson()).toMatchSnapshot();
     });
 
-    test.only("object all options", async () => {
+    test("object all options", async () => {
       const parameters: Parameters = [];
       const query = Joi.object()
         .keys({
