@@ -1,4 +1,4 @@
-# Array types
+# Array type
 
 #### Array type can contain different scalar types, objects and even inner arrays. The most simple types can be used almost everywhere, the more complex types can't.
 
@@ -28,7 +28,7 @@
         .allow(null);                       // array nullable ?
 ```
 
-### Array of objects
+### Array of objects (only usable inside an object, request body per example)
 
 ```ts
     // this is an array of objects with name and age
@@ -44,6 +44,26 @@
                     .min(0)
                     .max(120),
             })
+        )
+        .min(1)                                     // min items in array
+        .max(100)                                   // max items in array
+        .required()                                 // required ?
+        .description("Array description")   
+        .default([{ name: "John Doe", age: 25 }])   // default value that is used if not present
+        .example([{ name: "John Doe", age: 25 }])   // sample value used to prefill API, notice it's an array
+        .allow(null);                               // array nullable ?
+```
+
+### Array of arrays
+
+```ts
+    // this is an array of array of string
+    Joi.array()
+        .items(
+            Joi.array()
+                .items(
+                    Joi.string(),
+                })
         )
         .min(1)                                     // min items in array
         .max(100)                                   // max items in array

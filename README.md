@@ -41,3 +41,62 @@ Object                                                                  | NO    
 [Numeric Types](documentation/NUMERIC.md)<br/>
 [Date-Time Types](documentation/DATE-TIME.md)<br/>
 [Binary Types](documentation/BINARY.md)<br/>
+[Array Type](documentation/ARRAY.md)<br/>
+[Object Type](documentation/OBJECT.md)<br/>
+
+## Declaring an API
+
+### First we need to create an OpenApi object to store information
+
+```ts
+    const openApi = new OpenApi(
+        "1.0.0",                // API version
+        "Server API",           // API title
+        "Some test api",        // API description
+        "maintainer@domain.com" // API maintainer email
+    );
+```
+
+### Then you need to declare an array with the API servers
+
+In the event your API is based on docker instances you should call setServers when OpenApi class is called to get the json, to update the IPs and port numbers. You can even specify different servers dependind if the call is internal or external. Up to you.
+
+```ts
+    openApi.setServers([
+        { url: "https://api.domain.com:443" },
+        { url: "https://192.168.1.23:80" }
+    ]);
+```
+
+### Now you need to declare your endpoints
+
+```ts
+    openApi.addPath(
+        "/hello",
+        {
+            get: {
+                summary: "Server Healthcheck",          // Method title
+                description: "Hello world endpoint",    // Method description
+                operationId: "hello-op",                // unique operation id
+                responses: {                            // response codes and description
+                    200: textPlain("Successful operation."),
+/*                  // or if you prefer:
+                    200: {
+                        description: "Successful operation.",
+                        content: { "text-plain": {} },  // mimetype with empty schema
+                    },*/
+                },
+                tags: ["Test Operations"],              // One or more tags, this will allow API grouping
+            },
+        },
+        true                                            // visible ? If not it gets skipped from declaration
+    );
+```
+
+### Finally we export the JSON schema
+
+Note that the paths just need to be added one time (during server init), after this the openApi is basically static.
+
+```ts
+    openApi.generateJson();
+```
