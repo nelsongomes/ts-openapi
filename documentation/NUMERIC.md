@@ -1,6 +1,6 @@
 # Numeric types
 
-#### All numeric types here defined have all parameters defined, as a sample, but in most cases you just need to say it's a number. The definition detail depends on what you need, in some cases like an update it makes sense to allow for null for parameter removal, as an example.
+All numeric types here defined have all parameters defined, as a sample, but in most cases you just need to say it's a number. The definition detail depends on what you need, in some cases like an update it makes sense to allow for null for parameter removal, as an example.
 
 ## Type Samples
 

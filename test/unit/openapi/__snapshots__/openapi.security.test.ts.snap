@@ -1,0 +1,352 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/openapi/openapi Security Schemes Api Key Security (local) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "apiSecurity": Object {
+        "in": "header",
+        "name": "X-API-KEY",
+        "type": "apiKey",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "security": Array [
+          Object {
+            "apiSecurity": Array [],
+          },
+        ],
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Security Schemes Basic Security (global) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "basicSecurity": Object {
+        "scheme": "basic",
+        "type": "http",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "security": Array [
+    Object {
+      "basicSecurity": Array [],
+    },
+  ],
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Security Schemes Basic Security (local) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "basicSecurity": Object {
+        "scheme": "basic",
+        "type": "http",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "security": Array [
+          Object {
+            "basicSecurity": Array [],
+          },
+        ],
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Security Schemes Bearer Security (local) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "bearerSecurity": Object {
+        "scheme": "bearer",
+        "type": "http",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "security": Array [
+          Object {
+            "bearerSecurity": Array [],
+          },
+        ],
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Security Schemes Bearer Security with bearerFormat (local) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "bearerJwtSecurity": Object {
+        "bearerFormat": "JWT",
+        "scheme": "bearer",
+        "type": "http",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "security": Array [
+          Object {
+            "bearerJwtSecurity": Array [],
+          },
+        ],
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Security Schemes Cookie Security (local) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "cookieSecurity": Object {
+        "in": "cookie",
+        "name": "JSESSIONID",
+        "type": "apiKey",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "security": Array [
+          Object {
+            "cookieSecurity": Array [],
+          },
+        ],
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;

@@ -2,6 +2,7 @@ import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/openapi-helpers";
 import { Parameters, ParameterIn } from "../../../../src/openapi/openapi.types";
+import { bodyParams } from "../../../../src/openapi/openapi-functions";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -53,7 +54,7 @@ describe("src/openapi/openapi", () => {
             description: "Test endpoint",
             operationId: "id",
             parameters,
-            requestBody: openApi.bodyParams(bodySchema),
+            requestBody: bodyParams(bodySchema),
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -67,28 +68,23 @@ describe("src/openapi/openapi", () => {
     });
 
     test("object all options", async () => {
-      const parameters: Parameters = [];
       const query = Joi.object()
         .keys({
-          base64string: Joi.binary()
-            .description("some binary base64 value")
-            .required()
-            .min(512)
-            .max(1024)
-            .default("c2FtcGxlMQ==")
-            .example("c2FtcGxlMQ==")
-            .allow(null),
+          parameter1: Joi.string().description("String parameter"),
         })
-        .description("ignore this");
+        .required()
+        .default({ parameter1: "default" })
+        .example({ parameter1: "default" })
+        .allow(null)
+        .description("My body description");
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
-          get: {
+          post: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            requestBody: bodyParams(query),
             responses: {
               200: textPlain("Successful operation."),
             },

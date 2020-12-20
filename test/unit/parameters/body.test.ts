@@ -3,7 +3,7 @@ import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/openapi-helpers";
 import { ParameterIn, Parameters } from "../../../src/openapi/openapi.types";
-import joiToSwagger from "../../../src/joi-conversion";
+import { bodyParams } from "../../../src/openapi/openapi-functions";
 
 describe.only("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -37,7 +37,7 @@ describe.only("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            requestBody: openApi.bodyParams(query),
+            requestBody: bodyParams(query),
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -102,7 +102,7 @@ describe.only("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            requestBody: openApi.bodyParams(query),
+            requestBody: bodyParams(query),
             responses: {
               200: textPlain("Successful operation."),
             },

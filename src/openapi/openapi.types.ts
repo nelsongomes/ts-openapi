@@ -59,6 +59,9 @@ export enum IntegerFormats {
   Int64 = "int64",
 }
 
+export type Scheme = { [k: string]: string[] };
+export type SecuritySchemeArray = Scheme[];
+
 export type SchemaTypeString = {
   type: "string";
   format?: StringFormats;
@@ -126,19 +129,49 @@ export type Parameter = {
   example?: string | number | string[] | number[];
 };
 export type Parameters = Parameter[];
+export type PathDefinition = {
+  tags: Tags;
+  summary: string;
+  description: string;
+  operationId: string;
+  security?: SecuritySchemeArray;
+  parameters?: Parameters;
+  requestBody?: Body;
+  responses: Responses;
+};
 export type Path = {
-  [K in Method]?: {
-    tags: Tags;
-    summary: string;
-    description: string;
-    operationId: string;
-    parameters?: Parameters;
-    requestBody?: Body;
-    responses: Responses;
-  };
+  [K in Method]?: PathDefinition;
 };
 export type Paths = {
   [path: string]: Path;
+};
+
+export type SecurityBasicScheme = {
+  type: "http";
+  scheme: "basic";
+};
+
+export type SecurityApiKeySchemeMethod = "header" | "cookie" | "query";
+export type SecurityApiKeyScheme = {
+  type: "apiKey";
+  in: SecurityApiKeySchemeMethod;
+  name: string;
+};
+
+export type SecurityBearerScheme = {
+  type: "http";
+  scheme: "bearer";
+  bearerFormat?: string;
+};
+
+export type SecurityScheme =
+  | SecurityBasicScheme
+  | SecurityApiKeyScheme
+  | SecurityBearerScheme;
+
+export type OpenApiComponents = {
+  schemas?: { [k: string]: SchemaTypes };
+  securitySchemes?: { [k: string]: SecurityScheme };
 };
 
 export type OpenApiSchema = {
@@ -156,6 +189,8 @@ export type OpenApiSchema = {
   openapi: "3.0.1";
   paths: Paths;
   servers: Servers;
+  components?: OpenApiComponents;
+  security?: SecuritySchemeArray;
 };
 
 export type WebRequestSchema = {

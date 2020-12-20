@@ -1,6 +1,6 @@
 # Array type
 
-#### Array type can contain different scalar types, objects and even inner arrays. The most simple types can be used almost everywhere, the more complex types can't.
+Array type can contain different scalar types, objects and even inner arrays. The most simple types can be used almost everywhere, the more complex types can't.
 
 1. **Query parameters don't support array of arrays or array of objects** but supports arrays of scalar types;
 2. **Path parameters don't support arrays of any kind**;

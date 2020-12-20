@@ -1,19 +1,19 @@
 # Ts-openapi
-#### An openapi json generator based on joi information about APIs that will help you to maintain your API documentation up to date. In node ecosystem, joi is the most used library to validate data schemas, this can be used to generate and maintain API information up to date, without the need to update manually documentation.
+
+An openapi json generator using joi API schemas that will help you to maintain your API documentation up to date. Joi is the is one of the most used components to validate data schemas, this can be used to generate and maintain API information up to date, without the need to update manually documentation.
+
+This software has some code extracted from [joi-to-swagger](https://www.npmjs.com/package/joi-to-swagger) to interface with Joi schemas.
+
 ## Installation
+
 Using npm:
 `npm i --save ts-openapi`
-#### Visit the [GitHub Repo](https://github.com/nelsongomes/ts-openapi/) tutorials, documentation, and support.
 
-## Useful resources
-- [OpenApi Supported Types](#supported-types)
-- [Versions status](https://joi.dev/resources/status/#joi)
-- [Changelog](https://joi.dev/resources/changelog/)
-- [Project policies](https://joi.dev/policies/)
+### Visit the [GitHub Repo](https://github.com/nelsongomes/ts-openapi/) tutorials, documentation, and support
 
 ------------
 
-## [OpenApi Supported Types](#supported-types)
+## OpenApi Supported Types
 
 Type                                                                    | Query   | Path (1)(6)  | Header | Cookie  | Body
 --------------------------------------------                            | ------- | ---------    | ------ | ------- | ---------
@@ -59,7 +59,7 @@ Object                                                                  | NO    
 
 ### Then you need to declare an array with the API servers
 
-In the event your API is based on docker instances you should call setServers when OpenApi class is called to get the json, to update the IPs and port numbers. You can even specify different servers dependind if the call is internal or external. Up to you.
+In the event your API is based on docker instances you should call setServers when OpenApi class is called to get the json, to update the IPs and port numbers. You can even specify different servers depending if the call is internal or external. Up to you.
 
 ```ts
     openApi.setServers([
@@ -95,7 +95,7 @@ In the event your API is based on docker instances you should call setServers wh
 
 ### Finally we export the JSON schema
 
-Note that the paths just need to be added one time (during server init), after this the openApi is basically static.
+Note that the paths just need to be added one time, during server init, after this the openApi is basically static.
 
 ```ts
     openApi.generateJson();

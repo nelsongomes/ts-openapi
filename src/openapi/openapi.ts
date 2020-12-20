@@ -1,25 +1,26 @@
-import Joi, { ObjectSchema, Schema } from "joi";
+import { Schema } from "joi";
 import { ApplicationError } from "../errors/application-error";
 import joiToSwagger, { SwaggerSchema } from "../joi-conversion";
+import {
+  bodyParams,
+  limitations,
+  stringSchema,
+  numberSchema,
+  integerSchema,
+  booleanSchema,
+  arraySchema,
+} from "./openapi-functions";
 import { validateParameters } from "./openapi-validation";
 import {
-  IntegerFormats,
-  NumberFormats,
   OpenApiSchema,
   Parameter,
   ParameterIn,
   Parameters,
   Path,
-  SchemaTypeArray,
-  SchemaTypeInteger,
-  SchemaTypeNumber,
-  SchemaTypeString,
-  SchemaTypeBoolean,
   Servers,
-  StringFormats,
-  SchemaTypeObject,
-  Body,
+  SecurityScheme,
   WebRequestSchema,
+  PathDefinition,
 } from "./openapi.types";
 
 const REQUIRED_TYPES = [ParameterIn.Path];
@@ -27,6 +28,7 @@ const REQUIRED_TYPES = [ParameterIn.Path];
 export class OpenApi {
   private schema: OpenApiSchema;
   private operationIds: string[] = [];
+  private securitySchemeIds: string[] = [];
 
   constructor(
     version: string,
@@ -58,6 +60,35 @@ export class OpenApi {
     this.schema.servers = servers;
   }
 
+  public declareSecurityScheme(name: string, scheme: SecurityScheme) {
+    if (this.securitySchemeIds.includes(name)) {
+      throw new Error("Security scheme name already exists.");
+    }
+
+    if (!this.schema.components || !this.schema.components.securitySchemes) {
+      this.schema.components = {};
+      this.schema.components.securitySchemes = {};
+    }
+
+    // add new securityScheme by name
+    this.schema.components.securitySchemes[name] = scheme;
+
+    // add new id
+    this.securitySchemeIds.push(name);
+  }
+
+  public addGlobalSecurityScheme(name: string, scopes?: string[]) {
+    if (!this.securitySchemeIds.includes(name)) {
+      throw new Error(`Unknown security scheme '${name}'`);
+    }
+
+    if (!this.schema.security) {
+      this.schema.security = [];
+    }
+
+    this.schema.security.push({ [name]: scopes || [] });
+  }
+
   public addPath(path: string, definition: Path, visible: boolean) {
     if (!visible) {
       return;
@@ -67,22 +98,30 @@ export class OpenApi {
       throw new Error("GET operations cannot have a requestBody.");
     }
 
-    const operationId = (
-      definition.get ||
-      definition.post ||
-      definition.put ||
-      definition.delete || { operationId: "unknownOperationId" }
-    ).operationId;
+    const pathDefinition =
+      (definition.get as PathDefinition) ||
+      (definition.post as PathDefinition) ||
+      (definition.put as PathDefinition) ||
+      (definition.delete as PathDefinition);
 
-    const responses = (
-      definition.get ||
-      definition.post ||
-      definition.put ||
-      definition.delete ||
-      {}
-    ).responses;
+    const operationId = pathDefinition.operationId;
+    const responses = pathDefinition.responses;
+
     if (Object.getOwnPropertyNames(responses).length === 0) {
       throw new Error("Should define at least one response.");
+    }
+
+    if (pathDefinition.security) {
+      // TODO verify security scheme exists
+      pathDefinition.security.forEach((securityScheme) => {
+        const securitySchemeName = Object.getOwnPropertyNames(
+          securityScheme
+        )[0];
+
+        if (!this.securitySchemeIds.includes(securitySchemeName)) {
+          throw new Error(`Unknown security scheme '${securitySchemeName}'`);
+        }
+      });
     }
 
     if (!operationId) {
@@ -137,7 +176,7 @@ export class OpenApi {
 
       if (validationSchema.body) {
         // request body
-        requestBody = this.bodyParams(validationSchema.body);
+        requestBody = bodyParams(validationSchema.body);
       }
 
       return {
@@ -147,30 +186,6 @@ export class OpenApi {
     }
 
     return { parameters: undefined, requestBody: undefined };
-  }
-
-  public bodyParams(schema: ObjectSchema): Body {
-    const internalSchema = Joi.object().keys({ object: schema.required() });
-
-    const query = joiToSwagger(internalSchema, {});
-
-    const key = Object.keys(query.swagger.properties)[0];
-    const parameter = query.swagger.properties[key];
-    const isRequired =
-      query.swagger.required && query.swagger.required.includes(key);
-
-    return {
-      description:
-        query.swagger.properties[key].description ||
-        "Body does not have a description.",
-      content: {
-        "application/json": {
-          schema: this.objectSchema(parameter),
-          ...(parameter.example && { example: parameter.example }),
-        },
-      },
-      required: true,
-    };
   }
 
   public genericParams(
@@ -253,78 +268,13 @@ export class OpenApi {
     return this.schema;
   }
 
-  private limitations(parameter: any): string {
-    const limitations = [];
-
-    if (parameter.type === "string" && parameter.enum) {
-      // min & max should be ignored when is an enum
-      delete parameter.minLength;
-      delete parameter.maxLength;
-    }
-
-    // string
-    if (parameter.minLength) {
-      limitations.push(`min:${parameter.minLength} chars`);
-    }
-
-    if (parameter.maxLength) {
-      limitations.push(`max:${parameter.maxLength} chars`);
-    }
-
-    // integer / float
-    if (parameter.type === "integer" && parameter.enum) {
-      // min & max should be ignored when is an enum
-      delete parameter.minimum;
-      delete parameter.maximum;
-    }
-
-    if (parameter.minimum) {
-      limitations.push(`min:${parameter.minimum}`);
-    }
-
-    if (parameter.maximum) {
-      limitations.push(`max:${parameter.maximum}`);
-    }
-
-    // array
-    if (parameter.minItems) {
-      limitations.push(`minItems:${parameter.minItems}`);
-    }
-
-    if (parameter.maxItems) {
-      limitations.push(`maxItems:${parameter.maxItems}`);
-    }
-
-    if (parameter.format) {
-      switch (parameter.format) {
-        case StringFormats.DateTime:
-          if (parameter.meta && parameter.meta.format === "date") {
-            limitations.push("min:10");
-            limitations.push("max:10");
-            limitations.push(`date:yyyy-mm-dd`);
-          } else {
-            limitations.push(`ISO8601 date-time format`);
-          }
-          break;
-        case StringFormats.Byte:
-          limitations.push("base64 encoded string");
-          break;
-        case StringFormats.Binary:
-          limitations.push("binary string");
-          break;
-      }
-    }
-
-    return limitations.length > 0 ? ` (${limitations.join(", ")})` : "";
-  }
-
   private stringParameter(
     name: string,
     parameter: any,
     required: boolean,
     type: ParameterIn
   ): Parameter {
-    const limitationDetail = this.limitations(parameter);
+    const limitationDetail = limitations(parameter);
     const p: Parameter = {
       description:
         (parameter.description || "Parameter without description.") +
@@ -332,68 +282,11 @@ export class OpenApi {
       in: type,
       name,
       required: isRequiredParameter(required, type),
-      schema: this.stringSchema(parameter),
+      schema: stringSchema(parameter),
       ...(parameter.example && { example: parameter.example }),
     };
 
     return p;
-  }
-
-  private stringSchema(parameter: any): SchemaTypeString {
-    const supportedFormats = Object.values(StringFormats);
-    const description =
-      (parameter.description || "Parameter without description.") +
-      (this.limitations(parameter) || "");
-
-    const output: SchemaTypeString = {
-      description,
-      ...(parameter.default && { default: parameter.default }),
-      ...(parameter.format &&
-        supportedFormats.includes(parameter.format) && {
-          format: parameter.format,
-        }),
-      ...(parameter.enum && { enum: parameter.enum }),
-      ...(parameter.minLength && { minLength: parameter.minLength }),
-      ...(parameter.maxLength && { maxLength: parameter.maxLength }),
-      ...(typeof parameter.nullable === "boolean" && {
-        nullable: parameter.nullable,
-      }),
-      type: "string",
-    };
-
-    if (parameter.meta) {
-      if (parameter.meta.format) {
-        parameter.format = parameter.meta.format;
-      }
-    }
-
-    if (parameter.format && supportedFormats.includes(parameter.format)) {
-      output.format = parameter.format;
-
-      switch (parameter.format) {
-        case StringFormats.Date:
-          output.maxLength = 10; // 2020-10-14
-          output.minLength = 10;
-          break;
-        case StringFormats.DateTime:
-          output.minLength = 16; // 20201014T214403Z
-          output.maxLength = 25; // 2020-10-14T21:44:03+00:00
-          break;
-        case StringFormats.Password:
-          delete output.default; // no defaults for passwords
-          break;
-      }
-    }
-
-    // default values must be part of enum
-    if (
-      parameter.enum instanceof Array &&
-      !parameter.enum.includes(output.default)
-    ) {
-      delete output.default;
-    }
-
-    return output;
   }
 
   private numberParameter(
@@ -402,7 +295,7 @@ export class OpenApi {
     required: boolean,
     type: ParameterIn
   ): Parameter {
-    const limitationDetail = this.limitations(parameter);
+    const limitationDetail = limitations(parameter);
 
     const p: Parameter = {
       description:
@@ -411,32 +304,11 @@ export class OpenApi {
       in: type,
       name,
       required: isRequiredParameter(required, type),
-      schema: this.numberSchema(parameter),
+      schema: numberSchema(parameter),
       ...(parameter.example && { example: parameter.example }),
     };
 
     return p;
-  }
-
-  private numberSchema(parameter: any): SchemaTypeNumber {
-    const description =
-      (parameter.description || "Parameter without description.") +
-      (this.limitations(parameter) || "");
-
-    const output: SchemaTypeNumber = {
-      description,
-      ...(parameter.default && { default: parameter.default }),
-      ...(parameter.enum && { enum: parameter.enum }),
-      ...(parameter.minimum && { minimum: parameter.minimum }),
-      ...(parameter.maximum && { maximum: parameter.maximum }),
-      ...(typeof parameter.nullable === "boolean" && {
-        nullable: parameter.nullable,
-      }),
-      format: NumberFormats.Double,
-      type: "number",
-    };
-
-    return output;
   }
 
   private integerParameter(
@@ -445,7 +317,7 @@ export class OpenApi {
     required: boolean,
     type: ParameterIn
   ): Parameter {
-    const limitationDetail = this.limitations(parameter);
+    const limitationDetail = limitations(parameter);
 
     const p: Parameter = {
       description:
@@ -454,40 +326,11 @@ export class OpenApi {
       in: type,
       name,
       required: isRequiredParameter(required, type),
-      schema: this.integerSchema(parameter),
+      schema: integerSchema(parameter),
       ...(parameter.example && { example: parameter.example }),
     };
 
     return p;
-  }
-
-  private integerSchema(parameter: any): SchemaTypeInteger {
-    const description =
-      (parameter.description || "Parameter without description.") +
-      (this.limitations(parameter) || "");
-
-    const output: SchemaTypeInteger = {
-      description,
-      ...(parameter.default && { default: parameter.default }),
-      ...(parameter.enum && { enum: parameter.enum }),
-      ...(parameter.minimum && { minimum: parameter.minimum }),
-      ...(parameter.maximum && { maximum: parameter.maximum }),
-      ...(typeof parameter.nullable === "boolean" && {
-        nullable: parameter.nullable,
-      }),
-      format: IntegerFormats.Int64,
-      type: "integer",
-    };
-
-    // default values must be part of enum
-    if (
-      parameter.enum instanceof Array &&
-      !parameter.enum.includes(output.default)
-    ) {
-      delete output.default;
-    }
-
-    return output;
   }
 
   private booleanParameter(
@@ -496,7 +339,7 @@ export class OpenApi {
     required: boolean,
     type: ParameterIn
   ): Parameter {
-    const limitationDetail = this.limitations(parameter);
+    const limitationDetail = limitations(parameter);
 
     const p: Parameter = {
       description:
@@ -505,7 +348,7 @@ export class OpenApi {
       in: type,
       name,
       required: isRequiredParameter(required, type),
-      schema: this.booleanSchema(parameter),
+      schema: booleanSchema(parameter),
       ...(typeof parameter.example === "boolean" && {
         example: parameter.example,
       }),
@@ -514,33 +357,14 @@ export class OpenApi {
     return p;
   }
 
-  private booleanSchema(parameter: any): SchemaTypeBoolean {
-    const description =
-      (parameter.description || "Parameter without description.") +
-      (this.limitations(parameter) || "");
-
-    const output: SchemaTypeBoolean = {
-      description,
-      ...(typeof parameter.default === "boolean" && {
-        default: parameter.default,
-      }),
-      ...(typeof parameter.nullable === "boolean" && {
-        nullable: parameter.nullable,
-      }),
-      type: "boolean",
-    };
-
-    return output;
-  }
-
   private arrayParameter(
     name: string,
     parameter: any,
     required: boolean,
     type: ParameterIn
   ): Parameter {
-    const limitationDetail = this.limitations(parameter);
-    const schema = this.arraySchema(parameter);
+    const limitationDetail = limitations(parameter);
+    const schema = arraySchema(parameter);
 
     const p: Parameter = {
       description:
@@ -555,187 +379,9 @@ export class OpenApi {
 
     return p;
   }
-
-  private arraySchema(parameter: any): SchemaTypeArray {
-    const output: SchemaTypeArray = {
-      ...(typeof parameter.default === "object" && {
-        default: parameter.default,
-      }),
-      ...(parameter.minItems && { minItems: parameter.minItems }),
-      ...(parameter.maxItems && { maxItems: parameter.maxItems }),
-      ...(typeof parameter.nullable === "boolean" && {
-        nullable: parameter.nullable,
-      }),
-      type: "array",
-    };
-
-    switch (parameter.items.type) {
-      case "string":
-        const {
-          default: ignoreA1,
-          nullable: ignoreA2,
-          minLength,
-          maxLength,
-          ...restOfStringSchema
-        } = this.stringSchema(parameter.items);
-
-        output.items = restOfStringSchema;
-        break;
-      case "number":
-        const {
-          default: ignoreB1,
-          nullable: ignoreB2,
-          minimum: ignoreB3,
-          maximum: ignoreB4,
-          ...restNumberOfSchema
-        } = this.numberSchema(parameter.items);
-
-        output.items = restNumberOfSchema;
-        break;
-      case "integer":
-        const {
-          default: ignoreC1,
-          nullable: ignoreC2,
-          minimum: ignoreC3,
-          maximum: ignoreC4,
-          ...restIntegerOfSchema
-        } = this.integerSchema(parameter.items);
-
-        output.items = restIntegerOfSchema;
-        break;
-      case "object":
-        const {
-          default: ignoreD1,
-          nullable: ignoreD2,
-          ...restOfObjectSchema
-        } = this.objectSchema(parameter.items);
-
-        output.items = restOfObjectSchema;
-        break;
-      default:
-        throw new Error("not implemented");
-    }
-
-    if (parameter.items.enum instanceof Array) {
-      // default values must be part of enum
-      if (
-        output.default instanceof Array &&
-        !output.default.every((element: any, _index: number, _array: any[]) =>
-          parameter.items.enum.includes(element)
-        )
-      ) {
-        delete output.default;
-      }
-
-      // string enums are already limited
-      if (parameter.items.type === "string") {
-        delete (output.items as SchemaTypeString).minLength;
-        delete (output.items as SchemaTypeString).maxLength;
-      }
-    }
-
-    return output;
-  }
-
-  private objectSchema(parameter: any): SchemaTypeObject {
-    const description =
-      (parameter.description || "Parameter without description.") +
-      (this.limitations(parameter) || "");
-
-    const output: SchemaTypeObject = {
-      description,
-      ...(typeof parameter.default === "object" && {
-        default: parameter.default,
-      }),
-      ...(parameter.minItems && { minItems: parameter.minItems }),
-      ...(parameter.maxItems && { maxItems: parameter.maxItems }),
-      ...(typeof parameter.nullable === "boolean" && {
-        nullable: parameter.nullable,
-      }),
-      type: "object",
-      properties: {},
-    };
-
-    for (const propertyKey of Object.keys(parameter.properties)) {
-      const property = parameter.properties[propertyKey];
-
-      switch (property.type) {
-        case "string":
-          const {
-            default: ignoreA1,
-            nullable: ignoreA2,
-            minLength,
-            maxLength,
-            ...restOfStringSchema
-          } = this.stringSchema(property);
-
-          output.properties[propertyKey] = restOfStringSchema;
-          break;
-        case "number":
-          const {
-            default: ignoreB1,
-            nullable: ignoreB2,
-            minimum: ignoreB3,
-            maximum: ignoreB4,
-            ...restNumberOfSchema
-          } = this.numberSchema(property);
-
-          output.properties[propertyKey] = restNumberOfSchema;
-          break;
-        case "boolean":
-          const {
-            default: ignoreE1,
-            nullable: ignorE2,
-            ...restBooleanOfSchema
-          } = this.booleanSchema(property);
-
-          output.properties[propertyKey] = restBooleanOfSchema;
-          break;
-        case "integer":
-          const {
-            default: ignoreC1,
-            nullable: ignoreC2,
-            minimum: ignoreC3,
-            maximum: ignoreC4,
-            ...restIntegerOfSchema
-          } = this.integerSchema(property);
-
-          output.properties[propertyKey] = restIntegerOfSchema;
-          break;
-        case "object":
-          const {
-            default: ignoreD1,
-            nullable: ignoreD2,
-            ...restOfObjectSchema
-          } = this.objectSchema(property);
-
-          output.properties[propertyKey] = restOfObjectSchema;
-          break;
-        case "array":
-          const {
-            default: ignoreF1,
-            nullable: ignoreF2,
-            ...restOfArraySchema
-          } = this.arraySchema(property);
-
-          output.properties[propertyKey] = restOfArraySchema;
-          break;
-        default:
-          throw new Error(`${property.type} not implemented`);
-      }
-    }
-
-    return output;
-  }
 }
 
 // all required parameters or path parameters are parameters are required
 function isRequiredParameter(required: boolean, type: ParameterIn) {
   return required || REQUIRED_TYPES.includes(type);
-}
-
-export function bodySchema(schema: ObjectSchema): Body {
-  const localOpenApi = new OpenApi("", "", "", "");
-
-  return localOpenApi.bodyParams(schema);
 }
