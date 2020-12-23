@@ -1,7 +1,7 @@
 import Joi from "joi";
 import { example } from "yargs";
 import { OpenApi } from "../../../../src/openapi/openapi";
-import { textPlain } from "../../../../src/openapi/helpers/openapi-helpers";
+import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,

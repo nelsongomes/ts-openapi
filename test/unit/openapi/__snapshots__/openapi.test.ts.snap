@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`src/openapi/openapi Constructor add body 1`] = `
+Object {
+  "content": Object {
+    "application/json": Object {
+      "schema": Object {
+        "description": "Sample body",
+        "properties": Object {
+          "username": Object {
+            "description": "Parameter without description.",
+            "type": "string",
+          },
+        },
+        "type": "object",
+      },
+    },
+  },
+  "description": "Sample body",
+  "required": true,
+}
+`;
+
 exports[`src/openapi/openapi Constructor addPath, public vs private method (private method does not get included) 1`] = `
 Object {
   "info": Object {

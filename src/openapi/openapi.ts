@@ -17,6 +17,7 @@ import {
   ParameterIn,
   Parameters,
   Path,
+  Body,
   Servers,
   SecurityScheme,
   WebRequestSchema,
@@ -87,6 +88,7 @@ export class OpenApi {
     }
 
     this.schema.security.push({ [name]: scopes || [] });
+    this.securitySchemeIds.push(name);
   }
 
   public addPath(path: string, definition: Path, visible: boolean) {
@@ -142,50 +144,40 @@ export class OpenApi {
     this.schema.info.termsOfService = termsOfService;
   }
 
-  public parametersAndBodyFromSchema(validationSchema?: WebRequestSchema) {
+  public parametersAndBodyFromSchema(
+    validationSchema: WebRequestSchema
+  ): { parameters: Parameters | undefined; requestBody: Body | undefined } {
     let parameters: Parameters = [];
-    let requestBody;
+    let requestBody: Body | undefined;
 
-    if (validationSchema) {
-      if (validationSchema.query) {
-        // get parameters
-        this.genericParams(
-          parameters,
-          validationSchema.query,
-          ParameterIn.Query
-        );
-      }
-
-      if (validationSchema.params) {
-        // uri params
-        this.genericParams(
-          parameters,
-          validationSchema.params,
-          ParameterIn.Path
-        );
-      }
-
-      if (validationSchema.headers) {
-        // header params
-        this.genericParams(
-          parameters,
-          validationSchema.headers,
-          ParameterIn.Header
-        );
-      }
-
-      if (validationSchema.body) {
-        // request body
-        requestBody = bodyParams(validationSchema.body);
-      }
-
-      return {
-        parameters: parameters.length > 0 ? parameters : undefined,
-        requestBody,
-      };
+    if (validationSchema.query) {
+      // get parameters
+      this.genericParams(parameters, validationSchema.query, ParameterIn.Query);
     }
 
-    return { parameters: undefined, requestBody: undefined };
+    if (validationSchema.params) {
+      // uri params
+      this.genericParams(parameters, validationSchema.params, ParameterIn.Path);
+    }
+
+    if (validationSchema.headers) {
+      // header params
+      this.genericParams(
+        parameters,
+        validationSchema.headers,
+        ParameterIn.Header
+      );
+    }
+
+    if (validationSchema.body) {
+      // request body
+      requestBody = bodyParams(validationSchema.body);
+    }
+
+    return {
+      parameters: parameters.length > 0 ? parameters : undefined,
+      requestBody,
+    };
   }
 
   public genericParams(

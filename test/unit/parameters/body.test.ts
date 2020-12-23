@@ -1,7 +1,7 @@
 import { doesNotMatch, strict } from "assert";
 import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
-import { textPlain } from "../../../src/openapi/helpers/openapi-helpers";
+import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import { ParameterIn, Parameters } from "../../../src/openapi/openapi.types";
 import { bodyParams } from "../../../src/openapi/openapi-functions";
 
@@ -21,15 +21,25 @@ describe.only("src/openapi/openapi", () => {
     });
 
     test("should succeed with an object, without description", (done) => {
-      const query = Joi.object()
+      const bodySchema = Joi.object()
         .keys({
-          username: Joi.string().description("Username"),
+          username: Joi.string()
+            .description("Username")
+            .required(),
           password: Joi.string()
+            .required()
             .meta({ format: "password" })
             .description("User password"),
         })
         .required()
         .example({ username: "johndoe@acme.com", password: "*******" });
+
+      const { requestBody, parameters } = openApi.parametersAndBodyFromSchema({
+        body: bodySchema,
+        headers: bodySchema,
+        params: bodySchema,
+        query: bodySchema,
+      });
 
       openApi.addPath(
         "/test",
@@ -37,7 +47,8 @@ describe.only("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            requestBody: bodyParams(query),
+            requestBody,
+            parameters,
             responses: {
               200: textPlain("Successful operation."),
             },

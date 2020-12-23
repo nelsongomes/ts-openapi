@@ -350,3 +350,284 @@ Object {
   ],
 }
 `;
+
+exports[`src/openapi/openapi Security Schemes Oauth2 Security authorizationCode (local) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "oauth2Security": Object {
+        "description": "This API uses OAuth 2 with the authorizationCode grant flow. [More info](https://api.example.com/docs/auth)",
+        "flows": Object {
+          "authorizationCode": Object {
+            "authorizationUrl": "https://api.example.com/oauth2/authorize",
+            "refreshUrl": "https://www.domain.com/refreshUrl",
+            "scopes": Object {
+              "read_pets": "Read your pets",
+              "write_pets": "Modify pets in your account",
+            },
+            "tokenUrl": "https://api.example.com/oauth2/tokenUrl",
+          },
+        },
+        "type": "oauth2",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "security": Array [
+          Object {
+            "oauth2Security": Array [
+              "read_pets",
+            ],
+          },
+        ],
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Security Schemes Oauth2 Security clientCredentials (local) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "oauth2Security": Object {
+        "description": "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
+        "flows": Object {
+          "clientCredentials": Object {
+            "refreshUrl": "https://www.domain.com/refreshUrl",
+            "scopes": Object {
+              "read_pets": "Read your pets",
+              "write_pets": "Modify pets in your account",
+            },
+            "tokenUrl": "https://api.example.com/tokenUrl",
+          },
+        },
+        "type": "oauth2",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "security": Array [
+          Object {
+            "oauth2Security": Array [
+              "read_pets",
+            ],
+          },
+        ],
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Security Schemes Oauth2 Security implicit (local) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "oauth2Security": Object {
+        "description": "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
+        "flows": Object {
+          "implicit": Object {
+            "authorizationUrl": "https://api.example.com/oauth2/authorize",
+            "refreshUrl": "https://www.domain.com/refreshUrl",
+            "scopes": Object {
+              "read_pets": "Read your pets",
+              "write_pets": "Modify pets in your account",
+            },
+          },
+        },
+        "type": "oauth2",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "security": Array [
+          Object {
+            "oauth2Security": Array [
+              "read_pets",
+            ],
+          },
+        ],
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Security Schemes Oauth2 Security password (local) 1`] = `
+Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "oauth2Security": Object {
+        "description": "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
+        "flows": Object {
+          "password": Object {
+            "refreshUrl": "https://www.domain.com/refreshUrl",
+            "scopes": Object {
+              "read_pets": "Read your pets",
+              "write_pets": "Modify pets in your account",
+            },
+            "tokenUrl": "https://api.example.com/tokenUrl",
+          },
+        },
+        "type": "oauth2",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/health": Object {
+      "get": Object {
+        "description": "Service healthcheck endpoint",
+        "operationId": "healthcheck",
+        "parameters": Array [],
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "security": Array [
+          Object {
+            "oauth2Security": Array [
+              "read_pets",
+            ],
+          },
+        ],
+        "summary": "Server Healthcheck",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;

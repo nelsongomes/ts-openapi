@@ -1,6 +1,6 @@
 import * as Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
-import { textPlain } from "../../../src/openapi/helpers/openapi-helpers";
+import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,
@@ -18,6 +18,27 @@ describe("src/openapi/openapi", () => {
       );
 
       expect(openApi instanceof OpenApi).toBe(true);
+    });
+
+    test("add body", async () => {
+      const openApi = new OpenApi(
+        "1.0.0",
+        "Server API",
+        "Some test api",
+        "nelson.ricardo.gomes@gmail.com"
+      );
+
+      const body = Joi.object()
+        .keys({
+          username: Joi.string(),
+        })
+        .description("Sample body");
+
+      const { requestBody } = openApi.parametersAndBodyFromSchema({
+        body,
+      });
+
+      expect(requestBody).toMatchSnapshot();
     });
 
     test("simple, but no servers were added", async () => {

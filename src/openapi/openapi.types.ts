@@ -164,10 +164,42 @@ export type SecurityBearerScheme = {
   bearerFormat?: string;
 };
 
+export type SecurityOauth2Scopes = {
+  [scopeName: string]: string;
+};
+export type SecurityOauth2Scheme = {
+  type: "oauth2";
+  description: string;
+  flows: {
+    authorizationCode?: {
+      authorizationUrl: string;
+      tokenUrl: string;
+      refreshUrl?: string;
+      scopes: SecurityOauth2Scopes;
+    };
+    implicit?: {
+      authorizationUrl: string;
+      refreshUrl?: string;
+      scopes: SecurityOauth2Scopes;
+    };
+    password?: {
+      tokenUrl: string;
+      refreshUrl?: string;
+      scopes: SecurityOauth2Scopes;
+    };
+    clientCredentials?: {
+      tokenUrl: string;
+      refreshUrl?: string;
+      scopes: SecurityOauth2Scopes;
+    };
+  };
+};
+
 export type SecurityScheme =
   | SecurityBasicScheme
   | SecurityApiKeyScheme
-  | SecurityBearerScheme;
+  | SecurityBearerScheme
+  | SecurityOauth2Scheme;
 
 export type OpenApiComponents = {
   schemas?: { [k: string]: SchemaTypes };
