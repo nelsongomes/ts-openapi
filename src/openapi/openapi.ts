@@ -226,10 +226,6 @@ export class OpenApi {
     schema: Schema,
     type: ParameterIn
   ) {
-    if (type === ParameterIn.Body) {
-      throw new Error("Body content must declared with function bodyParams.");
-    }
-
     const query = joiToSwagger(schema, {});
 
     for (const key of Object.keys(query.swagger.properties)) {

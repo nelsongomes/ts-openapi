@@ -20,7 +20,9 @@ export function validateParameters(
       );
       break;
     case ParameterIn.Cookie:
-      validateCookieParameters(name, parameterType);
+    case ParameterIn.Header:
+      const upcaseType = type.charAt(0).toUpperCase() + type.slice(1);
+      validateCookieParameters(upcaseType, name, parameterType);
       break;
   }
 }
@@ -74,8 +76,12 @@ function validateQueryParameters(
   }
 }
 
-function validateCookieParameters(key: string, parameterType: string) {
+function validateCookieParameters(
+  type: string,
+  key: string,
+  parameterType: string
+) {
   if (["object", "array"].includes(parameterType)) {
-    throw new Error(`Cookie param '${key}' cannot be an object or an array.`);
+    throw new Error(`${type} param '${key}' cannot be an object or an array.`);
   }
 }
