@@ -1,12 +1,6 @@
 import Joi from "joi";
-import { example } from "yargs";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema,
-} from "../../../../src/openapi/openapi.types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -27,7 +21,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
-            parameters: [],
+            validationSchema: {},
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -40,20 +34,17 @@ describe("src/openapi/openapi", () => {
     });
 
     test("byte array simple", async () => {
-      const parameters: Parameters = [];
-
       const query = Joi.object().keys({
         base64array: Joi.array().items(Joi.binary().encoding("base64")),
       });
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -67,7 +58,6 @@ describe("src/openapi/openapi", () => {
     });
 
     test("byte array all options", async () => {
-      const parameters: Parameters = [];
       const query = Joi.object()
         .keys({
           base64array: Joi.array()
@@ -92,14 +82,13 @@ describe("src/openapi/openapi", () => {
         })
         .description("ignore");
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },

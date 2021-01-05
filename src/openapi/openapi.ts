@@ -16,11 +16,12 @@ import {
   Parameter,
   ParameterIn,
   Parameters,
-  Path,
+  PathInputDefinition,
   Body,
   Servers,
   SecurityScheme,
   WebRequestSchema,
+  PathInput,
   PathDefinition,
 } from "./openapi.types";
 
@@ -91,23 +92,54 @@ export class OpenApi {
     this.securitySchemeIds.push(name);
   }
 
-  public addPath(path: string, definition: Path, visible: boolean) {
+  /**
+   * this replaces path parameters from express to openapi format
+   * @param apiPath
+   */
+  private replaceParameters(apiPath: string): string {
+    let newPath = apiPath;
+    const paramsRegex = apiPath.match(/:([A-Za-z0-9_]+)/g);
+
+    if (paramsRegex) {
+      for (const param of paramsRegex) {
+        newPath = newPath.replace(param, `{${param.substring(1)}}`);
+      }
+    }
+    return newPath;
+  }
+
+  public addPath(path: string, inputDefinition: PathInput, visible: boolean) {
     if (!visible) {
       return;
     }
 
-    if (definition.get && definition.get.requestBody) {
-      throw new Error("GET operations cannot have a requestBody.");
-    }
+    path = this.replaceParameters(path);
 
     const pathDefinition =
-      (definition.get as PathDefinition) ||
-      (definition.post as PathDefinition) ||
-      (definition.put as PathDefinition) ||
-      (definition.delete as PathDefinition);
+      (inputDefinition.get as PathInputDefinition) ||
+      (inputDefinition.post as PathInputDefinition) ||
+      (inputDefinition.put as PathInputDefinition) ||
+      (inputDefinition.delete as PathInputDefinition);
+
+    const method = Object.getOwnPropertyNames(inputDefinition)[0];
 
     const operationId = pathDefinition.operationId;
     const responses = pathDefinition.responses;
+
+    const { validationSchema, ...remainder } = pathDefinition;
+    const { parameters, requestBody } = this.parametersAndBodyFromSchema(
+      pathDefinition.validationSchema || {}
+    );
+
+    let definition: PathDefinition = {
+      ...remainder,
+      ...(parameters && { parameters }),
+      ...(requestBody && { requestBody }),
+    };
+
+    if (inputDefinition.get && definition.requestBody) {
+      throw new Error("GET operations cannot have a requestBody.");
+    }
 
     if (Object.getOwnPropertyNames(responses).length === 0) {
       throw new Error("Should define at least one response.");
@@ -135,7 +167,7 @@ export class OpenApi {
     }
 
     this.operationIds.push(operationId);
-    this.schema.paths[path] = definition;
+    this.schema.paths[path] = { [method]: definition };
   }
 
   public setLicense(name: string, url: string, termsOfService: string) {
@@ -144,7 +176,7 @@ export class OpenApi {
     this.schema.info.termsOfService = termsOfService;
   }
 
-  public parametersAndBodyFromSchema(
+  private parametersAndBodyFromSchema(
     validationSchema: WebRequestSchema
   ): { parameters: Parameters | undefined; requestBody: Body | undefined } {
     let parameters: Parameters = [];
@@ -158,6 +190,15 @@ export class OpenApi {
     if (validationSchema.params) {
       // uri params
       this.genericParams(parameters, validationSchema.params, ParameterIn.Path);
+    }
+
+    if (validationSchema.cookie) {
+      // cookie params
+      this.genericParams(
+        parameters,
+        validationSchema.cookie,
+        ParameterIn.Cookie
+      );
     }
 
     if (validationSchema.headers) {
@@ -180,7 +221,7 @@ export class OpenApi {
     };
   }
 
-  public genericParams(
+  private genericParams(
     parameters: Parameters,
     schema: Schema,
     type: ParameterIn

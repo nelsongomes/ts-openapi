@@ -20,7 +20,7 @@ describe("src/openapi/openapi", () => {
     });
 
     test("object simple", async () => {
-      const bodySchema = Joi.object().keys({
+      const body = Joi.object().keys({
         float: Joi.number(),
         integer: Joi.number().integer(),
         string: Joi.string(),
@@ -53,8 +53,7 @@ describe("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
-            requestBody: bodyParams(bodySchema),
+            validationSchema: { body },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -68,7 +67,7 @@ describe("src/openapi/openapi", () => {
     });
 
     test("object all options", async () => {
-      const query = Joi.object()
+      const body = Joi.object()
         .keys({
           parameter1: Joi.string().description("String parameter"),
         })
@@ -84,7 +83,7 @@ describe("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            requestBody: bodyParams(query),
+            validationSchema: { body },
             responses: {
               200: textPlain("Successful operation."),
             },

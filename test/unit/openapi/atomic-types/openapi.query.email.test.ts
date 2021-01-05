@@ -20,38 +20,20 @@ describe("src/openapi/openapi", () => {
       );
 
       openApi.setServers([{ url: "https://server.com" }]);
-      openApi.addPath(
-        "/health",
-        {
-          get: {
-            description: "Service healthcheck endpoint",
-            operationId: "repeated",
-            parameters: [],
-            responses: {
-              200: textPlain("Successful operation."),
-            },
-            summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
-        },
-        true
-      );
     });
 
     test("email simple", async () => {
-      const parameters: Parameters = [];
       const query = Joi.object().keys({
         email: Joi.string().email(),
       });
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -65,7 +47,6 @@ describe("src/openapi/openapi", () => {
     });
 
     test("email all options", async () => {
-      const parameters: Parameters = [];
       const query = Joi.object()
         .keys({
           email: Joi.string()
@@ -80,14 +61,13 @@ describe("src/openapi/openapi", () => {
         })
         .description("ignore this");
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },

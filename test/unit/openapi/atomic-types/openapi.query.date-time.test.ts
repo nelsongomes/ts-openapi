@@ -20,38 +20,20 @@ describe("src/openapi/openapi", () => {
       );
 
       openApi.setServers([{ url: "https://server.com" }]);
-      openApi.addPath(
-        "/health",
-        {
-          get: {
-            description: "Service healthcheck endpoint",
-            operationId: "repeated",
-            parameters: [],
-            responses: {
-              200: textPlain("Successful operation."),
-            },
-            summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
-        },
-        true
-      );
     });
 
     test("date-time simple", async () => {
-      const parameters: Parameters = [];
       const query = Joi.object().keys({
         timestamp: Joi.string().isoDate(),
       });
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -65,21 +47,19 @@ describe("src/openapi/openapi", () => {
     });
 
     test("date-time downgrades to date if format = 'date' (2017-07-21)", async () => {
-      const parameters: Parameters = [];
       const query = Joi.object().keys({
         timestamp: Joi.string()
           .isoDate()
           .meta({ format: "date" }),
       });
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -93,7 +73,6 @@ describe("src/openapi/openapi", () => {
     });
 
     test("date-time all options", async () => {
-      const parameters: Parameters = [];
       const query = Joi.object()
         .keys({
           timestamp: Joi.string()
@@ -106,14 +85,13 @@ describe("src/openapi/openapi", () => {
         })
         .description("ignore this");
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },

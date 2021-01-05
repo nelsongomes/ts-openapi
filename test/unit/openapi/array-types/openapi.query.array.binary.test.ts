@@ -21,39 +21,20 @@ describe("src/openapi/openapi", () => {
       );
 
       openApi.setServers([{ url: "https://server.com" }]);
-      openApi.addPath(
-        "/health",
-        {
-          get: {
-            description: "Service healthcheck endpoint",
-            operationId: "repeated",
-            parameters: [],
-            responses: {
-              200: textPlain("Successful operation."),
-            },
-            summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
-        },
-        true
-      );
     });
 
     test("binary array simple", async () => {
-      const parameters: Parameters = [];
-
       const query = Joi.object().keys({
         binaryArray: Joi.array().items(Joi.binary()),
       });
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -67,7 +48,6 @@ describe("src/openapi/openapi", () => {
     });
 
     test("binary array all options", async () => {
-      const parameters: Parameters = [];
       const query = Joi.object()
         .keys({
           base64string: Joi.array()
@@ -91,14 +71,13 @@ describe("src/openapi/openapi", () => {
         })
         .description("ignore");
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },

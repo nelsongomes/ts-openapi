@@ -142,6 +142,18 @@ export type PathDefinition = {
 export type Path = {
   [K in Method]?: PathDefinition;
 };
+export type PathInputDefinition = {
+  tags: Tags;
+  summary: string;
+  description: string;
+  operationId: string;
+  security?: SecuritySchemeArray;
+  responses: Responses;
+  validationSchema?: WebRequestSchema;
+};
+export type PathInput = {
+  [K in Method]?: PathInputDefinition;
+};
 export type Paths = {
   [path: string]: Path;
 };
@@ -230,4 +242,5 @@ export type WebRequestSchema = {
   query?: Joi.ObjectSchema;
   params?: Joi.ObjectSchema;
   headers?: Joi.ObjectSchema;
+  cookie?: Joi.ObjectSchema;
 };

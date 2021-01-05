@@ -2,11 +2,7 @@ import { doesNotMatch, strict } from "assert";
 import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema,
-} from "../../../src/openapi/openapi.types";
+import { Parameters, ParameterIn } from "../../../src/openapi/openapi.types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -24,21 +20,18 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if query parameter is an object", (done) => {
-      const parameters: Parameters = [];
       const query = Joi.object().keys({
         someObject: Joi.object().keys({ test: Joi.string() }),
       });
 
       try {
-        openApi.genericParams(parameters, query, ParameterIn.Query);
-
         openApi.addPath(
           "/test",
           {
             get: {
               description: "Test endpoint",
               operationId: "id",
-              parameters,
+              validationSchema: { query },
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -58,7 +51,6 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if query parameter is an array of arrays", (done) => {
-      const parameters: Parameters = [];
       const query = Joi.object().keys({
         arrayOfArrays: Joi.array().items({
           test: Joi.array().items({ string: Joi.string() }),
@@ -66,15 +58,13 @@ describe("src/openapi/openapi", () => {
       });
 
       try {
-        openApi.genericParams(parameters, query, ParameterIn.Query);
-
         openApi.addPath(
           "/test",
           {
             get: {
               description: "Test endpoint",
               operationId: "id",
-              parameters,
+              validationSchema: { query },
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -98,14 +88,11 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed query parameter is an array of scalar", (done) => {
-      const parameters: Parameters = [];
       const query = Joi.object().keys({
         arrayOfArrays: Joi.array().items({
           test: Joi.string(),
         }),
       });
-
-      openApi.genericParams(parameters, query, ParameterIn.Query);
 
       openApi.addPath(
         "/test",
@@ -113,7 +100,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },

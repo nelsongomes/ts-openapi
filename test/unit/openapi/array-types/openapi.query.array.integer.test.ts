@@ -23,8 +23,6 @@ describe("src/openapi/openapi", () => {
     });
 
     test("integer array all options", async () => {
-      const parameters: Parameters = [];
-
       const query = Joi.object()
         .keys({
           integerList: Joi.array()
@@ -51,14 +49,13 @@ describe("src/openapi/openapi", () => {
         })
         .description("IGNORED");
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -72,20 +69,17 @@ describe("src/openapi/openapi", () => {
     });
 
     test("integer array minimal options", async () => {
-      const parameters: Parameters = [];
-
       const query = Joi.object().keys({
         integerList: Joi.array().items(Joi.number().integer()),
       });
 
-      openApi.genericParams(parameters, query, ParameterIn.Query);
       openApi.addPath(
         "/test",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { query },
             responses: {
               200: textPlain("Successful operation."),
             },

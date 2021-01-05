@@ -2,22 +2,63 @@
 
 exports[`src/openapi/openapi Constructor add body 1`] = `
 Object {
-  "content": Object {
-    "application/json": Object {
-      "schema": Object {
-        "description": "Sample body",
-        "properties": Object {
-          "username": Object {
-            "description": "Parameter without description.",
-            "type": "string",
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/something": Object {
+      "post": Object {
+        "description": "desc",
+        "operationId": "id",
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "schema": Object {
+                "description": "Sample body",
+                "properties": Object {
+                  "username": Object {
+                    "description": "Parameter without description.",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "Sample body",
+          "required": true,
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "plain/text": Object {},
+            },
+            "description": "Success",
           },
         },
-        "type": "object",
+        "summary": "summary",
+        "tags": Array [
+          "example",
+        ],
       },
     },
   },
-  "description": "Sample body",
-  "required": true,
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
 }
 `;
 
@@ -42,7 +83,6 @@ Object {
       "get": Object {
         "description": "Service healthcheck endpoint",
         "operationId": "repeated",
-        "parameters": Array [],
         "responses": Object {
           "200": Object {
             "content": Object {
@@ -87,7 +127,6 @@ Object {
       "get": Object {
         "description": "Service healthcheck endpoint",
         "operationId": "repeated",
-        "parameters": Array [],
         "responses": Object {
           "200": Object {
             "content": Object {
@@ -132,7 +171,6 @@ Object {
       "get": Object {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "parameters": Array [],
         "responses": Object {
           "200": Object {
             "content": Object {

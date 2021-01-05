@@ -21,7 +21,7 @@ describe.only("src/openapi/openapi", () => {
     });
 
     test("should succeed with an object, without description", (done) => {
-      const bodySchema = Joi.object()
+      const body = Joi.object()
         .keys({
           username: Joi.string()
             .description("Username")
@@ -34,21 +34,13 @@ describe.only("src/openapi/openapi", () => {
         .required()
         .example({ username: "johndoe@acme.com", password: "*******" });
 
-      const { requestBody, parameters } = openApi.parametersAndBodyFromSchema({
-        body: bodySchema,
-        headers: bodySchema,
-        params: bodySchema,
-        query: bodySchema,
-      });
-
       openApi.addPath(
         "/test",
         {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            requestBody,
-            parameters,
+            validationSchema: { body },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -63,30 +55,8 @@ describe.only("src/openapi/openapi", () => {
       done();
     });
 
-    test("should throw an exception if body is declared as parameter", (done) => {
-      const parameters: Parameters = [];
-
-      const query = Joi.object().keys({
-        passwords: Joi.array().items(Joi.string().meta({ format: "password" })),
-      });
-
-      try {
-        openApi.genericParams(parameters, query, ParameterIn.Body);
-
-        done.fail(
-          "It should have thrown an exception because body content must declared with function bodyParams."
-        );
-      } catch (e) {
-        expect(e).toBeInstanceOf(Error);
-        expect(e.message).toBe(
-          "Body content must declared with function bodyParams."
-        );
-        done();
-      }
-    });
-
     test("should succeed with an object with all types", (done) => {
-      const query = Joi.object()
+      const body = Joi.object()
         .keys({
           string: Joi.string().description("Username"),
           number: Joi.number(),
@@ -113,7 +83,7 @@ describe.only("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            requestBody: bodyParams(query),
+            validationSchema: { body },
             responses: {
               200: textPlain("Successful operation."),
             },

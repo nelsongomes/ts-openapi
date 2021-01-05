@@ -34,11 +34,25 @@ describe("src/openapi/openapi", () => {
         })
         .description("Sample body");
 
-      const { requestBody } = openApi.parametersAndBodyFromSchema({
-        body,
-      });
+      openApi.setServers([{ url: "https://server.com" }]);
+      openApi.addPath(
+        "/something",
+        {
+          post: {
+            operationId: "id",
+            description: "desc",
+            summary: "summary",
+            tags: ["example"],
+            responses: {
+              [200]: { description: "Success", content: { "plain/text": {} } },
+            },
+            validationSchema: { body },
+          },
+        },
+        true
+      );
 
-      expect(requestBody).toMatchSnapshot();
+      expect(openApi.generateJson()).toMatchSnapshot();
     });
 
     test("simple, but no servers were added", async () => {
@@ -93,7 +107,7 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              parameters: [],
+              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -118,6 +132,12 @@ describe("src/openapi/openapi", () => {
         "nelson.ricardo.gomes@gmail.com"
       );
 
+      const body = Joi.object()
+        .keys({
+          username: Joi.string(),
+        })
+        .description("Sample body");
+
       try {
         openApi.setServers([{ url: "https://server.com" }]);
         openApi.addPath(
@@ -126,24 +146,7 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              parameters: [],
-              requestBody: {
-                required: true,
-                description: "some description",
-                content: {
-                  "application/json": {
-                    schema: {
-                      description: "description",
-                      type: "object",
-                      properties: {
-                        aaa: {
-                          type: "string",
-                        },
-                      },
-                    },
-                  },
-                },
-              },
+              validationSchema: { body },
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -175,7 +178,7 @@ describe("src/openapi/openapi", () => {
           {
             get: {
               description: "Service healthcheck endpoint",
-              parameters: [],
+              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -208,7 +211,7 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "",
-              parameters: [],
+              validationSchema: {},
               responses: {},
               summary: "Server Healthcheck",
               tags: ["Internals"],
@@ -239,7 +242,7 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "repeated",
-              parameters: [],
+              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -256,7 +259,7 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "repeated",
-              parameters: [],
+              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -288,7 +291,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
-            parameters: [],
+            validationSchema: {},
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -305,7 +308,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
-            parameters: [],
+            validationSchema: {},
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -334,7 +337,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
-            parameters: [],
+            validationSchema: {},
             responses: {
               200: textPlain("Successful operation."),
             },

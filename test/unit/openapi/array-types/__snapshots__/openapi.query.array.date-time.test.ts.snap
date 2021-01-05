@@ -21,7 +21,6 @@ Object {
       "get": Object {
         "description": "Service healthcheck endpoint",
         "operationId": "repeated",
-        "parameters": Array [],
         "responses": Object {
           "200": Object {
             "content": Object {
@@ -100,7 +99,6 @@ Object {
       "get": Object {
         "description": "Service healthcheck endpoint",
         "operationId": "repeated",
-        "parameters": Array [],
         "responses": Object {
           "200": Object {
             "content": Object {
@@ -189,7 +187,6 @@ Object {
       "get": Object {
         "description": "Service healthcheck endpoint",
         "operationId": "repeated",
-        "parameters": Array [],
         "responses": Object {
           "200": Object {
             "content": Object {

@@ -24,12 +24,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({
+      const cookie = Joi.object().keys({
         username: Joi.string().required(),
       });
-
-      openApi.genericParams(parameters, query, ParameterIn.Cookie);
 
       openApi.addPath(
         "/test",
@@ -37,7 +34,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { cookie },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -52,21 +49,18 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if query parameter is an object or an array", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({
+      const cookie = Joi.object().keys({
         someObject: Joi.object().keys({ test: Joi.string() }),
       });
 
       try {
-        openApi.genericParams(parameters, query, ParameterIn.Cookie);
-
         openApi.addPath(
           "/test",
           {
             get: {
               description: "Test endpoint",
               operationId: "id",
-              parameters,
+              validationSchema: { cookie },
               responses: {
                 200: textPlain("Successful operation."),
               },

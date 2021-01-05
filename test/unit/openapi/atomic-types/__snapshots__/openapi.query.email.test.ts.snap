@@ -17,25 +17,6 @@ Object {
   },
   "openapi": "3.0.1",
   "paths": Object {
-    "/health": Object {
-      "get": Object {
-        "description": "Service healthcheck endpoint",
-        "operationId": "repeated",
-        "parameters": Array [],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
-            },
-            "description": "Successful operation.",
-          },
-        },
-        "summary": "Server Healthcheck",
-        "tags": Array [
-          "Internals",
-        ],
-      },
-    },
     "/test": Object {
       "get": Object {
         "description": "Test endpoint",
@@ -98,25 +79,6 @@ Object {
   },
   "openapi": "3.0.1",
   "paths": Object {
-    "/health": Object {
-      "get": Object {
-        "description": "Service healthcheck endpoint",
-        "operationId": "repeated",
-        "parameters": Array [],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
-            },
-            "description": "Successful operation.",
-          },
-        },
-        "summary": "Server Healthcheck",
-        "tags": Array [
-          "Internals",
-        ],
-      },
-    },
     "/test": Object {
       "get": Object {
         "description": "Test endpoint",

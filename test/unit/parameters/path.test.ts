@@ -20,20 +20,17 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({
+      const params = Joi.object().keys({
         username: Joi.string().required(),
       });
 
-      openApi.genericParams(parameters, query, ParameterIn.Path);
-
       openApi.addPath(
-        "/test",
+        "/test/:username",
         {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            parameters,
+            validationSchema: { params },
             responses: {
               200: textPlain("Successful operation."),
             },
@@ -44,25 +41,24 @@ describe("src/openapi/openapi", () => {
         true
       );
 
+      expect(openApi.generateJson()).toMatchSnapshot();
+
       done();
     });
 
     test("should throw an exception if path parameter name is not made up of “word characters” ([A-Za-z0-9_])", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({
+      const params = Joi.object().keys({
         "user#name": Joi.string(),
       });
 
       try {
-        openApi.genericParams(parameters, query, ParameterIn.Path);
-
         openApi.addPath(
           "/test",
           {
             get: {
               description: "Test endpoint",
               operationId: "id",
-              parameters,
+              validationSchema: { params },
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -86,21 +82,18 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if path parameter is an object or array", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({
+      const params = Joi.object().keys({
         stringArray: Joi.array().items({ list: Joi.string() }),
       });
 
       try {
-        openApi.genericParams(parameters, query, ParameterIn.Path);
-
         openApi.addPath(
           "/test",
           {
             get: {
               description: "Test endpoint",
               operationId: "id",
-              parameters,
+              validationSchema: { params },
               responses: {
                 200: textPlain("Successful operation."),
               },
@@ -124,21 +117,18 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if path parameter is not required", (done) => {
-      const parameters: Parameters = [];
-      const query = Joi.object().keys({
+      const params = Joi.object().keys({
         someString: Joi.string(),
       });
 
       try {
-        openApi.genericParams(parameters, query, ParameterIn.Path);
-
         openApi.addPath(
           "/test",
           {
             get: {
               description: "Test endpoint",
               operationId: "id",
-              parameters,
+              validationSchema: { params },
               responses: {
                 200: textPlain("Successful operation."),
               },

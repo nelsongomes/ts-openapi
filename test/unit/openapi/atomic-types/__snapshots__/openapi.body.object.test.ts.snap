@@ -90,7 +90,6 @@ Object {
       "post": Object {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [],
         "requestBody": Object {
           "content": Object {
             "application/json": Object {
