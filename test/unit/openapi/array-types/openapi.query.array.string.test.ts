@@ -1,7 +1,7 @@
 import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import { Parameters, ParameterIn } from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -20,7 +20,7 @@ describe("src/openapi/openapi", () => {
 
     test("string array simple", async () => {
       const query = Joi.object().keys({
-        category: Joi.array().items(Joi.string()),
+        category: Joi.array().items(Types.String())
       });
 
       openApi.addPath(
@@ -31,11 +31,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -46,14 +46,14 @@ describe("src/openapi/openapi", () => {
       const query = Joi.object({
         category: Joi.array()
           .items(
-            Joi.string()
-              // ignore these
-              .min(11)
-              .max(20)
-              .required()
-              .example("example")
-              .default("default")
-              .allow(null)
+            Types.String({
+              minLength: 11,
+              maxLength: 20,
+              required: true,
+              nullable: true,
+              default: "default",
+              example: "example"
+            })
           )
           .min(1)
           .max(50)
@@ -61,7 +61,7 @@ describe("src/openapi/openapi", () => {
           .required()
           .example(["a"])
           .default("b")
-          .allow(null),
+          .allow(null)
       });
 
       openApi.addPath(
@@ -72,11 +72,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -87,13 +87,13 @@ describe("src/openapi/openapi", () => {
       enum EnumValues {
         AAA = "a",
         BBB = "b",
-        CCC = "c",
+        CCC = "c"
       }
 
       const query = Joi.object({
         category: Joi.array().items(
-          Joi.string().valid(...Object.values(EnumValues))
-        ),
+          Types.StringEnum({ values: Object.values(EnumValues) })
+        )
       });
 
       openApi.addPath(
@@ -104,33 +104,28 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
       expect(openApi.generateJson()).toMatchSnapshot();
     });
 
-    test("string array enum min and max should be skipped (the values are already limited)", async () => {
+    test("string array enum min and max (string length) should be skipped (the values are already limited)", async () => {
       enum EnumValues {
         AAA = "a",
         BBB = "b",
-        CCC = "c",
+        CCC = "c"
       }
 
       const query = Joi.object().keys({
         category: Joi.array()
-          .items(
-            Joi.string()
-              .valid(...Object.values(EnumValues))
-              .max(1)
-              .min(10)
-          )
-          .required(),
+          .items(Types.StringEnum({ values: Object.values(EnumValues) }))
+          .required()
       });
 
       openApi.addPath(
@@ -141,11 +136,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -156,13 +151,13 @@ describe("src/openapi/openapi", () => {
       enum EnumValues {
         AAA = "a",
         BBB = "b",
-        CCC = "c",
+        CCC = "c"
       }
 
       const query = Joi.object().keys({
         category: Joi.array()
-          .items(Joi.string().valid(...Object.values(EnumValues)))
-          .default(["a", "b"]),
+          .items(Types.StringEnum({ values: Object.values(EnumValues) }))
+          .default(["a", "b"])
       });
 
       openApi.addPath(
@@ -173,11 +168,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -188,13 +183,13 @@ describe("src/openapi/openapi", () => {
       enum EnumValues {
         AAA = "a",
         BBB = "b",
-        CCC = "c",
+        CCC = "c"
       }
 
       const query = Joi.object().keys({
         category: Joi.array()
-          .items(Joi.string().valid(...Object.values(EnumValues)))
-          .default(["a", "z"]),
+          .items(Types.StringEnum({ values: Object.values(EnumValues) }))
+          .default(["a", "z"])
       });
 
       openApi.addPath(
@@ -205,11 +200,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -220,22 +215,18 @@ describe("src/openapi/openapi", () => {
       enum EnumValues {
         AAA = "a",
         BBB = "b",
-        CCC = "c",
+        CCC = "c"
       }
 
       const query = Joi.object({
         category: Joi.array()
           .items(
-            Joi.string()
-              .valid(...Object.values(EnumValues))
-              // ignore these
-              .description("Just a string")
-              .min(10)
-              .max(20)
-              .example("ignore")
-              .default("ignore")
-              .required()
-              .allow(null)
+            Types.StringEnum({
+              values: Object.values(EnumValues),
+              description: "Enum of strings",
+              nullable: true,
+              required: true
+            })
           )
           .description("array of category")
           .required()
@@ -243,7 +234,7 @@ describe("src/openapi/openapi", () => {
           .max(10)
           .example(["a", "b", "c"])
           .default(["b"])
-          .allow(null),
+          .allow(null)
       }).description("ignore this");
 
       openApi.addPath(
@@ -254,11 +245,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

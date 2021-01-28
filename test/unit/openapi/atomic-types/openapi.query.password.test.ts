@@ -4,8 +4,9 @@ import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,
-  WebRequestSchema,
+  WebRequestSchema
 } from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -24,7 +25,7 @@ describe("src/openapi/openapi", () => {
 
     test("password simple", async () => {
       const query = Joi.object().keys({
-        password: Joi.string().meta({ format: "password" }),
+        password: Types.Password()
       });
 
       openApi.addPath(
@@ -35,11 +36,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -48,14 +49,14 @@ describe("src/openapi/openapi", () => {
 
     test("password all options", async () => {
       const query = Joi.object().keys({
-        password: Joi.string()
-          .meta({ format: "password" })
-          .required()
-          .min(50)
-          .max(255)
-          .description("User password.")
-          .example("****")
-          .allow(null),
+        password: Types.Password({
+          required: true,
+          minLength: 50,
+          maxLength: 255,
+          description: "User password.",
+          example: "****",
+          nullable: true
+        })
       });
 
       openApi.addPath(
@@ -66,11 +67,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

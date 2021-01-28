@@ -3,6 +3,7 @@ import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import { Parameters, ParameterIn } from "../../../src/openapi/openapi.types";
+import { Types } from "../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -19,9 +20,9 @@ describe("src/openapi/openapi", () => {
       openApi.setServers([{ url: "https://server.com" }]);
     });
 
-    test("should succeed", (done) => {
+    test("should succeed", done => {
       const params = Joi.object().keys({
-        username: Joi.string().required(),
+        username: Types.String({ required: true })
       });
 
       openApi.addPath(
@@ -32,11 +33,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { params },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -46,9 +47,9 @@ describe("src/openapi/openapi", () => {
       done();
     });
 
-    test("should throw an exception if path parameter name is not made up of “word characters” ([A-Za-z0-9_])", (done) => {
+    test("should throw an exception if path parameter name is not made up of “word characters” ([A-Za-z0-9_])", done => {
       const params = Joi.object().keys({
-        "user#name": Joi.string(),
+        "user#name": Types.String()
       });
 
       try {
@@ -60,11 +61,11 @@ describe("src/openapi/openapi", () => {
               operationId: "id",
               validationSchema: { params },
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Test",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );
@@ -81,9 +82,9 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("should throw an exception if path parameter is an object or array", (done) => {
+    test("should throw an exception if path parameter is an object or array", done => {
       const params = Joi.object().keys({
-        stringArray: Joi.array().items({ list: Joi.string() }),
+        stringArray: Joi.array().items({ list: Types.String() })
       });
 
       try {
@@ -95,11 +96,11 @@ describe("src/openapi/openapi", () => {
               operationId: "id",
               validationSchema: { params },
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Test",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );
@@ -116,9 +117,9 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("should throw an exception if path parameter is not required", (done) => {
+    test("should throw an exception if path parameter is not required", done => {
       const params = Joi.object().keys({
-        someString: Joi.string(),
+        someString: Types.String()
       });
 
       try {
@@ -130,11 +131,11 @@ describe("src/openapi/openapi", () => {
               operationId: "id",
               validationSchema: { params },
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Test",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );

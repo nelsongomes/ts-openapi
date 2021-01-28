@@ -1,6 +1,7 @@
 import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -19,7 +20,7 @@ describe("src/openapi/openapi", () => {
 
     test("number simple", async () => {
       const query = Joi.object().keys({
-        user_name: Joi.number(),
+        user_name: Types.Number()
       });
 
       openApi.addPath(
@@ -30,11 +31,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -43,14 +44,15 @@ describe("src/openapi/openapi", () => {
 
     test("number simple all options", async () => {
       const query = Joi.object({
-        sensor: Joi.number()
-          .description("Sensor value.")
-          .required()
-          .min(0.5)
-          .max(100.66)
-          .default(1)
-          .example(33.333)
-          .allow(null),
+        sensor: Types.Number({
+          description: "Sensor value.",
+          required: true,
+          minValue: 0.5,
+          maxValue: 100.66,
+          default: 1,
+          example: 33.333,
+          nullable: true
+        })
       }).description("ignore this");
 
       openApi.addPath(
@@ -61,11 +63,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -76,11 +78,11 @@ describe("src/openapi/openapi", () => {
       enum EnumValues {
         AAA = 4.1,
         BBB = 10,
-        CCC = 20,
+        CCC = 20
       }
 
       const query = Joi.object({
-        option: Joi.number().valid(...Object.values(EnumValues)),
+        option: Types.NumberEnum({ values: Object.values(EnumValues) })
       });
 
       openApi.addPath(
@@ -91,11 +93,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -106,15 +108,14 @@ describe("src/openapi/openapi", () => {
       enum EnumValues {
         AAA = 3,
         BBB = 6,
-        CCC = 9,
+        CCC = 9
       }
 
       const query = Joi.object({
-        option: Joi.number()
-          .valid(...Object.values(EnumValues))
-          .description("Integer options from enum")
-          .min(1)
-          .max(3),
+        option: Types.NumberEnum({
+          values: Object.values(EnumValues),
+          description: "Integer options from enum"
+        })
       });
 
       openApi.addPath(
@@ -125,11 +126,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -140,14 +141,15 @@ describe("src/openapi/openapi", () => {
       enum EnumValues {
         AAA = 10,
         BBB = 20,
-        CCC = 30,
+        CCC = 30
       }
 
       const query = Joi.object().keys({
-        option: Joi.number()
-          .valid(...Object.values(EnumValues))
-          .description("Integer options from enum")
-          .default(20),
+        option: Types.NumberEnum({
+          values: Object.values(EnumValues),
+          description: "Integer options from enum",
+          default: 20
+        })
       });
 
       openApi.addPath(
@@ -158,11 +160,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -173,14 +175,15 @@ describe("src/openapi/openapi", () => {
       enum EnumValues {
         AAA = 10,
         BBB = 20,
-        CCC = 30,
+        CCC = 30
       }
 
       const query = Joi.object({
-        option: Joi.number()
-          .valid(...Object.values(EnumValues))
-          .description("Integer options from enum")
-          .default(12),
+        option: Types.NumberEnum({
+          values: Object.values(EnumValues),
+          description: "Integer options from enum",
+          default: 12
+        })
       });
 
       openApi.addPath(
@@ -191,11 +194,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -206,17 +209,18 @@ describe("src/openapi/openapi", () => {
       enum EnumValues {
         AAA = 10.1,
         BBB = 20.2,
-        CCC = 30.3,
+        CCC = 30.3
       }
 
       const query = Joi.object({
-        sensor: Joi.number()
-          .description("Sensor value.")
-          .required()
-          .valid(...Object.values(EnumValues))
-          .default(10.1)
-          .example(30.3)
-          .allow(null),
+        sensor: Types.NumberEnum({
+          values: Object.values(EnumValues),
+          description: "Sensor value.",
+          required: true,
+          default: 10.1,
+          example: 30.3,
+          nullable: true
+        })
       }).description("ignore this");
       openApi.addPath(
         "/test",
@@ -226,11 +230,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

@@ -56,12 +56,12 @@ Object {
                     "type": "boolean",
                   },
                   "date": Object {
-                    "description": "Parameter without description. (min:10, max:10, date:yyyy-mm-dd)",
+                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
                   "dateTime": Object {
-                    "description": "Parameter without description. (ISO8601 date-time format)",
+                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },

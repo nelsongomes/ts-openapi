@@ -4,8 +4,9 @@ import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,
-  WebRequestSchema,
+  WebRequestSchema
 } from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -27,17 +28,15 @@ describe("src/openapi/openapi", () => {
         .keys({
           integerList: Joi.array()
             .items(
-              Joi.number()
-                .integer()
-
-                // ignore these for arrays
-                .min(1)
-                .max(50)
-                .required()
-                .description("Integer description, age")
-                .example(1)
-                .default(2)
-                .allow(null)
+              Types.Integer({
+                minValue: 1,
+                maxValue: 50,
+                required: true,
+                description: "Integer description, age",
+                example: 1,
+                default: 2,
+                nullable: true
+              })
             )
             .description("Array of integers")
             .required()
@@ -45,7 +44,7 @@ describe("src/openapi/openapi", () => {
             .max(10)
             .default([1, 2, 3])
             .example([4, 5, 6])
-            .allow(null),
+            .allow(null)
         })
         .description("IGNORED");
 
@@ -57,11 +56,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -70,7 +69,7 @@ describe("src/openapi/openapi", () => {
 
     test("integer array minimal options", async () => {
       const query = Joi.object().keys({
-        integerList: Joi.array().items(Joi.number().integer()),
+        integerList: Joi.array().items(Types.Integer())
       });
 
       openApi.addPath(
@@ -81,11 +80,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

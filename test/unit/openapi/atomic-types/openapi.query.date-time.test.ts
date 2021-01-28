@@ -4,8 +4,9 @@ import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,
-  WebRequestSchema,
+  WebRequestSchema
 } from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -24,7 +25,7 @@ describe("src/openapi/openapi", () => {
 
     test("date-time simple", async () => {
       const query = Joi.object().keys({
-        timestamp: Joi.string().isoDate(),
+        timestamp: Types.DateTime()
       });
 
       openApi.addPath(
@@ -35,11 +36,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -48,9 +49,7 @@ describe("src/openapi/openapi", () => {
 
     test("date-time downgrades to date if format = 'date' (2017-07-21)", async () => {
       const query = Joi.object().keys({
-        timestamp: Joi.string()
-          .isoDate()
-          .meta({ format: "date" }),
+        timestamp: Types.Date()
       });
 
       openApi.addPath(
@@ -61,11 +60,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -75,13 +74,13 @@ describe("src/openapi/openapi", () => {
     test("date-time all options", async () => {
       const query = Joi.object()
         .keys({
-          timestamp: Joi.string()
-            .isoDate()
-            .required()
-            .description("When did it happen.")
-            .default("2020-10-14T22:12:53.065Z")
-            .example("2020-10-14T22:12:53.065Z")
-            .allow(null),
+          timestamp: Types.DateTime({
+            required: true,
+            nullable: true,
+            description: "When did it happen.",
+            default: "2020-10-14T22:12:53.065Z",
+            example: "2020-10-14T22:12:53.065Z"
+          })
         })
         .description("ignore this");
 
@@ -93,11 +92,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

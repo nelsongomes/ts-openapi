@@ -3,6 +3,7 @@ import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Parameters, ParameterIn } from "../../../../src/openapi/openapi.types";
 import { bodyParams } from "../../../../src/openapi/openapi-functions";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -21,28 +22,26 @@ describe("src/openapi/openapi", () => {
 
     test("object simple", async () => {
       const body = Joi.object().keys({
-        float: Joi.number(),
-        integer: Joi.number().integer(),
-        string: Joi.string(),
+        float: Types.Number(),
+        integer: Types.Integer(),
+        string: Types.String(),
         binary: Joi.binary(),
         byte: Joi.binary().encoding("base64"),
-        boolean: Joi.boolean(),
-        date: Joi.string()
-          .isoDate()
-          .meta({ format: "date" }),
-        dateTime: Joi.string().isoDate(),
-        stringarray: Joi.array().items(Joi.string()),
+        boolean: Types.Boolean(),
+        date: Types.Date(),
+        dateTime: Types.DateTime(),
+        stringarray: Joi.array().items(Types.String()),
         base64array: Joi.array().items(Joi.binary().encoding("base64")),
         internalobject: Joi.object().keys({
-          uuid: Joi.string().meta({ format: "uuid" }),
-          boolean: Joi.boolean(),
+          uuid: Types.Uuid(),
+          boolean: Types.Boolean()
         }),
         objectArray: Joi.array().items({
           obj: Joi.object().keys({
-            uuid: Joi.string().meta({ format: "uuid" }),
-            boolean: Joi.boolean(),
-          }),
-        }),
+            uuid: Types.Uuid(),
+            boolean: Types.Boolean()
+          })
+        })
       });
 
       const parameters: Parameters = [];
@@ -55,11 +54,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { body },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -69,7 +68,7 @@ describe("src/openapi/openapi", () => {
     test("object all options", async () => {
       const body = Joi.object()
         .keys({
-          parameter1: Joi.string().description("String parameter"),
+          parameter1: Types.String({ description: "String parameter" })
         })
         .required()
         .default({ parameter1: "default" })
@@ -85,11 +84,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { body },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

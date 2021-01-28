@@ -10,11 +10,11 @@ import {
   SchemaTypeNumber,
   SchemaTypeObject,
   SchemaTypeString,
-  StringFormats,
+  StringFormats
 } from "./openapi.types";
 
 export function limitations(parameter: any): string {
-  const limitations = [];
+  const limitationArray = [];
 
   if (parameter.type === "string" && parameter.enum) {
     // min & max should be ignored when is an enum
@@ -24,11 +24,11 @@ export function limitations(parameter: any): string {
 
   // string
   if (parameter.minLength) {
-    limitations.push(`min:${parameter.minLength} chars`);
+    limitationArray.push(`min:${parameter.minLength} chars`);
   }
 
   if (parameter.maxLength) {
-    limitations.push(`max:${parameter.maxLength} chars`);
+    limitationArray.push(`max:${parameter.maxLength} chars`);
   }
 
   // integer / float
@@ -39,43 +39,41 @@ export function limitations(parameter: any): string {
   }
 
   if (parameter.minimum) {
-    limitations.push(`min:${parameter.minimum}`);
+    limitationArray.push(`min:${parameter.minimum}`);
   }
 
   if (parameter.maximum) {
-    limitations.push(`max:${parameter.maximum}`);
+    limitationArray.push(`max:${parameter.maximum}`);
   }
 
   // array
   if (parameter.minItems) {
-    limitations.push(`minItems:${parameter.minItems}`);
+    limitationArray.push(`minItems:${parameter.minItems}`);
   }
 
   if (parameter.maxItems) {
-    limitations.push(`maxItems:${parameter.maxItems}`);
+    limitationArray.push(`maxItems:${parameter.maxItems}`);
   }
 
   if (parameter.format) {
     switch (parameter.format) {
       case StringFormats.DateTime:
         if (parameter.meta && parameter.meta.format === "date") {
-          limitations.push("min:10");
-          limitations.push("max:10");
-          limitations.push(`date:yyyy-mm-dd`);
+          limitationArray.push(`date:yyyy-mm-dd`);
         } else {
-          limitations.push(`ISO8601 date-time format`);
+          limitationArray.push(`ISO8601 date-time format`);
         }
         break;
       case StringFormats.Byte:
-        limitations.push("base64 encoded string");
+        limitationArray.push("base64 encoded string");
         break;
       case StringFormats.Binary:
-        limitations.push("binary string");
+        limitationArray.push("binary string");
         break;
     }
   }
 
-  return limitations.length > 0 ? ` (${limitations.join(", ")})` : "";
+  return limitationArray.length > 0 ? ` (${limitationArray.join(", ")})` : "";
 }
 
 export function bodyParams(schema: ObjectSchema): Body {
@@ -94,10 +92,10 @@ export function bodyParams(schema: ObjectSchema): Body {
     content: {
       "application/json": {
         schema: objectSchema(parameter),
-        ...(parameter.example && { example: parameter.example }),
-      },
+        ...(parameter.example && { example: parameter.example })
+      }
     },
-    required: true,
+    required: true
   };
 }
 
@@ -109,15 +107,15 @@ function objectSchema(parameter: any): SchemaTypeObject {
   const output: SchemaTypeObject = {
     description,
     ...(typeof parameter.default === "object" && {
-      default: parameter.default,
+      default: parameter.default
     }),
     ...(parameter.minItems && { minItems: parameter.minItems }),
     ...(parameter.maxItems && { maxItems: parameter.maxItems }),
     ...(typeof parameter.nullable === "boolean" && {
-      nullable: parameter.nullable,
+      nullable: parameter.nullable
     }),
     type: "object",
-    properties: {},
+    properties: {}
   };
 
   for (const propertyKey of Object.keys(parameter.properties)) {
@@ -203,15 +201,15 @@ export function stringSchema(parameter: any): SchemaTypeString {
     ...(parameter.default && { default: parameter.default }),
     ...(parameter.format &&
       supportedFormats.includes(parameter.format) && {
-        format: parameter.format,
+        format: parameter.format
       }),
     ...(parameter.enum && { enum: parameter.enum }),
     ...(parameter.minLength && { minLength: parameter.minLength }),
     ...(parameter.maxLength && { maxLength: parameter.maxLength }),
     ...(typeof parameter.nullable === "boolean" && {
-      nullable: parameter.nullable,
+      nullable: parameter.nullable
     }),
-    type: "string",
+    type: "string"
   };
 
   if (parameter.meta) {
@@ -261,10 +259,10 @@ export function numberSchema(parameter: any): SchemaTypeNumber {
     ...(parameter.minimum && { minimum: parameter.minimum }),
     ...(parameter.maximum && { maximum: parameter.maximum }),
     ...(typeof parameter.nullable === "boolean" && {
-      nullable: parameter.nullable,
+      nullable: parameter.nullable
     }),
     format: NumberFormats.Double,
-    type: "number",
+    type: "number"
   };
 
   return output;
@@ -278,12 +276,12 @@ export function booleanSchema(parameter: any): SchemaTypeBoolean {
   const output: SchemaTypeBoolean = {
     description,
     ...(typeof parameter.default === "boolean" && {
-      default: parameter.default,
+      default: parameter.default
     }),
     ...(typeof parameter.nullable === "boolean" && {
-      nullable: parameter.nullable,
+      nullable: parameter.nullable
     }),
-    type: "boolean",
+    type: "boolean"
   };
 
   return output;
@@ -301,10 +299,10 @@ export function integerSchema(parameter: any): SchemaTypeInteger {
     ...(parameter.minimum && { minimum: parameter.minimum }),
     ...(parameter.maximum && { maximum: parameter.maximum }),
     ...(typeof parameter.nullable === "boolean" && {
-      nullable: parameter.nullable,
+      nullable: parameter.nullable
     }),
     format: IntegerFormats.Int64,
-    type: "integer",
+    type: "integer"
   };
 
   // default values must be part of enum
@@ -321,14 +319,14 @@ export function integerSchema(parameter: any): SchemaTypeInteger {
 export function arraySchema(parameter: any): SchemaTypeArray {
   const output: SchemaTypeArray = {
     ...(typeof parameter.default === "object" && {
-      default: parameter.default,
+      default: parameter.default
     }),
     ...(parameter.minItems && { minItems: parameter.minItems }),
     ...(parameter.maxItems && { maxItems: parameter.maxItems }),
     ...(typeof parameter.nullable === "boolean" && {
-      nullable: parameter.nullable,
+      nullable: parameter.nullable
     }),
-    type: "array",
+    type: "array"
   };
 
   switch (parameter.items.type) {

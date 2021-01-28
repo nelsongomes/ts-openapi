@@ -166,7 +166,7 @@ Object {
                 "b",
               ],
               "items": Object {
-                "description": "Just a string",
+                "description": "Enum of strings",
                 "enum": Array [
                   "a",
                   "b",
@@ -336,7 +336,7 @@ Object {
 }
 `;
 
-exports[`src/openapi/openapi Array of string string array enum min and max should be skipped (the values are already limited) 1`] = `
+exports[`src/openapi/openapi Array of string string array enum min and max (string length) should be skipped (the values are already limited) 1`] = `
 Object {
   "info": Object {
     "contact": Object {

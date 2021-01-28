@@ -2,6 +2,7 @@ import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Parameters, ParameterIn } from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -24,11 +25,11 @@ describe("src/openapi/openapi", () => {
             operationId: "repeated",
             validationSchema: {},
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -36,7 +37,7 @@ describe("src/openapi/openapi", () => {
 
     test("date-time array simple", async () => {
       const query = Joi.object().keys({
-        timestamps: Joi.array().items(Joi.string().isoDate()),
+        timestamps: Joi.array().items(Types.DateTime())
       });
 
       openApi.addPath(
@@ -47,11 +48,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -60,11 +61,7 @@ describe("src/openapi/openapi", () => {
 
     test("date array simple", async () => {
       const query = Joi.object().keys({
-        timestamps: Joi.array().items(
-          Joi.string()
-            .isoDate()
-            .meta({ format: "date" })
-        ),
+        timestamps: Joi.array().items(Types.Date())
       });
 
       openApi.addPath(
@@ -75,11 +72,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -91,13 +88,11 @@ describe("src/openapi/openapi", () => {
         .keys({
           timestamps: Joi.array()
             .items(
-              Joi.string()
-                .isoDate()
-                // ignore these
-                .description("ignore")
-                .max(999)
-                .allow(null)
-                .required()
+              Types.DateTime({
+                description: "ignore",
+                nullable: true,
+                required: true
+              })
             )
             .min(1)
             .max(100)
@@ -105,7 +100,7 @@ describe("src/openapi/openapi", () => {
             .description("date-time array")
             .default(["2020-10-14T22:12:53.065Z", "2020-10-14T22:12:53.065Z"])
             .example(["2020-10-14T22:12:53.065Z"])
-            .allow(null),
+            .allow(null)
         })
         .description("ignore");
 
@@ -117,11 +112,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

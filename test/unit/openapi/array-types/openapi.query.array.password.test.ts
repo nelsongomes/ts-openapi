@@ -1,6 +1,7 @@
 import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -19,7 +20,7 @@ describe("src/openapi/openapi", () => {
 
     test("password array simple", async () => {
       const query = Joi.object().keys({
-        passwords: Joi.array().items(Joi.string().meta({ format: "password" })),
+        passwords: Joi.array().items(Types.Password())
       });
 
       openApi.addPath(
@@ -30,11 +31,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -46,13 +47,12 @@ describe("src/openapi/openapi", () => {
         .keys({
           passwords: Joi.array()
             .items(
-              Joi.string()
-                .meta({ format: "password" })
-                // ignore these
-                .description("password string")
-                .max(999)
-                .allow(null)
-                .required()
+              Types.Password({
+                description: "password string",
+                maxLength: 999,
+                nullable: true,
+                required: true
+              })
             )
             .min(1)
             .max(100)
@@ -60,7 +60,7 @@ describe("src/openapi/openapi", () => {
             .description("Email array")
             .default(["a@a.com", "b@b.com"])
             .example(["c@c.com"])
-            .allow(null),
+            .allow(null)
         })
         .description("ignore");
 
@@ -72,11 +72,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

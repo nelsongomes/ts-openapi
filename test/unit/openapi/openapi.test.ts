@@ -1,11 +1,7 @@
 import * as Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema,
-} from "../../../src/openapi/openapi.types";
+import { Types } from "../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   describe("Constructor", () => {
@@ -30,7 +26,7 @@ describe("src/openapi/openapi", () => {
 
       const body = Joi.object()
         .keys({
-          username: Joi.string(),
+          username: Types.String()
         })
         .description("Sample body");
 
@@ -44,10 +40,10 @@ describe("src/openapi/openapi", () => {
             summary: "summary",
             tags: ["example"],
             responses: {
-              [200]: { description: "Success", content: { "plain/text": {} } },
+              [200]: { description: "Success", content: { "plain/text": {} } }
             },
-            validationSchema: { body },
-          },
+            validationSchema: { body }
+          }
         },
         true
       );
@@ -71,7 +67,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("simple, but no paths were added", (done) => {
+    test("simple, but no paths were added", done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -109,11 +105,11 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );
@@ -134,7 +130,7 @@ describe("src/openapi/openapi", () => {
 
       const body = Joi.object()
         .keys({
-          username: Joi.string(),
+          username: Types.String()
         })
         .description("Sample body");
 
@@ -148,11 +144,11 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: { body },
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );
@@ -180,11 +176,11 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"],
-            } as any,
+              tags: ["Internals"]
+            } as any
           },
           true
         );
@@ -214,8 +210,8 @@ describe("src/openapi/openapi", () => {
               validationSchema: {},
               responses: {},
               summary: "Server Healthcheck",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );
@@ -244,11 +240,11 @@ describe("src/openapi/openapi", () => {
               operationId: "repeated",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );
@@ -261,11 +257,11 @@ describe("src/openapi/openapi", () => {
               operationId: "repeated",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );
@@ -293,11 +289,11 @@ describe("src/openapi/openapi", () => {
             operationId: "repeated",
             validationSchema: {},
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -310,11 +306,11 @@ describe("src/openapi/openapi", () => {
             operationId: "repeated",
             validationSchema: {},
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         false
       );
@@ -339,11 +335,11 @@ describe("src/openapi/openapi", () => {
             operationId: "repeated",
             validationSchema: {},
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

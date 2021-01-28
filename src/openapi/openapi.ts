@@ -8,7 +8,7 @@ import {
   numberSchema,
   integerSchema,
   booleanSchema,
-  arraySchema,
+  arraySchema
 } from "./openapi-functions";
 import { validateParameters } from "./openapi-validation";
 import {
@@ -22,7 +22,7 @@ import {
   SecurityScheme,
   WebRequestSchema,
   PathInput,
-  PathDefinition,
+  PathDefinition
 } from "./openapi.types";
 
 const REQUIRED_TYPES = [ParameterIn.Path];
@@ -41,20 +41,20 @@ export class OpenApi {
     this.schema = {
       info: {
         contact: {
-          email,
+          email
         },
         description,
         license: {
           name: "Apache 2.0",
-          url: "http://www.apache.org/licenses/LICENSE-2.0.html",
+          url: "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
         termsOfService: "http://swagger.io/terms/",
         title,
-        version,
+        version
       },
       openapi: "3.0.1",
       paths: {},
-      servers: [],
+      servers: []
     };
   }
 
@@ -131,10 +131,10 @@ export class OpenApi {
       pathDefinition.validationSchema || {}
     );
 
-    let definition: PathDefinition = {
+    const definition: PathDefinition = {
       ...remainder,
       ...(parameters && { parameters }),
-      ...(requestBody && { requestBody }),
+      ...(requestBody && { requestBody })
     };
 
     if (inputDefinition.get && definition.requestBody) {
@@ -147,7 +147,7 @@ export class OpenApi {
 
     if (pathDefinition.security) {
       // TODO verify security scheme exists
-      pathDefinition.security.forEach((securityScheme) => {
+      pathDefinition.security.forEach(securityScheme => {
         const securitySchemeName = Object.getOwnPropertyNames(
           securityScheme
         )[0];
@@ -179,7 +179,7 @@ export class OpenApi {
   private parametersAndBodyFromSchema(
     validationSchema: WebRequestSchema
   ): { parameters: Parameters | undefined; requestBody: Body | undefined } {
-    let parameters: Parameters = [];
+    const parameters: Parameters = [];
     let requestBody: Body | undefined;
 
     if (validationSchema.query) {
@@ -217,7 +217,7 @@ export class OpenApi {
 
     return {
       parameters: parameters.length > 0 ? parameters : undefined,
-      requestBody,
+      requestBody
     };
   }
 
@@ -312,7 +312,7 @@ export class OpenApi {
       name,
       required: isRequiredParameter(required, type),
       schema: stringSchema(parameter),
-      ...(parameter.example && { example: parameter.example }),
+      ...(parameter.example && { example: parameter.example })
     };
 
     return p;
@@ -334,7 +334,7 @@ export class OpenApi {
       name,
       required: isRequiredParameter(required, type),
       schema: numberSchema(parameter),
-      ...(parameter.example && { example: parameter.example }),
+      ...(parameter.example && { example: parameter.example })
     };
 
     return p;
@@ -356,7 +356,7 @@ export class OpenApi {
       name,
       required: isRequiredParameter(required, type),
       schema: integerSchema(parameter),
-      ...(parameter.example && { example: parameter.example }),
+      ...(parameter.example && { example: parameter.example })
     };
 
     return p;
@@ -379,8 +379,8 @@ export class OpenApi {
       required: isRequiredParameter(required, type),
       schema: booleanSchema(parameter),
       ...(typeof parameter.example === "boolean" && {
-        example: parameter.example,
-      }),
+        example: parameter.example
+      })
     };
 
     return p;
@@ -403,7 +403,7 @@ export class OpenApi {
       name,
       required: isRequiredParameter(required, type),
       schema,
-      ...(parameter.example && { example: parameter.example }),
+      ...(parameter.example && { example: parameter.example })
     };
 
     return p;

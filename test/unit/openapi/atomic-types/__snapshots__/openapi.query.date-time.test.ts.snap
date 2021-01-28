@@ -23,14 +23,12 @@ Object {
         "operationId": "id",
         "parameters": Array [
           Object {
-            "description": "When did it happen. (ISO8601 date-time format)",
-            "example": "2020-10-14T22:12:53.065Z",
+            "description": "When did it happen. (max:24 chars, ISO8601 date-time format)",
             "in": "query",
             "name": "timestamp",
             "required": true,
             "schema": Object {
-              "default": "2020-10-14T22:12:53.065Z",
-              "description": "When did it happen. (ISO8601 date-time format)",
+              "description": "When did it happen. (max:24 chars, ISO8601 date-time format)",
               "format": "date-time",
               "maxLength": 25,
               "minLength": 16,
@@ -85,12 +83,12 @@ Object {
         "operationId": "id",
         "parameters": Array [
           Object {
-            "description": "Parameter without description. (min:10, max:10, date:yyyy-mm-dd)",
+            "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
             "in": "query",
             "name": "timestamp",
             "required": false,
             "schema": Object {
-              "description": "Parameter without description. (min:10, max:10, date:yyyy-mm-dd)",
+              "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
               "format": "date",
               "maxLength": 10,
               "minLength": 10,
@@ -144,12 +142,12 @@ Object {
         "operationId": "id",
         "parameters": Array [
           Object {
-            "description": "Parameter without description. (ISO8601 date-time format)",
+            "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
             "in": "query",
             "name": "timestamp",
             "required": false,
             "schema": Object {
-              "description": "Parameter without description. (ISO8601 date-time format)",
+              "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
               "format": "date-time",
               "maxLength": 25,
               "minLength": 16,

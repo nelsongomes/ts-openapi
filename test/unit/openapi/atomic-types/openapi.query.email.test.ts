@@ -4,8 +4,9 @@ import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,
-  WebRequestSchema,
+  WebRequestSchema
 } from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -24,7 +25,7 @@ describe("src/openapi/openapi", () => {
 
     test("email simple", async () => {
       const query = Joi.object().keys({
-        email: Joi.string().email(),
+        email: Types.Email()
       });
 
       openApi.addPath(
@@ -35,11 +36,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -49,15 +50,15 @@ describe("src/openapi/openapi", () => {
     test("email all options", async () => {
       const query = Joi.object()
         .keys({
-          email: Joi.string()
-            .email()
-            .required()
-            .min(50)
-            .max(255)
-            .description("User email.")
-            .default("john.doe@domain.com")
-            .example("john.doe@domain.com")
-            .allow(null),
+          email: Types.Email({
+            required: true,
+            minLength: 50,
+            maxLength: 255,
+            description: "User email.",
+            default: "john.doe@domain.com",
+            example: "john.doe@domain.com",
+            nullable: true
+          })
         })
         .description("ignore this");
 
@@ -69,11 +70,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

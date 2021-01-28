@@ -5,8 +5,9 @@ import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,
-  WebRequestSchema,
+  WebRequestSchema
 } from "../../../src/openapi/openapi.types";
+import { Types } from "../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -23,9 +24,9 @@ describe("src/openapi/openapi", () => {
       openApi.setServers([{ url: "https://server.com" }]);
     });
 
-    test("should succeed", (done) => {
+    test("should succeed", done => {
       const headers = Joi.object().keys({
-        username: Joi.string().required(),
+        username: Types.String({ required: true })
       });
 
       openApi.addPath(
@@ -36,11 +37,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { headers },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -48,9 +49,9 @@ describe("src/openapi/openapi", () => {
       done();
     });
 
-    test("should throw an exception if query parameter is an object or an array", (done) => {
+    test("should throw an exception if query parameter is an object or an array", done => {
       const headers = Joi.object().keys({
-        someObject: Joi.object().keys({ test: Joi.string() }),
+        someObject: Joi.object().keys({ test: Types.String() })
       });
 
       try {
@@ -62,11 +63,11 @@ describe("src/openapi/openapi", () => {
               operationId: "id",
               validationSchema: { headers },
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Test",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );

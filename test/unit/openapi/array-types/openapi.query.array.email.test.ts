@@ -1,12 +1,12 @@
 import Joi from "joi";
-import { example } from "yargs";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,
-  WebRequestSchema,
+  WebRequestSchema
 } from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -29,11 +29,11 @@ describe("src/openapi/openapi", () => {
             operationId: "repeated",
             validationSchema: {},
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -41,7 +41,7 @@ describe("src/openapi/openapi", () => {
 
     test("email array simple", async () => {
       const query = Joi.object().keys({
-        emails: Joi.array().items(Joi.string().email()),
+        emails: Joi.array().items(Types.Email())
       });
 
       openApi.addPath(
@@ -52,11 +52,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -68,13 +68,12 @@ describe("src/openapi/openapi", () => {
         .keys({
           emails: Joi.array()
             .items(
-              Joi.string()
-                .email()
-                // ignore these
-                .description("email")
-                .max(999)
-                .allow(null)
-                .required()
+              Types.Email({
+                description: "email",
+                nullable: true,
+                required: true,
+                maxLength: 999
+              })
             )
             .min(1)
             .max(100)
@@ -82,7 +81,7 @@ describe("src/openapi/openapi", () => {
             .description("Email array")
             .default(["a@a.com", "b@b.com"])
             .example(["c@c.com"])
-            .allow(null),
+            .allow(null)
         })
         .description("ignore");
 
@@ -94,11 +93,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

@@ -4,6 +4,7 @@ import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import { ParameterIn, Parameters } from "../../../src/openapi/openapi.types";
 import { bodyParams } from "../../../src/openapi/openapi-functions";
+import { Types } from "../../../src/openapi/helpers/types";
 
 describe.only("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -20,16 +21,14 @@ describe.only("src/openapi/openapi", () => {
       openApi.setServers([{ url: "https://server.com" }]);
     });
 
-    test("should succeed with an object, without description", (done) => {
+    test("should succeed with an object, without description", done => {
       const body = Joi.object()
         .keys({
-          username: Joi.string()
-            .description("Username")
-            .required(),
-          password: Joi.string()
-            .required()
-            .meta({ format: "password" })
-            .description("User password"),
+          username: Types.String({ description: "Username", required: true }),
+          password: Types.Password({
+            required: true,
+            description: "User password"
+          })
         })
         .required()
         .example({ username: "johndoe@acme.com", password: "*******" });
@@ -42,11 +41,11 @@ describe.only("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { body },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -55,22 +54,20 @@ describe.only("src/openapi/openapi", () => {
       done();
     });
 
-    test("should succeed with an object with all types", (done) => {
+    test("should succeed with an object with all types", done => {
       const body = Joi.object()
         .keys({
-          string: Joi.string().description("Username"),
-          number: Joi.number(),
-          integer: Joi.number().integer(),
-          object: Joi.object().keys({ internalString: Joi.string() }),
-          array: Joi.array().items(Joi.string()),
+          string: Types.String({ description: "Username" }),
+          number: Types.Number(),
+          integer: Types.Integer(),
+          object: Joi.object().keys({ internalString: Types.String() }),
+          array: Joi.array().items(Types.String()),
           arrayOfObjects: Joi.array().items(
-            Joi.object().keys({ internalString: Joi.string() })
+            Joi.object().keys({ internalString: Types.String() })
           ),
-          boolean: Joi.boolean(),
-          date: Joi.string()
-            .isoDate()
-            .meta({ format: "date" }),
-          dateTime: Joi.string().isoDate(),
+          boolean: Types.Boolean(),
+          date: Types.Date(),
+          dateTime: Types.DateTime()
         })
         .required()
         .description("User login")
@@ -85,11 +82,11 @@ describe.only("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { body },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

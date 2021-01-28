@@ -4,8 +4,9 @@ import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,
-  WebRequestSchema,
+  WebRequestSchema
 } from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -27,11 +28,11 @@ describe("src/openapi/openapi", () => {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -39,7 +40,7 @@ describe("src/openapi/openapi", () => {
 
     test("boolean simple", async () => {
       const query = Joi.object().keys({
-        administrator: Joi.boolean(),
+        administrator: Types.Boolean()
       });
 
       openApi.addPath(
@@ -50,11 +51,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -64,12 +65,13 @@ describe("src/openapi/openapi", () => {
     test("boolean all options", async () => {
       const query = Joi.object()
         .keys({
-          administrator: Joi.boolean()
-            .description("Is this user an administrator?")
-            .required()
-            .default(false)
-            .example(false)
-            .allow(null),
+          administrator: Types.Boolean({
+            description: "Is this user an administrator?",
+            required: true,
+            default: false,
+            example: false,
+            nullable: true
+          })
         })
         .description("ignore this");
 
@@ -81,11 +83,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
