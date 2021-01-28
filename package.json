@@ -41,7 +41,7 @@
     "prettier": "1.19.1",
     "ts-jest": "26.4.1",
     "ts-node": "8.6.2",
-    "tslint": "^6.0.0",
+    "tslint": "6.0.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-eslint-rules": "5.4.0",
     "tslint-react": "4.2.0",
@@ -89,7 +89,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,css,md}": [
+    "*.{js,ts,css}": [
       "prettier --write",
       "tslint"
     ]

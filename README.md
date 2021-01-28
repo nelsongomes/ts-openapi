@@ -1,5 +1,7 @@
 # Ts-openapi
 
+[![npm](https://img.shields.io/npm/v/ts-openapi.svg)](https://www.npmjs.com/package/ts-openapi)
+
 An openapi json generator using joi API schemas that will help you to maintain your API documentation up to date. Joi is the is one of the most used components to validate data schemas, this can be used to generate and maintain API information up to date, without the need to update manually documentation.
 
 This software has some code extracted from [joi-to-swagger](https://www.npmjs.com/package/joi-to-swagger) to interface with Joi schemas.
