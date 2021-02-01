@@ -23,7 +23,7 @@ Object {
         "operationId": "id",
         "parameters": Array [
           Object {
-            "description": "Parameter without description. (minItems:10, maxItems:20)",
+            "description": "bin array (minItems:10, maxItems:20)",
             "example": Array [
               "c2FtcGxlMQ==",
             ],

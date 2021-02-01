@@ -24,11 +24,12 @@ describe("src/openapi/openapi", () => {
         "nelson.ricardo.gomes@gmail.com"
       );
 
-      const body = Joi.object()
-        .keys({
+      const body = Types.Object({
+        properties: {
           username: Types.String()
-        })
-        .description("Sample body");
+        },
+        description: "Sample body"
+      });
 
       openApi.setServers([{ url: "https://server.com" }]);
       openApi.addPath(
@@ -128,11 +129,12 @@ describe("src/openapi/openapi", () => {
         "nelson.ricardo.gomes@gmail.com"
       );
 
-      const body = Joi.object()
-        .keys({
+      const body = Types.Object({
+        properties: {
           username: Types.String()
-        })
-        .description("Sample body");
+        },
+        description: "Sample body"
+      });
 
       try {
         openApi.setServers([{ url: "https://server.com" }]);

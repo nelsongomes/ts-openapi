@@ -82,8 +82,6 @@ export function bodyParams(schema: ObjectSchema): Body {
 
   const key = Object.keys(query.swagger.properties)[0];
   const parameter = query.swagger.properties[key];
-  const isRequired =
-    query.swagger.required && query.swagger.required.includes(key);
 
   return {
     description:

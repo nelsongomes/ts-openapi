@@ -25,16 +25,18 @@ describe("src/openapi/openapi", () => {
         float: Types.Number(),
         integer: Types.Integer(),
         string: Types.String(),
-        binary: Joi.binary(),
-        byte: Joi.binary().encoding("base64"),
+        binary: Types.Binary(),
+        byte: Types.Byte(),
         boolean: Types.Boolean(),
         date: Types.Date(),
         dateTime: Types.DateTime(),
         stringarray: Joi.array().items(Types.String()),
-        base64array: Joi.array().items(Joi.binary().encoding("base64")),
-        internalobject: Joi.object().keys({
-          uuid: Types.Uuid(),
-          boolean: Types.Boolean()
+        base64array: Joi.array().items(Types.Byte()),
+        internalobject: Types.Object({
+          properties: {
+            uuid: Types.Uuid(),
+            boolean: Types.Boolean()
+          }
         }),
         objectArray: Joi.array().items({
           obj: Joi.object().keys({

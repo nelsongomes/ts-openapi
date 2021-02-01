@@ -1,12 +1,7 @@
 import Joi from "joi";
-import { example } from "yargs";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema,
-} from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -24,8 +19,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("binary array simple", async () => {
-      const query = Joi.object().keys({
-        binaryArray: Joi.array().items(Joi.binary()),
+      const query = Types.Object({
+        properties: {
+          binaryArray: Joi.array().items(Types.Binary())
+        }
       });
 
       openApi.addPath(
@@ -36,11 +33,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -48,28 +45,30 @@ describe("src/openapi/openapi", () => {
     });
 
     test("binary array all options", async () => {
-      const query = Joi.object()
-        .keys({
+      const query = Types.Object({
+        properties: {
           base64string: Joi.array()
             .items(
-              Joi.binary()
-                .description("some binary base64 value")
-                // ignore these
-                .required()
-                .min(512)
-                .max(1024)
-                .default("c2FtcGxlMQ==")
-                .example("c2FtcGxlMQ==")
-                .allow(null)
+              Types.Binary({
+                description: "some binary base64 value",
+                required: true,
+                minLength: 512,
+                maxLength: 1024,
+                default: "c2FtcGxlMQ==",
+                example: "c2FtcGxlMQ==",
+                nullable: true
+              })
             )
             .required()
             .min(10)
             .max(20)
             .default(["c2FtcGxlMQ=="])
             .example(["c2FtcGxlMQ=="])
-            .allow(null),
-        })
-        .description("ignore");
+            .description("bin array")
+            .allow(null)
+        },
+        description: "ignored"
+      });
 
       openApi.addPath(
         "/test",
@@ -79,11 +78,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

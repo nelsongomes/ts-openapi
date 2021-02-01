@@ -1,12 +1,5 @@
-import { doesNotMatch, strict } from "assert";
-import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema
-} from "../../../src/openapi/openapi.types";
 import { Types } from "../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -25,8 +18,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed", done => {
-      const headers = Joi.object().keys({
-        username: Types.String({ required: true })
+      const headers = Types.Object({
+        properties: {
+          username: Types.String({ required: true })
+        }
       });
 
       openApi.addPath(
@@ -50,8 +45,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if query parameter is an object or an array", done => {
-      const headers = Joi.object().keys({
-        someObject: Joi.object().keys({ test: Types.String() })
+      const headers = Types.Object({
+        properties: {
+          someObject: Types.Object({ properties: { test: Types.String() } })
+        }
       });
 
       try {

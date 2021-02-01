@@ -1,8 +1,6 @@
-import { doesNotMatch, strict } from "assert";
 import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
-import { Parameters, ParameterIn } from "../../../src/openapi/openapi.types";
 import { Types } from "../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -21,8 +19,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if query parameter is an object", done => {
-      const query = Joi.object().keys({
-        someObject: Joi.object().keys({ test: Types.String() })
+      const query = Types.Object({
+        properties: {
+          someObject: Types.Object({ properties: { test: Types.String() } })
+        }
       });
 
       try {
@@ -52,10 +52,12 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if query parameter is an array of arrays", done => {
-      const query = Joi.object().keys({
-        arrayOfArrays: Joi.array().items({
-          test: Joi.array().items({ string: Types.String() })
-        })
+      const query = Types.Object({
+        properties: {
+          arrayOfArrays: Joi.array().items({
+            test: Joi.array().items({ string: Types.String() })
+          })
+        }
       });
 
       try {
@@ -89,10 +91,12 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed query parameter is an array of scalar", done => {
-      const query = Joi.object().keys({
-        arrayOfArrays: Joi.array().items({
-          test: Types.String()
-        })
+      const query = Types.Object({
+        properties: {
+          arrayOfArrays: Joi.array().items({
+            test: Types.String()
+          })
+        }
       });
 
       openApi.addPath(

@@ -178,12 +178,14 @@ describe("src/openapi/openapi", () => {
         CCC = 30
       }
 
-      const query = Joi.object({
-        option: Types.NumberEnum({
-          values: Object.values(EnumValues),
-          description: "Integer options from enum",
-          default: 12
-        })
+      const query = Types.Object({
+        properties: {
+          option: Types.NumberEnum({
+            values: Object.values(EnumValues),
+            description: "Integer options from enum",
+            default: 12
+          })
+        }
       });
 
       openApi.addPath(
@@ -212,16 +214,19 @@ describe("src/openapi/openapi", () => {
         CCC = 30.3
       }
 
-      const query = Joi.object({
-        sensor: Types.NumberEnum({
-          values: Object.values(EnumValues),
-          description: "Sensor value.",
-          required: true,
-          default: 10.1,
-          example: 30.3,
-          nullable: true
-        })
-      }).description("ignore this");
+      const query = Types.Object({
+        properties: {
+          sensor: Types.NumberEnum({
+            values: Object.values(EnumValues),
+            description: "Sensor value.",
+            required: true,
+            default: 10.1,
+            example: 30.3,
+            nullable: true
+          })
+        },
+        description: "ignore it!"
+      });
       openApi.addPath(
         "/test",
         {

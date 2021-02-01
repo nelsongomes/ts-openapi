@@ -1,8 +1,6 @@
-import { doesNotMatch } from "assert";
 import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
-import { Parameters, ParameterIn } from "../../../src/openapi/openapi.types";
 import { Types } from "../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -21,8 +19,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed", done => {
-      const params = Joi.object().keys({
-        username: Types.String({ required: true })
+      const params = Types.Object({
+        properties: {
+          username: Types.String({ required: true })
+        }
       });
 
       openApi.addPath(
@@ -48,8 +48,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if path parameter name is not made up of “word characters” ([A-Za-z0-9_])", done => {
-      const params = Joi.object().keys({
-        "user#name": Types.String()
+      const params = Types.Object({
+        properties: {
+          "user#name": Types.String()
+        }
       });
 
       try {
@@ -83,8 +85,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if path parameter is an object or array", done => {
-      const params = Joi.object().keys({
-        stringArray: Joi.array().items({ list: Types.String() })
+      const params = Types.Object({
+        properties: {
+          stringArray: Joi.array().items({ list: Types.String() })
+        }
       });
 
       try {
@@ -118,8 +122,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if path parameter is not required", done => {
-      const params = Joi.object().keys({
-        someString: Types.String()
+      const params = Types.Object({
+        properties: {
+          someString: Types.String()
+        }
       });
 
       try {

@@ -1,9 +1,6 @@
-import { doesNotMatch, strict } from "assert";
 import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
-import { ParameterIn, Parameters } from "../../../src/openapi/openapi.types";
-import { bodyParams } from "../../../src/openapi/openapi-functions";
 import { Types } from "../../../src/openapi/helpers/types";
 
 describe.only("src/openapi/openapi", () => {
@@ -22,16 +19,17 @@ describe.only("src/openapi/openapi", () => {
     });
 
     test("should succeed with an object, without description", done => {
-      const body = Joi.object()
-        .keys({
+      const body = Types.Object({
+        properties: {
           username: Types.String({ description: "Username", required: true }),
           password: Types.Password({
             required: true,
             description: "User password"
           })
-        })
-        .required()
-        .example({ username: "johndoe@acme.com", password: "*******" });
+        },
+        required: true,
+        example: { username: "johndoe@acme.com", password: "*******" }
+      });
 
       openApi.addPath(
         "/test",
@@ -55,24 +53,26 @@ describe.only("src/openapi/openapi", () => {
     });
 
     test("should succeed with an object with all types", done => {
-      const body = Joi.object()
-        .keys({
+      const body = Types.Object({
+        properties: {
           string: Types.String({ description: "Username" }),
           number: Types.Number(),
           integer: Types.Integer(),
-          object: Joi.object().keys({ internalString: Types.String() }),
+          object: Types.Object({
+            properties: { internalString: Types.String() }
+          }),
           array: Joi.array().items(Types.String()),
           arrayOfObjects: Joi.array().items(
-            Joi.object().keys({ internalString: Types.String() })
+            Types.Object({ properties: { internalString: Types.String() } })
           ),
           boolean: Types.Boolean(),
           date: Types.Date(),
           dateTime: Types.DateTime()
-        })
-        .required()
-        .description("User login")
-        .example({ username: "johndoe@acme.com", password: "*******" })
-        .description("Full body description.");
+        },
+        required: true,
+        description: "Full body description.",
+        example: { username: "johndoe@acme.com", password: "*******" }
+      });
 
       openApi.addPath(
         "/test",

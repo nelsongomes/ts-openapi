@@ -1,4 +1,3 @@
-import Joi, { types } from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../../src/openapi/helpers/types";
@@ -47,8 +46,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("string simple", async () => {
-      const query = Joi.object().keys({
-        user_name: Types.String()
+      const query = Types.Object({
+        properties: {
+          user_name: Types.String()
+        }
       });
 
       openApi.addPath(
@@ -71,8 +72,8 @@ describe("src/openapi/openapi", () => {
     });
 
     test("string simple all options", async () => {
-      const query = Joi.object()
-        .keys({
+      const query = Types.Object({
+        properties: {
           name: Types.String({
             description: "Complete user name.",
             minLength: 5,
@@ -82,8 +83,9 @@ describe("src/openapi/openapi", () => {
             example: "John Doe",
             nullable: true
           })
-        })
-        .description("ignore this");
+        },
+        description: "ignore this!"
+      });
 
       openApi.addPath(
         "/test",
@@ -111,8 +113,10 @@ describe("src/openapi/openapi", () => {
         CCC = "ccc"
       }
 
-      const query = Joi.object().keys({
-        option: Types.StringEnum({ values: Object.values(EnumValues) })
+      const query = Types.Object({
+        properties: {
+          option: Types.StringEnum({ values: Object.values(EnumValues) })
+        }
       });
 
       openApi.addPath(
@@ -141,11 +145,13 @@ describe("src/openapi/openapi", () => {
         CCC = "ccc"
       }
 
-      const query = Joi.object().keys({
-        option: Types.StringEnum({
-          values: Object.values(EnumValues),
-          description: "String options from enum"
-        })
+      const query = Types.Object({
+        properties: {
+          option: Types.StringEnum({
+            values: Object.values(EnumValues),
+            description: "String options from enum"
+          })
+        }
       });
 
       openApi.addPath(
@@ -174,12 +180,14 @@ describe("src/openapi/openapi", () => {
         CCC = "ccc"
       }
 
-      const query = Joi.object().keys({
-        option: Types.StringEnum({
-          values: Object.values(EnumValues),
-          description: "String options from enum",
-          default: "bbb"
-        })
+      const query = Types.Object({
+        properties: {
+          option: Types.StringEnum({
+            values: Object.values(EnumValues),
+            description: "String options from enum",
+            default: "bbb"
+          })
+        }
       });
 
       openApi.addPath(
@@ -208,12 +216,14 @@ describe("src/openapi/openapi", () => {
         CCC = "ccc"
       }
 
-      const query = Joi.object().keys({
-        option: Types.StringEnum({
-          values: Object.values(EnumValues),
-          description: "String options from enum",
-          default: "abc"
-        })
+      const query = Types.Object({
+        properties: {
+          option: Types.StringEnum({
+            values: Object.values(EnumValues),
+            description: "String options from enum",
+            default: "abc"
+          })
+        }
       });
 
       openApi.addPath(
@@ -242,8 +252,8 @@ describe("src/openapi/openapi", () => {
         CCC = "planes"
       }
 
-      const query = Joi.object()
-        .keys({
+      const query = Types.Object({
+        properties: {
           category: Types.StringEnum({
             values: Object.values(EnumValues),
             description: "Select vehicle type",
@@ -252,8 +262,9 @@ describe("src/openapi/openapi", () => {
             example: EnumValues.CCC,
             nullable: true
           })
-        })
-        .description("ignore this");
+        },
+        description: "ignore this!"
+      });
 
       openApi.addPath(
         "/test",

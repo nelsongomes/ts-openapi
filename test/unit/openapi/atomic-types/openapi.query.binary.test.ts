@@ -4,8 +4,9 @@ import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import {
   Parameters,
   ParameterIn,
-  WebRequestSchema,
+  WebRequestSchema
 } from "../../../../src/openapi/openapi.types";
+import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
@@ -27,11 +28,11 @@ describe("src/openapi/openapi", () => {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -39,7 +40,7 @@ describe("src/openapi/openapi", () => {
 
     test("binary simple", async () => {
       const query = Joi.object().keys({
-        base64string: Joi.binary(),
+        base64string: Types.Binary()
       });
 
       openApi.addPath(
@@ -50,11 +51,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );
@@ -62,18 +63,20 @@ describe("src/openapi/openapi", () => {
     });
 
     test("binary all options", async () => {
-      const query = Joi.object()
-        .keys({
-          base64string: Joi.binary()
-            .description("some binary base64 value")
-            .required()
-            .min(512)
-            .max(1024)
-            .default("c2FtcGxlMQ==")
-            .example("c2FtcGxlMQ==")
-            .allow(null),
-        })
-        .description("ignore this");
+      const query = Types.Object({
+        properties: {
+          base64string: Types.Binary({
+            description: "some binary base64 value",
+            required: true,
+            minLength: 512,
+            maxLength: 1024,
+            default: "c2FtcGxlMQ==",
+            example: "c2FtcGxlMQ==",
+            nullable: true
+          })
+        },
+        description: "ignore this!"
+      });
 
       openApi.addPath(
         "/test",
@@ -83,11 +86,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             validationSchema: { query },
             responses: {
-              200: textPlain("Successful operation."),
+              200: textPlain("Successful operation.")
             },
             summary: "Server Test",
-            tags: ["Internals"],
-          },
+            tags: ["Internals"]
+          }
         },
         true
       );

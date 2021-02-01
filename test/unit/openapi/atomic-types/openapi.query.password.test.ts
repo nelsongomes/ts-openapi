@@ -1,11 +1,5 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema
-} from "../../../../src/openapi/openapi.types";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -24,8 +18,10 @@ describe("src/openapi/openapi", () => {
     });
 
     test("password simple", async () => {
-      const query = Joi.object().keys({
-        password: Types.Password()
+      const query = Types.Object({
+        properties: {
+          password: Types.Password()
+        }
       });
 
       openApi.addPath(
@@ -48,15 +44,17 @@ describe("src/openapi/openapi", () => {
     });
 
     test("password all options", async () => {
-      const query = Joi.object().keys({
-        password: Types.Password({
-          required: true,
-          minLength: 50,
-          maxLength: 255,
-          description: "User password.",
-          example: "****",
-          nullable: true
-        })
+      const query = Types.Object({
+        properties: {
+          password: Types.Password({
+            required: true,
+            minLength: 50,
+            maxLength: 255,
+            description: "User password.",
+            example: "****",
+            nullable: true
+          })
+        }
       });
 
       openApi.addPath(

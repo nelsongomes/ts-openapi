@@ -22,6 +22,8 @@ type StringEnumParameters = {
 type EmailParameters = StringParameters;
 type PasswordParameters = StringParameters;
 type UuidParameters = StringParameters;
+type BinaryParameters = StringParameters;
+type ByteParameters = StringParameters;
 
 type DateParameters = {
   default?: string;
@@ -46,6 +48,12 @@ type NumberEnumParameters = IntegerEnumParameters;
 type BooleanParameters = {
   default?: boolean;
   example?: boolean;
+} & Common;
+
+type ObjectParameters = {
+  properties: Joi.SchemaMap<StringParameters | any>;
+  default?: object;
+  example?: object;
 } & Common;
 
 export const Types = {
@@ -108,6 +116,55 @@ export const Types = {
 
   Uuid: (parameters?: UuidParameters) => {
     return Types.String(parameters).meta({ format: "uuid" });
+  },
+
+  Binary: (parameters?: BinaryParameters) => {
+    let joiType = Joi.binary();
+
+    if (parameters) {
+      const {
+        description,
+        required,
+        nullable,
+        maxLength,
+        minLength,
+        example
+      } = parameters;
+
+      if (description) {
+        joiType = joiType.description(description);
+      }
+
+      if (typeof required === "boolean" && required) {
+        joiType = joiType.required();
+      }
+
+      if (typeof nullable === "boolean" && nullable) {
+        joiType = joiType.allow(null);
+      }
+
+      if (minLength) {
+        joiType = joiType.min(minLength);
+      }
+
+      if (maxLength) {
+        joiType = joiType.max(maxLength);
+      }
+
+      if (parameters.default) {
+        joiType = joiType.default(parameters.default);
+      }
+
+      if (parameters.example) {
+        joiType = joiType.example(example);
+      }
+    }
+
+    return joiType;
+  },
+
+  Byte: (parameters?: ByteParameters) => {
+    return Types.Binary(parameters).encoding("base64");
   },
 
   DateTime: (parameters?: DateParameters) => {
@@ -223,6 +280,33 @@ export const Types = {
       if (typeof parameters.example === "boolean") {
         joiType = joiType.example(example);
       }
+    }
+
+    return joiType;
+  },
+
+  Object: (parameters: ObjectParameters) => {
+    const { properties, description, required, nullable, example } = parameters;
+    let joiType = Joi.object().keys(properties);
+
+    if (description) {
+      joiType = joiType.description(description);
+    }
+
+    if (required) {
+      joiType = joiType.required();
+    }
+
+    if (nullable) {
+      joiType = joiType.allow(null);
+    }
+
+    if (parameters.default) {
+      joiType = joiType.default(parameters.default);
+    }
+
+    if (parameters.example) {
+      joiType = joiType.example(example);
     }
 
     return joiType;
