@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../../src/openapi/helpers/types";
@@ -20,7 +19,7 @@ describe("src/openapi/openapi", () => {
 
     test("binary array simple", async () => {
       const query = {
-        binaryArray: Joi.array().items(Types.Binary())
+        binaryArray: Types.Array({ arrayType: Types.Binary() })
       };
 
       openApi.addPath(
@@ -44,18 +43,17 @@ describe("src/openapi/openapi", () => {
 
     test("binary array all options", async () => {
       const query = {
-        base64string: Joi.array()
-          .items(
-            Types.Binary({
-              description: "some binary base64 value",
-              required: true,
-              minLength: 512,
-              maxLength: 1024,
-              default: "c2FtcGxlMQ==",
-              example: "c2FtcGxlMQ==",
-              nullable: true
-            })
-          )
+        base64string: Types.Array({
+          arrayType: Types.Binary({
+            description: "some binary base64 value",
+            required: true,
+            minLength: 512,
+            maxLength: 1024,
+            default: "c2FtcGxlMQ==",
+            example: "c2FtcGxlMQ==",
+            nullable: true
+          })
+        })
           .required()
           .min(10)
           .max(20)

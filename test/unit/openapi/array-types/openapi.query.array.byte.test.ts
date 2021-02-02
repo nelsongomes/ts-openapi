@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../../src/openapi/helpers/types";
@@ -36,7 +35,7 @@ describe("src/openapi/openapi", () => {
 
     test("byte array simple", async () => {
       const query = {
-        base64array: Joi.array().items(Types.Byte())
+        base64array: Types.Array({ arrayType: Types.Byte() })
       };
 
       openApi.addPath(
@@ -60,24 +59,23 @@ describe("src/openapi/openapi", () => {
 
     test("byte array all options", async () => {
       const query = {
-        base64array: Joi.array()
-          .items(
-            Types.Byte({
-              description: "some binary base64 value",
-              required: true,
-              minLength: 512,
-              maxLength: 1024,
-              default: "c2FtcGxlMQ==",
-              example: "c2FtcGxlMQ==",
-              nullable: true
-            })
-          )
-          .required()
-          .min(1)
-          .max(10)
-          .default(["c2FtcGxlMQ=="])
-          .example(["c2FtcGxlMQ=="])
-          .allow(null)
+        base64array: Types.Array({
+          arrayType: Types.Byte({
+            description: "some binary base64 value",
+            required: true,
+            minLength: 512,
+            maxLength: 1024,
+            default: "c2FtcGxlMQ==",
+            example: "c2FtcGxlMQ==",
+            nullable: true
+          }),
+          required: true,
+          minLength: 1,
+          maxLength: 10,
+          default: ["c2FtcGxlMQ=="],
+          example: ["c2FtcGxlMQ=="],
+          nullable: true
+        })
       };
 
       openApi.addPath(

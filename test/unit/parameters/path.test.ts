@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../src/openapi/helpers/types";
@@ -82,7 +81,9 @@ describe("src/openapi/openapi", () => {
 
     test("should throw an exception if path parameter is an object or array", done => {
       const params = {
-        stringArray: Joi.array().items({ list: Types.String() })
+        stringArray: Types.Array({
+          arrayType: Types.Object({ properties: { list: Types.String() } })
+        })
       };
 
       try {

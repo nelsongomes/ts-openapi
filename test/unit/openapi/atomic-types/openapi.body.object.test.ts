@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../../src/openapi/helpers/types";
@@ -24,24 +23,28 @@ describe("src/openapi/openapi", () => {
           float: Types.Number(),
           integer: Types.Integer(),
           string: Types.String(),
-          binary: Types.Binary(),
+          binary: Types.Binary({}),
           byte: Types.Byte(),
-          boolean: Types.Boolean(),
+          boolean: Types.Boolean({}),
           date: Types.Date(),
-          dateTime: Types.DateTime(),
-          stringarray: Joi.array().items(Types.String()),
-          base64array: Joi.array().items(Types.Byte()),
+          dateTime: Types.DateTime({}),
+          stringarray: Types.Array({ arrayType: Types.String() }),
+          base64array: Types.Array({ arrayType: Types.Byte() }),
           internalobject: Types.Object({
             properties: {
               uuid: Types.Uuid(),
               boolean: Types.Boolean()
             }
           }),
-          objectArray: Joi.array().items({
-            obj: Types.Object({
+          objectArray: Types.Array({
+            arrayType: Types.Object({
               properties: {
-                uuid: Types.Uuid(),
-                boolean: Types.Boolean()
+                obj: Types.Object({
+                  properties: {
+                    uuid: Types.Uuid(),
+                    boolean: Types.Boolean()
+                  }
+                })
               }
             })
           })

@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../../src/openapi/helpers/types";
@@ -36,7 +35,7 @@ describe("src/openapi/openapi", () => {
 
     test("date-time array simple", async () => {
       const query = {
-        timestamps: Joi.array().items(Types.DateTime())
+        timestamps: Types.Array({ arrayType: Types.DateTime() })
       };
 
       openApi.addPath(
@@ -60,7 +59,7 @@ describe("src/openapi/openapi", () => {
 
     test("date array simple", async () => {
       const query = {
-        timestamps: Joi.array().items(Types.Date())
+        timestamps: Types.Array({ arrayType: Types.Date() })
       };
 
       openApi.addPath(
@@ -84,21 +83,20 @@ describe("src/openapi/openapi", () => {
 
     test("date-time array all options", async () => {
       const query = {
-        timestamps: Joi.array()
-          .items(
-            Types.DateTime({
-              description: "ignore",
-              nullable: true,
-              required: true
-            })
-          )
-          .min(1)
-          .max(100)
-          .required()
-          .description("date-time array")
-          .default(["2020-10-14T22:12:53.065Z", "2020-10-14T22:12:53.065Z"])
-          .example(["2020-10-14T22:12:53.065Z"])
-          .allow(null)
+        timestamps: Types.Array({
+          arrayType: Types.DateTime({
+            description: "ignore",
+            nullable: true,
+            required: true
+          }),
+          minLength: 1,
+          maxLength: 100,
+          required: true,
+          description: "date-time array",
+          default: ["2020-10-14T22:12:53.065Z", "2020-10-14T22:12:53.065Z"],
+          example: ["2020-10-14T22:12:53.065Z"],
+          nullable: true
+        })
       };
 
       openApi.addPath(

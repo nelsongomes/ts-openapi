@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../../src/openapi/helpers/types";
@@ -20,25 +19,24 @@ describe("src/openapi/openapi", () => {
 
     test("number array all options", async () => {
       const query = {
-        numberList: Joi.array()
-          .items(
-            Types.Number({
-              minValue: 1,
-              maxValue: 50,
-              required: true,
-              description: "Some integer",
-              example: 1,
-              default: 2,
-              nullable: true
-            })
-          )
-          .description("Array of integers")
-          .required()
-          .min(1)
-          .max(10)
-          .default([1, 2, 3])
-          .example([4, 5, 6])
-          .allow(null)
+        numberList: Types.Array({
+          arrayType: Types.Number({
+            minValue: 1,
+            maxValue: 50,
+            required: true,
+            description: "Some integer",
+            example: 1,
+            default: 2,
+            nullable: true
+          }),
+          description: "Array of integers",
+          required: true,
+          minLength: 1,
+          maxLength: 10,
+          default: [1, 2, 3],
+          example: [4, 5, 6],
+          nullable: true
+        })
       };
 
       openApi.addPath(
@@ -62,7 +60,7 @@ describe("src/openapi/openapi", () => {
 
     test("number array minimal options", async () => {
       const query = {
-        numberList: Joi.array().items(Types.Number())
+        numberList: Types.Array({ arrayType: Types.Number() })
       };
 
       openApi.addPath(

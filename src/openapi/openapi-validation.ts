@@ -59,15 +59,23 @@ function validateQueryParameters(
     throw new Error(`Query param '${key}' cannot be an object.`);
   }
 
-  if (["array"].includes(parameterType) && parameter.items.properties) {
-    const arrayProperties = parameter.items.properties;
+  if (["array"].includes(parameterType)) {
+    if (parameter.items.type === "object" || parameter.items.type === "array") {
+      if (parameter.items.properties) {
+        const arrayProperties = parameter.items.properties;
 
-    for (const propKey of Object.keys(arrayProperties)) {
-      const property = arrayProperties[propKey];
+        for (const propKey of Object.keys(arrayProperties)) {
+          const property = arrayProperties[propKey];
 
-      if (property.type === "array") {
+          if (property.type === "array") {
+            throw new Error(
+              `Query param '${key}' type array can only have scalar types inside of it (cannot be an array of arrays or an array of objects).`
+            );
+          }
+        }
+      } else {
         throw new Error(
-          `Query param '${key}' type array can only have scalar types inside of it (cannot be an array of arrays or an array of objects).`
+          `Query param type array can only have scalar types inside of it (cannot be an array of arrays or an array of objects).`
         );
       }
     }

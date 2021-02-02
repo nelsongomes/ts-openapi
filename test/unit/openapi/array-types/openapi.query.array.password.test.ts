@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../../src/openapi/helpers/types";
@@ -20,7 +19,7 @@ describe("src/openapi/openapi", () => {
 
     test("password array simple", async () => {
       const query = {
-        passwords: Joi.array().items(Types.Password())
+        passwords: Types.Array({ arrayType: Types.Password() })
       };
 
       openApi.addPath(
@@ -44,22 +43,21 @@ describe("src/openapi/openapi", () => {
 
     test("password array all options", async () => {
       const query = {
-        passwords: Joi.array()
-          .items(
-            Types.Password({
-              description: "password string",
-              maxLength: 999,
-              nullable: true,
-              required: true
-            })
-          )
-          .min(1)
-          .max(100)
-          .required()
-          .description("Email array")
-          .default(["a@a.com", "b@b.com"])
-          .example(["c@c.com"])
-          .allow(null)
+        passwords: Types.Array({
+          arrayType: Types.Password({
+            description: "password string",
+            maxLength: 999,
+            nullable: true,
+            required: true
+          }),
+          minLength: 1,
+          maxLength: 100,
+          required: true,
+          description: "Email array",
+          default: ["a@a.com", "b@b.com"],
+          example: ["c@c.com"],
+          nullable: true
+        })
       };
 
       openApi.addPath(

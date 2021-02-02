@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../src/openapi/helpers/types";
@@ -49,10 +48,14 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("should throw an exception if query parameter is an array of arrays", done => {
+    test("should throw an exception if query parameter is an array of objects", done => {
       const query = {
-        arrayOfArrays: Joi.array().items({
-          test: Joi.array().items({ string: Types.String() })
+        arrayOfArrays: Types.Array({
+          arrayType: Types.Object({
+            properties: {
+              test: Types.Array({ arrayType: Types.String() })
+            }
+          })
         })
       };
 
@@ -86,11 +89,46 @@ describe("src/openapi/openapi", () => {
       }
     });
 
+    test("should throw an exception if query parameter is an array of arrays", done => {
+      const query = {
+        arrayOfArrays: Types.Array({
+          arrayType: Types.Array({ arrayType: Types.String() })
+        })
+      };
+
+      try {
+        openApi.addPath(
+          "/test",
+          {
+            get: {
+              description: "Test endpoint",
+              operationId: "id",
+              validationSchema: { query },
+              responses: {
+                200: textPlain("Successful operation.")
+              },
+              summary: "Server Test",
+              tags: ["Internals"]
+            }
+          },
+          true
+        );
+
+        done.fail(
+          "It should have thrown an exception because only scalar arrays are valid"
+        );
+      } catch (e) {
+        expect(e).toBeInstanceOf(Error);
+        expect(e.message).toBe(
+          "Query param type array can only have scalar types inside of it (cannot be an array of arrays or an array of objects)."
+        );
+        done();
+      }
+    });
+
     test("should succeed query parameter is an array of scalar", done => {
       const query = {
-        arrayOfArrays: Joi.array().items({
-          test: Types.String()
-        })
+        arrayOfString: Types.Array({ arrayType: Types.String() })
       };
 
       openApi.addPath(

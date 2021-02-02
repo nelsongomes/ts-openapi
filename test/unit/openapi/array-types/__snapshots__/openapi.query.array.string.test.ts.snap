@@ -31,6 +31,9 @@ Object {
             "name": "category",
             "required": true,
             "schema": Object {
+              "default": Array [
+                "b",
+              ],
               "items": Object {
                 "description": "Parameter without description. (min:11 chars, max:20 chars)",
                 "type": "string",

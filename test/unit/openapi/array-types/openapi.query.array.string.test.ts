@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../../src/openapi/helpers/types";
@@ -20,7 +19,7 @@ describe("src/openapi/openapi", () => {
 
     test("string array simple", async () => {
       const query = {
-        category: Joi.array().items(Types.String())
+        category: Types.Array({ arrayType: Types.String() })
       };
 
       openApi.addPath(
@@ -44,24 +43,23 @@ describe("src/openapi/openapi", () => {
 
     test("string array all options", async () => {
       const query = {
-        category: Joi.array()
-          .items(
-            Types.String({
-              minLength: 11,
-              maxLength: 20,
-              required: true,
-              nullable: true,
-              default: "default",
-              example: "example"
-            })
-          )
-          .min(1)
-          .max(50)
-          .description("String array")
-          .required()
-          .example(["a"])
-          .default("b")
-          .allow(null)
+        category: Types.Array({
+          arrayType: Types.String({
+            minLength: 11,
+            maxLength: 20,
+            required: true,
+            nullable: true,
+            default: "default",
+            example: "example"
+          }),
+          minLength: 1,
+          maxLength: 50,
+          description: "String array",
+          required: true,
+          example: ["a"],
+          default: ["b"],
+          nullable: true
+        })
       };
 
       openApi.addPath(
@@ -91,9 +89,9 @@ describe("src/openapi/openapi", () => {
       }
 
       const query = {
-        category: Joi.array().items(
-          Types.StringEnum({ values: Object.values(EnumValues) })
-        )
+        category: Types.Array({
+          arrayType: Types.StringEnum({ values: Object.values(EnumValues) })
+        })
       };
 
       openApi.addPath(
@@ -123,9 +121,10 @@ describe("src/openapi/openapi", () => {
       }
 
       const query = {
-        category: Joi.array()
-          .items(Types.StringEnum({ values: Object.values(EnumValues) }))
-          .required()
+        category: Types.Array({
+          arrayType: Types.StringEnum({ values: Object.values(EnumValues) }),
+          required: true
+        })
       };
 
       openApi.addPath(
@@ -155,9 +154,10 @@ describe("src/openapi/openapi", () => {
       }
 
       const query = {
-        category: Joi.array()
-          .items(Types.StringEnum({ values: Object.values(EnumValues) }))
-          .default(["a", "b"])
+        category: Types.Array({
+          arrayType: Types.StringEnum({ values: Object.values(EnumValues) }),
+          default: ["a", "b"]
+        })
       };
 
       openApi.addPath(
@@ -187,9 +187,10 @@ describe("src/openapi/openapi", () => {
       }
 
       const query = {
-        category: Joi.array()
-          .items(Types.StringEnum({ values: Object.values(EnumValues) }))
-          .default(["a", "z"])
+        category: Types.Array({
+          arrayType: Types.StringEnum({ values: Object.values(EnumValues) }),
+          default: ["a", "z"]
+        })
       };
 
       openApi.addPath(
@@ -219,22 +220,21 @@ describe("src/openapi/openapi", () => {
       }
 
       const query = {
-        category: Joi.array()
-          .items(
-            Types.StringEnum({
-              values: Object.values(EnumValues),
-              description: "Enum of strings",
-              nullable: true,
-              required: true
-            })
-          )
-          .description("array of category")
-          .required()
-          .min(1)
-          .max(10)
-          .example(["a", "b", "c"])
-          .default(["b"])
-          .allow(null)
+        category: Types.Array({
+          arrayType: Types.StringEnum({
+            values: Object.values(EnumValues),
+            description: "Enum of strings",
+            nullable: true,
+            required: true
+          }),
+          description: "array of category",
+          required: true,
+          minLength: 1,
+          maxLength: 10,
+          example: ["a", "b", "c"],
+          default: ["b"],
+          nullable: true
+        })
       };
 
       openApi.addPath(

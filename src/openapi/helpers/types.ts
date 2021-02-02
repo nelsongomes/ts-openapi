@@ -51,9 +51,17 @@ type BooleanParameters = {
 } & Common;
 
 type ObjectParameters = {
-  properties: Joi.SchemaMap<StringParameters | any>;
+  properties: Joi.SchemaMap<any>;
   default?: object;
   example?: object;
+} & Common;
+
+type ArrayParameters = {
+  arrayType: Joi.SchemaLikeWithoutArray;
+  default?: object;
+  example?: object;
+  minLength?: number;
+  maxLength?: number;
 } & Common;
 
 export const Types = {
@@ -307,6 +315,49 @@ export const Types = {
 
     if (parameters.example) {
       joiType = joiType.example(example);
+    }
+
+    return joiType;
+  },
+
+  Array: (parameters: ArrayParameters) => {
+    const {
+      arrayType,
+      description,
+      required,
+      nullable,
+      example,
+      minLength,
+      maxLength
+    } = parameters;
+    let joiType = Joi.array().items(arrayType);
+
+    if (description) {
+      joiType = joiType.description(description);
+    }
+
+    if (required) {
+      joiType = joiType.required();
+    }
+
+    if (nullable) {
+      joiType = joiType.allow(null);
+    }
+
+    if (parameters.default) {
+      joiType = joiType.default(parameters.default);
+    }
+
+    if (parameters.example) {
+      joiType = joiType.example(example);
+    }
+
+    if (minLength) {
+      joiType = joiType.min(minLength);
+    }
+
+    if (maxLength) {
+      joiType = joiType.max(maxLength);
     }
 
     return joiType;

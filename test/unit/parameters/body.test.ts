@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../src/openapi/helpers/types";
@@ -61,10 +60,12 @@ describe.only("src/openapi/openapi", () => {
           object: Types.Object({
             properties: { internalString: Types.String() }
           }),
-          array: Joi.array().items(Types.String()),
-          arrayOfObjects: Joi.array().items(
-            Types.Object({ properties: { internalString: Types.String() } })
-          ),
+          array: Types.Array({ arrayType: Types.String() }),
+          arrayOfObjects: Types.Array({
+            arrayType: Types.Object({
+              properties: { internalString: Types.String() }
+            })
+          }),
           boolean: Types.Boolean(),
           date: Types.Date(),
           dateTime: Types.DateTime()

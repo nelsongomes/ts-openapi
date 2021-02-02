@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../../src/openapi/helpers/types";
@@ -36,7 +35,7 @@ describe("src/openapi/openapi", () => {
 
     test("email array simple", async () => {
       const query = {
-        emails: Joi.array().items(Types.Email())
+        emails: Types.Array({ arrayType: Types.Email() })
       };
 
       openApi.addPath(
@@ -60,22 +59,21 @@ describe("src/openapi/openapi", () => {
 
     test("email array all options", async () => {
       const query = {
-        emails: Joi.array()
-          .items(
-            Types.Email({
-              description: "email",
-              nullable: true,
-              required: true,
-              maxLength: 999
-            })
-          )
-          .min(1)
-          .max(100)
-          .required()
-          .description("Email array")
-          .default(["a@a.com", "b@b.com"])
-          .example(["c@c.com"])
-          .allow(null)
+        emails: Types.Array({
+          arrayType: Types.Email({
+            description: "email",
+            nullable: true,
+            required: true,
+            maxLength: 999
+          }),
+          minLength: 1,
+          maxLength: 100,
+          required: true,
+          description: "Email array",
+          default: ["a@a.com", "b@b.com"],
+          example: ["c@c.com"],
+          nullable: true
+        })
       };
 
       openApi.addPath(
