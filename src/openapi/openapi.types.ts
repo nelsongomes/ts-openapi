@@ -34,7 +34,7 @@ export enum ParameterIn {
   Path = "path",
   Header = "header",
   Cookie = "cookie",
-  Body = "requestBody",
+  Body = "requestBody"
 }
 
 export enum StringFormats {
@@ -48,15 +48,15 @@ export enum StringFormats {
   Uri = "uri",
   Hostname = "hostname",
   Ipv4 = "ipv4",
-  Ipv6 = "ipv6",
+  Ipv6 = "ipv6"
 }
 export enum NumberFormats {
   Float = "float",
-  Double = "double",
+  Double = "double"
 }
 export enum IntegerFormats {
   Int32 = "int32",
-  Int64 = "int64",
+  Int64 = "int64"
 }
 
 export type Scheme = { [k: string]: string[] };
@@ -239,8 +239,8 @@ export type OpenApiSchema = {
 
 export type WebRequestSchema = {
   body?: Joi.ObjectSchema;
-  query?: Joi.ObjectSchema;
-  params?: Joi.ObjectSchema;
-  headers?: Joi.ObjectSchema;
-  cookie?: Joi.ObjectSchema;
+  query?: Joi.SchemaMap<any>;
+  params?: Joi.SchemaMap<any>;
+  headers?: Joi.SchemaMap<any>;
+  cookie?: Joi.SchemaMap<any>;
 };

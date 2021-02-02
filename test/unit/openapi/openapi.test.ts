@@ -1,4 +1,3 @@
-import * as Joi from "joi";
 import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../src/openapi/helpers/types";

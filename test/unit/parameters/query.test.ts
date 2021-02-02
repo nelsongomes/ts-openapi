@@ -19,11 +19,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if query parameter is an object", done => {
-      const query = Types.Object({
-        properties: {
-          someObject: Types.Object({ properties: { test: Types.String() } })
-        }
-      });
+      const query = {
+        someObject: Types.Object({ properties: { test: Types.String() } })
+      };
 
       try {
         openApi.addPath(
@@ -52,13 +50,11 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if query parameter is an array of arrays", done => {
-      const query = Types.Object({
-        properties: {
-          arrayOfArrays: Joi.array().items({
-            test: Joi.array().items({ string: Types.String() })
-          })
-        }
-      });
+      const query = {
+        arrayOfArrays: Joi.array().items({
+          test: Joi.array().items({ string: Types.String() })
+        })
+      };
 
       try {
         openApi.addPath(
@@ -91,13 +87,11 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed query parameter is an array of scalar", done => {
-      const query = Types.Object({
-        properties: {
-          arrayOfArrays: Joi.array().items({
-            test: Types.String()
-          })
-        }
-      });
+      const query = {
+        arrayOfArrays: Joi.array().items({
+          test: Types.String()
+        })
+      };
 
       openApi.addPath(
         "/test",

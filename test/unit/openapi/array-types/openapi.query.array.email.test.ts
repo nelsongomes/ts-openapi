@@ -1,11 +1,6 @@
 import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema
-} from "../../../../src/openapi/openapi.types";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -40,9 +35,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("email array simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         emails: Joi.array().items(Types.Email())
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -64,26 +59,24 @@ describe("src/openapi/openapi", () => {
     });
 
     test("email array all options", async () => {
-      const query = Joi.object()
-        .keys({
-          emails: Joi.array()
-            .items(
-              Types.Email({
-                description: "email",
-                nullable: true,
-                required: true,
-                maxLength: 999
-              })
-            )
-            .min(1)
-            .max(100)
-            .required()
-            .description("Email array")
-            .default(["a@a.com", "b@b.com"])
-            .example(["c@c.com"])
-            .allow(null)
-        })
-        .description("ignore");
+      const query = {
+        emails: Joi.array()
+          .items(
+            Types.Email({
+              description: "email",
+              nullable: true,
+              required: true,
+              maxLength: 999
+            })
+          )
+          .min(1)
+          .max(100)
+          .required()
+          .description("Email array")
+          .default(["a@a.com", "b@b.com"])
+          .example(["c@c.com"])
+          .allow(null)
+      };
 
       openApi.addPath(
         "/test",

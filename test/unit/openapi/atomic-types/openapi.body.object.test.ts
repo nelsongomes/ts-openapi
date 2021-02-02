@@ -1,8 +1,6 @@
 import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import { Parameters, ParameterIn } from "../../../../src/openapi/openapi.types";
-import { bodyParams } from "../../../../src/openapi/openapi-functions";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -21,32 +19,34 @@ describe("src/openapi/openapi", () => {
     });
 
     test("object simple", async () => {
-      const body = Joi.object().keys({
-        float: Types.Number(),
-        integer: Types.Integer(),
-        string: Types.String(),
-        binary: Types.Binary(),
-        byte: Types.Byte(),
-        boolean: Types.Boolean(),
-        date: Types.Date(),
-        dateTime: Types.DateTime(),
-        stringarray: Joi.array().items(Types.String()),
-        base64array: Joi.array().items(Types.Byte()),
-        internalobject: Types.Object({
-          properties: {
-            uuid: Types.Uuid(),
-            boolean: Types.Boolean()
-          }
-        }),
-        objectArray: Joi.array().items({
-          obj: Joi.object().keys({
-            uuid: Types.Uuid(),
-            boolean: Types.Boolean()
+      const body = Types.Object({
+        properties: {
+          float: Types.Number(),
+          integer: Types.Integer(),
+          string: Types.String(),
+          binary: Types.Binary(),
+          byte: Types.Byte(),
+          boolean: Types.Boolean(),
+          date: Types.Date(),
+          dateTime: Types.DateTime(),
+          stringarray: Joi.array().items(Types.String()),
+          base64array: Joi.array().items(Types.Byte()),
+          internalobject: Types.Object({
+            properties: {
+              uuid: Types.Uuid(),
+              boolean: Types.Boolean()
+            }
+          }),
+          objectArray: Joi.array().items({
+            obj: Types.Object({
+              properties: {
+                uuid: Types.Uuid(),
+                boolean: Types.Boolean()
+              }
+            })
           })
-        })
+        }
       });
-
-      const parameters: Parameters = [];
 
       openApi.addPath(
         "/test",
@@ -68,15 +68,16 @@ describe("src/openapi/openapi", () => {
     });
 
     test("object all options", async () => {
-      const body = Joi.object()
-        .keys({
+      const body = Types.Object({
+        properties: {
           parameter1: Types.String({ description: "String parameter" })
-        })
-        .required()
-        .default({ parameter1: "default" })
-        .example({ parameter1: "default" })
-        .allow(null)
-        .description("My body description");
+        },
+        required: true,
+        default: { parameter1: "default" },
+        example: { parameter1: "default" },
+        nullable: true,
+        description: "My body description"
+      });
 
       openApi.addPath(
         "/test",

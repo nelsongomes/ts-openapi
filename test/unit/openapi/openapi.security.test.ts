@@ -7,14 +7,13 @@ import {
   oauth2AuthorizationCodeAuth,
   oauth2ClientCredentialsAuth,
   oauth2ImplicitAuth,
-  oauth2PasswordAuth,
+  oauth2PasswordAuth
 } from "../../../src/openapi/helpers/auth";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
-import { doesNotMatch } from "assert";
 
 describe("src/openapi/openapi", () => {
   describe("Security Schemes", () => {
-    test("Basic Security (global)", async (done) => {
+    test("Basic Security (global)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -39,11 +38,11 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"],
-            },
+              tags: ["Internals"]
+            }
           },
           true
         );
@@ -56,7 +55,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Basic Security (local)", async (done) => {
+    test("Basic Security (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -78,12 +77,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ basicSecurity: [] }],
-            },
+              security: [{ basicSecurity: [] }]
+            }
           },
           true
         );
@@ -96,7 +95,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Api Key Security (local)", async (done) => {
+    test("Api Key Security (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -121,12 +120,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ apiSecurity: [] }],
-            },
+              security: [{ apiSecurity: [] }]
+            }
           },
           true
         );
@@ -139,7 +138,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Cookie Security (local)", async (done) => {
+    test("Cookie Security (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -164,12 +163,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ cookieSecurity: [] }],
-            },
+              security: [{ cookieSecurity: [] }]
+            }
           },
           true
         );
@@ -182,7 +181,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Bearer Security (local)", async (done) => {
+    test("Bearer Security (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -204,12 +203,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ bearerSecurity: [] }],
-            },
+              security: [{ bearerSecurity: [] }]
+            }
           },
           true
         );
@@ -222,7 +221,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Oauth2 Security authorizationCode (local)", async (done) => {
+    test("Oauth2 Security authorizationCode (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -242,7 +241,7 @@ describe("src/openapi/openapi", () => {
             "https://api.example.com/oauth2/tokenUrl",
             {
               read_pets: "Read your pets",
-              write_pets: "Modify pets in your account",
+              write_pets: "Modify pets in your account"
             },
             "https://www.domain.com/refreshUrl"
           )
@@ -256,12 +255,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ oauth2Security: ["read_pets"] }],
-            },
+              security: [{ oauth2Security: ["read_pets"] }]
+            }
           },
           true
         );
@@ -274,7 +273,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Oauth2 Security implicit (local)", async (done) => {
+    test("Oauth2 Security implicit (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -293,7 +292,7 @@ describe("src/openapi/openapi", () => {
             "https://api.example.com/oauth2/authorize",
             {
               read_pets: "Read your pets",
-              write_pets: "Modify pets in your account",
+              write_pets: "Modify pets in your account"
             },
             "https://www.domain.com/refreshUrl"
           )
@@ -307,12 +306,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ oauth2Security: ["read_pets"] }],
-            },
+              security: [{ oauth2Security: ["read_pets"] }]
+            }
           },
           true
         );
@@ -324,7 +323,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Oauth2 Security password (local)", async (done) => {
+    test("Oauth2 Security password (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -343,7 +342,7 @@ describe("src/openapi/openapi", () => {
             "https://api.example.com/tokenUrl",
             {
               read_pets: "Read your pets",
-              write_pets: "Modify pets in your account",
+              write_pets: "Modify pets in your account"
             },
             "https://www.domain.com/refreshUrl"
           )
@@ -357,12 +356,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ oauth2Security: ["read_pets"] }],
-            },
+              security: [{ oauth2Security: ["read_pets"] }]
+            }
           },
           true
         );
@@ -375,7 +374,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Oauth2 Security clientCredentials (local)", async (done) => {
+    test("Oauth2 Security clientCredentials (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -394,7 +393,7 @@ describe("src/openapi/openapi", () => {
             "https://api.example.com/tokenUrl",
             {
               read_pets: "Read your pets",
-              write_pets: "Modify pets in your account",
+              write_pets: "Modify pets in your account"
             },
             "https://www.domain.com/refreshUrl"
           )
@@ -408,12 +407,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ oauth2Security: ["read_pets"] }],
-            },
+              security: [{ oauth2Security: ["read_pets"] }]
+            }
           },
           true
         );
@@ -426,7 +425,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Bearer Security with bearerFormat (local)", async (done) => {
+    test("Bearer Security with bearerFormat (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -448,12 +447,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ bearerJwtSecurity: [] }],
-            },
+              security: [{ bearerJwtSecurity: [] }]
+            }
           },
           true
         );
@@ -466,7 +465,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Should throw an error if security scheme does not exist (global)", async (done) => {
+    test("Should throw an error if security scheme does not exist (global)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -491,7 +490,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Should throw an error if duplicate scheme", async (done) => {
+    test("Should throw an error if duplicate scheme", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -514,7 +513,7 @@ describe("src/openapi/openapi", () => {
       }
     });
 
-    test("Should throw an error if security scheme does not exist (local)", async (done) => {
+    test("Should throw an error if security scheme does not exist (local)", async done => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -536,12 +535,12 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               validationSchema: {},
               responses: {
-                200: textPlain("Successful operation."),
+                200: textPlain("Successful operation.")
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ bearerJwtSecurity: [] }],
-            },
+              security: [{ bearerJwtSecurity: [] }]
+            }
           },
           true
         );

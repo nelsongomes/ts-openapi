@@ -55,8 +55,6 @@ function validateQueryParameters(
   parameterType: string,
   _isParameterRequired: boolean
 ) {
-  const nameMatch = key.match(/[A-Za-z0-9_]+/);
-
   if (["object"].includes(parameterType)) {
     throw new Error(`Query param '${key}' cannot be an object.`);
   }

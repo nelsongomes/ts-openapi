@@ -19,9 +19,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("password array simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         passwords: Joi.array().items(Types.Password())
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -43,26 +43,24 @@ describe("src/openapi/openapi", () => {
     });
 
     test("password array all options", async () => {
-      const query = Joi.object()
-        .keys({
-          passwords: Joi.array()
-            .items(
-              Types.Password({
-                description: "password string",
-                maxLength: 999,
-                nullable: true,
-                required: true
-              })
-            )
-            .min(1)
-            .max(100)
-            .required()
-            .description("Email array")
-            .default(["a@a.com", "b@b.com"])
-            .example(["c@c.com"])
-            .allow(null)
-        })
-        .description("ignore");
+      const query = {
+        passwords: Joi.array()
+          .items(
+            Types.Password({
+              description: "password string",
+              maxLength: 999,
+              nullable: true,
+              required: true
+            })
+          )
+          .min(1)
+          .max(100)
+          .required()
+          .description("Email array")
+          .default(["a@a.com", "b@b.com"])
+          .example(["c@c.com"])
+          .allow(null)
+      };
 
       openApi.addPath(
         "/test",

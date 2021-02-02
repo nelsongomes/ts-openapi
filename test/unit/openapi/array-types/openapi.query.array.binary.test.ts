@@ -19,11 +19,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("binary array simple", async () => {
-      const query = Types.Object({
-        properties: {
-          binaryArray: Joi.array().items(Types.Binary())
-        }
-      });
+      const query = {
+        binaryArray: Joi.array().items(Types.Binary())
+      };
 
       openApi.addPath(
         "/test",
@@ -45,30 +43,27 @@ describe("src/openapi/openapi", () => {
     });
 
     test("binary array all options", async () => {
-      const query = Types.Object({
-        properties: {
-          base64string: Joi.array()
-            .items(
-              Types.Binary({
-                description: "some binary base64 value",
-                required: true,
-                minLength: 512,
-                maxLength: 1024,
-                default: "c2FtcGxlMQ==",
-                example: "c2FtcGxlMQ==",
-                nullable: true
-              })
-            )
-            .required()
-            .min(10)
-            .max(20)
-            .default(["c2FtcGxlMQ=="])
-            .example(["c2FtcGxlMQ=="])
-            .description("bin array")
-            .allow(null)
-        },
-        description: "ignored"
-      });
+      const query = {
+        base64string: Joi.array()
+          .items(
+            Types.Binary({
+              description: "some binary base64 value",
+              required: true,
+              minLength: 512,
+              maxLength: 1024,
+              default: "c2FtcGxlMQ==",
+              example: "c2FtcGxlMQ==",
+              nullable: true
+            })
+          )
+          .required()
+          .min(10)
+          .max(20)
+          .default(["c2FtcGxlMQ=="])
+          .example(["c2FtcGxlMQ=="])
+          .description("bin array")
+          .allow(null)
+      };
 
       openApi.addPath(
         "/test",

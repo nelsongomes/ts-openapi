@@ -18,11 +18,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("password simple", async () => {
-      const query = Types.Object({
-        properties: {
-          password: Types.Password()
-        }
-      });
+      const query = {
+        password: Types.Password()
+      };
 
       openApi.addPath(
         "/test",
@@ -44,18 +42,16 @@ describe("src/openapi/openapi", () => {
     });
 
     test("password all options", async () => {
-      const query = Types.Object({
-        properties: {
-          password: Types.Password({
-            required: true,
-            minLength: 50,
-            maxLength: 255,
-            description: "User password.",
-            example: "****",
-            nullable: true
-          })
-        }
-      });
+      const query = {
+        password: Types.Password({
+          required: true,
+          minLength: 50,
+          maxLength: 255,
+          description: "User password.",
+          example: "****",
+          nullable: true
+        })
+      };
 
       openApi.addPath(
         "/test",

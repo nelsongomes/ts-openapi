@@ -1,11 +1,5 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema
-} from "../../../../src/openapi/openapi.types";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -24,9 +18,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("integer simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         user_name: Types.Integer()
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -48,7 +42,7 @@ describe("src/openapi/openapi", () => {
     });
 
     test("integer simple all options", async () => {
-      const query = Joi.object({
+      const query = {
         user_name: Types.Integer({
           description: "Some integer value",
           required: true,
@@ -58,7 +52,7 @@ describe("src/openapi/openapi", () => {
           example: 5,
           nullable: true
         })
-      }).description("ignore this");
+      };
 
       openApi.addPath(
         "/test",
@@ -86,12 +80,12 @@ describe("src/openapi/openapi", () => {
         CCC = 20
       }
 
-      const query = Joi.object({
+      const query = {
         option: Types.IntegerEnum({
           values: Object.values((EnumValues as unknown) as number[]),
           description: "Integer options from enum"
         })
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -119,12 +113,12 @@ describe("src/openapi/openapi", () => {
         CCC = 9
       }
 
-      const query = Joi.object({
+      const query = {
         option: Types.IntegerEnum({
           values: Object.values(EnumValues),
           description: "Integer options from enum"
         })
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -152,13 +146,13 @@ describe("src/openapi/openapi", () => {
         CCC = 30
       }
 
-      const query = Joi.object().keys({
+      const query = {
         option: Types.IntegerEnum({
           values: Object.values(EnumValues),
           description: "Integer options from enum",
           default: 20
         })
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -186,13 +180,13 @@ describe("src/openapi/openapi", () => {
         CCC = 30
       }
 
-      const query = Joi.object({
+      const query = {
         option: Types.IntegerEnum({
           values: Object.values(EnumValues),
           description: "Integer options from enum",
           default: 13
         })
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -220,7 +214,7 @@ describe("src/openapi/openapi", () => {
         CCC = 20
       }
 
-      const query = Joi.object({
+      const query = {
         option: Types.IntegerEnum({
           required: true,
           values: Object.values(EnumValues),
@@ -229,7 +223,7 @@ describe("src/openapi/openapi", () => {
           example: 20,
           nullable: true
         })
-      }).description("ignore this");
+      };
 
       openApi.addPath(
         "/test",

@@ -18,11 +18,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed", done => {
-      const cookie = Types.Object({
-        properties: {
-          username: Types.String({ required: true })
-        }
-      });
+      const cookie = {
+        username: Types.String({ required: true })
+      };
 
       openApi.addPath(
         "/test",
@@ -44,12 +42,10 @@ describe("src/openapi/openapi", () => {
       done();
     });
 
-    test("should throw an exception if query parameter is an object or an array", done => {
-      const cookie = Types.Object({
-        properties: {
-          someObject: Types.Object({ properties: { test: Types.String() } })
-        }
-      });
+    test("should throw an exception if cookie parameter is an object or an array", done => {
+      const cookie = {
+        someObject: Types.Object({ properties: { test: Types.String() } })
+      };
 
       try {
         openApi.addPath(

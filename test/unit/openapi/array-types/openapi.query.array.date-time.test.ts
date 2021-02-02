@@ -1,7 +1,6 @@
 import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import { Parameters, ParameterIn } from "../../../../src/openapi/openapi.types";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -36,9 +35,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("date-time array simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         timestamps: Joi.array().items(Types.DateTime())
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -60,9 +59,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("date array simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         timestamps: Joi.array().items(Types.Date())
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -84,25 +83,23 @@ describe("src/openapi/openapi", () => {
     });
 
     test("date-time array all options", async () => {
-      const query = Joi.object()
-        .keys({
-          timestamps: Joi.array()
-            .items(
-              Types.DateTime({
-                description: "ignore",
-                nullable: true,
-                required: true
-              })
-            )
-            .min(1)
-            .max(100)
-            .required()
-            .description("date-time array")
-            .default(["2020-10-14T22:12:53.065Z", "2020-10-14T22:12:53.065Z"])
-            .example(["2020-10-14T22:12:53.065Z"])
-            .allow(null)
-        })
-        .description("ignore");
+      const query = {
+        timestamps: Joi.array()
+          .items(
+            Types.DateTime({
+              description: "ignore",
+              nullable: true,
+              required: true
+            })
+          )
+          .min(1)
+          .max(100)
+          .required()
+          .description("date-time array")
+          .default(["2020-10-14T22:12:53.065Z", "2020-10-14T22:12:53.065Z"])
+          .example(["2020-10-14T22:12:53.065Z"])
+          .allow(null)
+      };
 
       openApi.addPath(
         "/test",

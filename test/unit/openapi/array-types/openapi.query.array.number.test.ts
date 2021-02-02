@@ -1,11 +1,6 @@
 import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema
-} from "../../../../src/openapi/openapi.types";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -24,29 +19,27 @@ describe("src/openapi/openapi", () => {
     });
 
     test("number array all options", async () => {
-      const query = Joi.object()
-        .keys({
-          numberList: Joi.array()
-            .items(
-              Types.Number({
-                minValue: 1,
-                maxValue: 50,
-                required: true,
-                description: "Some integer",
-                example: 1,
-                default: 2,
-                nullable: true
-              })
-            )
-            .description("Array of integers")
-            .required()
-            .min(1)
-            .max(10)
-            .default([1, 2, 3])
-            .example([4, 5, 6])
-            .allow(null)
-        })
-        .description("IGNORED");
+      const query = {
+        numberList: Joi.array()
+          .items(
+            Types.Number({
+              minValue: 1,
+              maxValue: 50,
+              required: true,
+              description: "Some integer",
+              example: 1,
+              default: 2,
+              nullable: true
+            })
+          )
+          .description("Array of integers")
+          .required()
+          .min(1)
+          .max(10)
+          .default([1, 2, 3])
+          .example([4, 5, 6])
+          .allow(null)
+      };
 
       openApi.addPath(
         "/test",
@@ -68,9 +61,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("number array minimal options", async () => {
-      const query = Joi.object().keys({
+      const query = {
         numberList: Joi.array().items(Types.Number())
-      });
+      };
 
       openApi.addPath(
         "/test",

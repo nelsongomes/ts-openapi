@@ -1,11 +1,5 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema
-} from "../../../../src/openapi/openapi.types";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -24,9 +18,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("email simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         email: Types.Email()
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -48,19 +42,17 @@ describe("src/openapi/openapi", () => {
     });
 
     test("email all options", async () => {
-      const query = Joi.object()
-        .keys({
-          email: Types.Email({
-            required: true,
-            minLength: 50,
-            maxLength: 255,
-            description: "User email.",
-            default: "john.doe@domain.com",
-            example: "john.doe@domain.com",
-            nullable: true
-          })
+      const query = {
+        email: Types.Email({
+          required: true,
+          minLength: 50,
+          maxLength: 255,
+          description: "User email.",
+          default: "john.doe@domain.com",
+          example: "john.doe@domain.com",
+          nullable: true
         })
-        .description("ignore this");
+      };
 
       openApi.addPath(
         "/test",

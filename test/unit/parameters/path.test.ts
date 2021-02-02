@@ -19,11 +19,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed", done => {
-      const params = Types.Object({
-        properties: {
-          username: Types.String({ required: true })
-        }
-      });
+      const params = {
+        username: Types.String({ required: true })
+      };
 
       openApi.addPath(
         "/test/:username",
@@ -48,11 +46,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if path parameter name is not made up of “word characters” ([A-Za-z0-9_])", done => {
-      const params = Types.Object({
-        properties: {
-          "user#name": Types.String()
-        }
-      });
+      const params = {
+        "user#name": Types.String()
+      };
 
       try {
         openApi.addPath(
@@ -85,11 +81,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if path parameter is an object or array", done => {
-      const params = Types.Object({
-        properties: {
-          stringArray: Joi.array().items({ list: Types.String() })
-        }
-      });
+      const params = {
+        stringArray: Joi.array().items({ list: Types.String() })
+      };
 
       try {
         openApi.addPath(
@@ -122,11 +116,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if path parameter is not required", done => {
-      const params = Types.Object({
-        properties: {
-          someString: Types.String()
-        }
-      });
+      const params = {
+        someString: Types.String()
+      };
 
       try {
         openApi.addPath(

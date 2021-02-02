@@ -18,11 +18,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should succeed", done => {
-      const headers = Types.Object({
-        properties: {
-          username: Types.String({ required: true })
-        }
-      });
+      const headers = {
+        username: Types.String({ required: true })
+      };
 
       openApi.addPath(
         "/test",
@@ -45,11 +43,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("should throw an exception if query parameter is an object or an array", done => {
-      const headers = Types.Object({
-        properties: {
-          someObject: Types.Object({ properties: { test: Types.String() } })
-        }
-      });
+      const headers = {
+        someObject: Types.Object({ properties: { test: Types.String() } })
+      };
 
       try {
         openApi.addPath(

@@ -1,11 +1,5 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema
-} from "../../../../src/openapi/openapi.types";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -39,9 +33,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("binary simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         base64string: Types.Binary()
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -63,20 +57,17 @@ describe("src/openapi/openapi", () => {
     });
 
     test("binary all options", async () => {
-      const query = Types.Object({
-        properties: {
-          base64string: Types.Binary({
-            description: "some binary base64 value",
-            required: true,
-            minLength: 512,
-            maxLength: 1024,
-            default: "c2FtcGxlMQ==",
-            example: "c2FtcGxlMQ==",
-            nullable: true
-          })
-        },
-        description: "ignore this!"
-      });
+      const query = {
+        base64string: Types.Binary({
+          description: "some binary base64 value",
+          required: true,
+          minLength: 512,
+          maxLength: 1024,
+          default: "c2FtcGxlMQ==",
+          example: "c2FtcGxlMQ==",
+          nullable: true
+        })
+      };
 
       openApi.addPath(
         "/test",

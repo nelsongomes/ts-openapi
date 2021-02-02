@@ -19,9 +19,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("string array simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         category: Joi.array().items(Types.String())
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -43,7 +43,7 @@ describe("src/openapi/openapi", () => {
     });
 
     test("string array all options", async () => {
-      const query = Joi.object({
+      const query = {
         category: Joi.array()
           .items(
             Types.String({
@@ -62,7 +62,7 @@ describe("src/openapi/openapi", () => {
           .example(["a"])
           .default("b")
           .allow(null)
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -90,11 +90,11 @@ describe("src/openapi/openapi", () => {
         CCC = "c"
       }
 
-      const query = Joi.object({
+      const query = {
         category: Joi.array().items(
           Types.StringEnum({ values: Object.values(EnumValues) })
         )
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -122,11 +122,11 @@ describe("src/openapi/openapi", () => {
         CCC = "c"
       }
 
-      const query = Joi.object().keys({
+      const query = {
         category: Joi.array()
           .items(Types.StringEnum({ values: Object.values(EnumValues) }))
           .required()
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -154,11 +154,11 @@ describe("src/openapi/openapi", () => {
         CCC = "c"
       }
 
-      const query = Joi.object().keys({
+      const query = {
         category: Joi.array()
           .items(Types.StringEnum({ values: Object.values(EnumValues) }))
           .default(["a", "b"])
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -186,11 +186,11 @@ describe("src/openapi/openapi", () => {
         CCC = "c"
       }
 
-      const query = Joi.object().keys({
+      const query = {
         category: Joi.array()
           .items(Types.StringEnum({ values: Object.values(EnumValues) }))
           .default(["a", "z"])
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -218,7 +218,7 @@ describe("src/openapi/openapi", () => {
         CCC = "c"
       }
 
-      const query = Joi.object({
+      const query = {
         category: Joi.array()
           .items(
             Types.StringEnum({
@@ -235,7 +235,7 @@ describe("src/openapi/openapi", () => {
           .example(["a", "b", "c"])
           .default(["b"])
           .allow(null)
-      }).description("ignore this");
+      };
 
       openApi.addPath(
         "/test",

@@ -35,9 +35,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("byte array simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         base64array: Joi.array().items(Types.Byte())
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -59,28 +59,26 @@ describe("src/openapi/openapi", () => {
     });
 
     test("byte array all options", async () => {
-      const query = Joi.object()
-        .keys({
-          base64array: Joi.array()
-            .items(
-              Types.Byte({
-                description: "some binary base64 value",
-                required: true,
-                minLength: 512,
-                maxLength: 1024,
-                default: "c2FtcGxlMQ==",
-                example: "c2FtcGxlMQ==",
-                nullable: true
-              })
-            )
-            .required()
-            .min(1)
-            .max(10)
-            .default(["c2FtcGxlMQ=="])
-            .example(["c2FtcGxlMQ=="])
-            .allow(null)
-        })
-        .description("ignore");
+      const query = {
+        base64array: Joi.array()
+          .items(
+            Types.Byte({
+              description: "some binary base64 value",
+              required: true,
+              minLength: 512,
+              maxLength: 1024,
+              default: "c2FtcGxlMQ==",
+              example: "c2FtcGxlMQ==",
+              nullable: true
+            })
+          )
+          .required()
+          .min(1)
+          .max(10)
+          .default(["c2FtcGxlMQ=="])
+          .example(["c2FtcGxlMQ=="])
+          .allow(null)
+      };
 
       openApi.addPath(
         "/test",

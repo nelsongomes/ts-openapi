@@ -1,11 +1,5 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema
-} from "../../../../src/openapi/openapi.types";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -39,9 +33,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("boolean simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         administrator: Types.Boolean()
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -63,17 +57,15 @@ describe("src/openapi/openapi", () => {
     });
 
     test("boolean all options", async () => {
-      const query = Joi.object()
-        .keys({
-          administrator: Types.Boolean({
-            description: "Is this user an administrator?",
-            required: true,
-            default: false,
-            example: false,
-            nullable: true
-          })
+      const query = {
+        administrator: Types.Boolean({
+          description: "Is this user an administrator?",
+          required: true,
+          default: false,
+          example: false,
+          nullable: true
         })
-        .description("ignore this");
+      };
 
       openApi.addPath(
         "/test",

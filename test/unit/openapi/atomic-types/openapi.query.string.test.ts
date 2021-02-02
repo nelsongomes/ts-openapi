@@ -46,11 +46,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("string simple", async () => {
-      const query = Types.Object({
-        properties: {
-          user_name: Types.String()
-        }
-      });
+      const query = {
+        user_name: Types.String()
+      };
 
       openApi.addPath(
         "/test",
@@ -72,20 +70,17 @@ describe("src/openapi/openapi", () => {
     });
 
     test("string simple all options", async () => {
-      const query = Types.Object({
-        properties: {
-          name: Types.String({
-            description: "Complete user name.",
-            minLength: 5,
-            maxLength: 100,
-            required: true,
-            default: "name",
-            example: "John Doe",
-            nullable: true
-          })
-        },
-        description: "ignore this!"
-      });
+      const query = {
+        name: Types.String({
+          description: "Complete user name.",
+          minLength: 5,
+          maxLength: 100,
+          required: true,
+          default: "name",
+          example: "John Doe",
+          nullable: true
+        })
+      };
 
       openApi.addPath(
         "/test",
@@ -113,11 +108,9 @@ describe("src/openapi/openapi", () => {
         CCC = "ccc"
       }
 
-      const query = Types.Object({
-        properties: {
-          option: Types.StringEnum({ values: Object.values(EnumValues) })
-        }
-      });
+      const query = {
+        option: Types.StringEnum({ values: Object.values(EnumValues) })
+      };
 
       openApi.addPath(
         "/test",
@@ -145,14 +138,12 @@ describe("src/openapi/openapi", () => {
         CCC = "ccc"
       }
 
-      const query = Types.Object({
-        properties: {
-          option: Types.StringEnum({
-            values: Object.values(EnumValues),
-            description: "String options from enum"
-          })
-        }
-      });
+      const query = {
+        option: Types.StringEnum({
+          values: Object.values(EnumValues),
+          description: "String options from enum"
+        })
+      };
 
       openApi.addPath(
         "/test",
@@ -180,15 +171,13 @@ describe("src/openapi/openapi", () => {
         CCC = "ccc"
       }
 
-      const query = Types.Object({
-        properties: {
-          option: Types.StringEnum({
-            values: Object.values(EnumValues),
-            description: "String options from enum",
-            default: "bbb"
-          })
-        }
-      });
+      const query = {
+        option: Types.StringEnum({
+          values: Object.values(EnumValues),
+          description: "String options from enum",
+          default: "bbb"
+        })
+      };
 
       openApi.addPath(
         "/test",
@@ -216,15 +205,13 @@ describe("src/openapi/openapi", () => {
         CCC = "ccc"
       }
 
-      const query = Types.Object({
-        properties: {
-          option: Types.StringEnum({
-            values: Object.values(EnumValues),
-            description: "String options from enum",
-            default: "abc"
-          })
-        }
-      });
+      const query = {
+        option: Types.StringEnum({
+          values: Object.values(EnumValues),
+          description: "String options from enum",
+          default: "abc"
+        })
+      };
 
       openApi.addPath(
         "/test",
@@ -252,19 +239,16 @@ describe("src/openapi/openapi", () => {
         CCC = "planes"
       }
 
-      const query = Types.Object({
-        properties: {
-          category: Types.StringEnum({
-            values: Object.values(EnumValues),
-            description: "Select vehicle type",
-            required: true,
-            default: EnumValues.AAA,
-            example: EnumValues.CCC,
-            nullable: true
-          })
-        },
-        description: "ignore this!"
-      });
+      const query = {
+        category: Types.StringEnum({
+          values: Object.values(EnumValues),
+          description: "Select vehicle type",
+          required: true,
+          default: EnumValues.AAA,
+          example: EnumValues.CCC,
+          nullable: true
+        })
+      };
 
       openApi.addPath(
         "/test",

@@ -1,11 +1,5 @@
-import Joi from "joi";
 import { OpenApi } from "../../../../src/openapi/openapi";
 import { textPlain } from "../../../../src/openapi/helpers/body-mimetype";
-import {
-  Parameters,
-  ParameterIn,
-  WebRequestSchema
-} from "../../../../src/openapi/openapi.types";
 import { Types } from "../../../../src/openapi/helpers/types";
 
 describe("src/openapi/openapi", () => {
@@ -24,9 +18,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("date-time simple", async () => {
-      const query = Joi.object().keys({
+      const query = {
         timestamp: Types.DateTime()
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -48,9 +42,9 @@ describe("src/openapi/openapi", () => {
     });
 
     test("date-time downgrades to date if format = 'date' (2017-07-21)", async () => {
-      const query = Joi.object().keys({
+      const query = {
         timestamp: Types.Date()
-      });
+      };
 
       openApi.addPath(
         "/test",
@@ -72,17 +66,15 @@ describe("src/openapi/openapi", () => {
     });
 
     test("date-time all options", async () => {
-      const query = Joi.object()
-        .keys({
-          timestamp: Types.DateTime({
-            required: true,
-            nullable: true,
-            description: "When did it happen.",
-            default: "2020-10-14T22:12:53.065Z",
-            example: "2020-10-14T22:12:53.065Z"
-          })
+      const query = {
+        timestamp: Types.DateTime({
+          required: true,
+          nullable: true,
+          description: "When did it happen.",
+          default: "2020-10-14T22:12:53.065Z",
+          example: "2020-10-14T22:12:53.065Z"
         })
-        .description("ignore this");
+      };
 
       openApi.addPath(
         "/test",

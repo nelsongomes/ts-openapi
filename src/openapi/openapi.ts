@@ -1,4 +1,4 @@
-import { Schema } from "joi";
+import Joi, { Schema } from "joi";
 import { ApplicationError } from "../errors/application-error";
 import joiToSwagger, { SwaggerSchema } from "../joi-conversion";
 import {
@@ -184,19 +184,27 @@ export class OpenApi {
 
     if (validationSchema.query) {
       // get parameters
-      this.genericParams(parameters, validationSchema.query, ParameterIn.Query);
+      this.genericParams(
+        parameters,
+        Joi.object().keys(validationSchema.query),
+        ParameterIn.Query
+      );
     }
 
     if (validationSchema.params) {
       // uri params
-      this.genericParams(parameters, validationSchema.params, ParameterIn.Path);
+      this.genericParams(
+        parameters,
+        Joi.object(validationSchema.params),
+        ParameterIn.Path
+      );
     }
 
     if (validationSchema.cookie) {
       // cookie params
       this.genericParams(
         parameters,
-        validationSchema.cookie,
+        Joi.object(validationSchema.cookie),
         ParameterIn.Cookie
       );
     }
@@ -205,7 +213,7 @@ export class OpenApi {
       // header params
       this.genericParams(
         parameters,
-        validationSchema.headers,
+        Joi.object(validationSchema.headers),
         ParameterIn.Header
       );
     }
