@@ -126,9 +126,9 @@ export class OpenApi {
     const operationId = pathDefinition.operationId;
     const responses = pathDefinition.responses;
 
-    const { validationSchema, ...remainder } = pathDefinition;
+    const { requestSchema, ...remainder } = pathDefinition;
     const { parameters, requestBody } = this.parametersAndBodyFromSchema(
-      pathDefinition.validationSchema || {}
+      pathDefinition.requestSchema || {}
     );
 
     const definition: PathDefinition = {
@@ -177,50 +177,50 @@ export class OpenApi {
   }
 
   private parametersAndBodyFromSchema(
-    validationSchema: WebRequestSchema
+    requestSchema: WebRequestSchema
   ): { parameters: Parameters | undefined; requestBody: Body | undefined } {
     const parameters: Parameters = [];
     let requestBody: Body | undefined;
 
-    if (validationSchema.query) {
+    if (requestSchema.query) {
       // get parameters
       this.genericParams(
         parameters,
-        Joi.object().keys(validationSchema.query),
+        Joi.object().keys(requestSchema.query),
         ParameterIn.Query
       );
     }
 
-    if (validationSchema.params) {
+    if (requestSchema.params) {
       // uri params
       this.genericParams(
         parameters,
-        Joi.object(validationSchema.params),
+        Joi.object(requestSchema.params),
         ParameterIn.Path
       );
     }
 
-    if (validationSchema.cookie) {
+    if (requestSchema.cookie) {
       // cookie params
       this.genericParams(
         parameters,
-        Joi.object(validationSchema.cookie),
+        Joi.object(requestSchema.cookie),
         ParameterIn.Cookie
       );
     }
 
-    if (validationSchema.headers) {
+    if (requestSchema.headers) {
       // header params
       this.genericParams(
         parameters,
-        Joi.object(validationSchema.headers),
+        Joi.object(requestSchema.headers),
         ParameterIn.Header
       );
     }
 
-    if (validationSchema.body) {
+    if (requestSchema.body) {
       // request body
-      requestBody = bodyParams(validationSchema.body);
+      requestBody = bodyParams(requestSchema.body);
     }
 
     return {

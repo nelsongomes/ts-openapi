@@ -10,9 +10,10 @@ import {
   oauth2ImplicitAuth,
   oauth2AuthorizationCodeAuth,
   oauth2PasswordAuth,
-  oauth2ClientCredentialsAuth,
+  oauth2ClientCredentialsAuth
 } from "./openapi/helpers/auth";
 import { textPlain } from "./openapi/helpers/body-mimetype";
+import { Types } from "./openapi/helpers/types";
 
 export { Joi, Schema };
 export { OpenApi, bodySchema };
@@ -27,6 +28,7 @@ export {
   oauth2ImplicitAuth,
   oauth2AuthorizationCodeAuth,
   oauth2PasswordAuth,
-  oauth2ClientCredentialsAuth,
+  oauth2ClientCredentialsAuth
 };
 export { textPlain };
+export { Types };

@@ -149,7 +149,7 @@ export type PathInputDefinition = {
   operationId: string;
   security?: SecuritySchemeArray;
   responses: Responses;
-  validationSchema?: WebRequestSchema;
+  requestSchema?: WebRequestSchema;
 };
 export type PathInput = {
   [K in Method]?: PathInputDefinition;

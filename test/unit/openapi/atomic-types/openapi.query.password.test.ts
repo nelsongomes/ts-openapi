@@ -28,7 +28,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { query },
+            requestSchema: { query },
             responses: {
               200: textPlain("Successful operation.")
             },
@@ -48,7 +48,6 @@ describe("src/openapi/openapi", () => {
           minLength: 50,
           maxLength: 255,
           description: "User password.",
-          example: "****",
           nullable: true
         })
       };
@@ -59,7 +58,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { query },
+            requestSchema: { query },
             responses: {
               200: textPlain("Successful operation.")
             },

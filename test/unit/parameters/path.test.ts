@@ -28,7 +28,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { params },
+            requestSchema: { params },
             responses: {
               200: textPlain("Successful operation.")
             },
@@ -56,7 +56,7 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Test endpoint",
               operationId: "id",
-              validationSchema: { params },
+              requestSchema: { params },
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -93,7 +93,7 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Test endpoint",
               operationId: "id",
-              validationSchema: { params },
+              requestSchema: { params },
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -128,7 +128,7 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Test endpoint",
               operationId: "id",
-              validationSchema: { params },
+              requestSchema: { params },
               responses: {
                 200: textPlain("Successful operation.")
               },

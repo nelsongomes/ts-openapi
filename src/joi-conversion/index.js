@@ -1,43 +1,56 @@
-'use strict';
+"use strict";
 
-const joi = require('joi');
-const { find, get, isEqual, isNumber, isPlainObject, isString, merge, set, uniqWith } = require('lodash');
+const joi = require("joi");
+const {
+  find,
+  get,
+  isEqual,
+  isNumber,
+  isPlainObject,
+  isString,
+  merge,
+  set,
+  uniqWith
+} = require("lodash");
 
 const patterns = {
-	alphanum: '^[a-zA-Z0-9]*$',
-	alphanumLower: '^[a-z0-9]*$',
-	alphanumUpper: '^[A-Z0-9]*$',
-	token: '^[a-zA-Z0-9_]*$',
+  alphanum: "^[a-zA-Z0-9]*$",
+  alphanumLower: "^[a-z0-9]*$",
+  alphanumUpper: "^[A-Z0-9]*$",
+  token: "^[a-zA-Z0-9_]*$"
 };
 
-function meta (schema, key) {
-	const flattened = Object.assign.apply(null, [ {} ].concat(schema.$_terms.metas));
+function meta(schema, key) {
+  const flattened = Object.assign.apply(
+    null,
+    [{}].concat(schema.$_terms.metas)
+  );
 
-	return get(flattened, key);
+  return get(flattened, key);
 }
 
 /*function refDef (type, name) {
 	return { $ref: '#/components/' + type + '/' + name };
 }*/
 
-function getMinMax (schema, suffix = 'Length') {
-	const swagger = {};
-	for (let i = 0; i < schema._rules.length; i++) {
-		const test = schema._rules[i];
-		if (test.name === 'min') {
-			swagger[`min${suffix}`] = test.args.limit;
-		}
+function getMinMax(schema, suffix = "Length") {
+  const swagger = {};
+  for (let i = 0; i < schema._rules.length; i++) {
+    const test = schema._rules[i];
+    if (test.name === "min") {
+      swagger[`min${suffix}`] = test.args.limit;
+    }
 
-		if (test.name === 'max') {
-			swagger[`max${suffix}`] = test.args.limit;
-		}
+    if (test.name === "max") {
+      swagger[`max${suffix}`] = test.args.limit;
+    }
 
-		/*if (test.name === 'length') {
+    /*if (test.name === 'length') {
 			swagger[`min${suffix}`] = test.args.limit;
 			swagger[`max${suffix}`] = test.args.limit;
 		}*/
-	}
-	return swagger;
+  }
+  return swagger;
 }
 
 /*function getCaseSuffix (schema) {
@@ -86,42 +99,42 @@ function getMinMax (schema, suffix = 'Length') {
 	return swaggers.length > 0 ? { [mode]: swaggers } : {};
 }*/
 
-function parseValidsAndInvalids (schema, filterFunc) {
-	const swagger = {};
-	if (schema._valids) {
-		const valids = schema._valids.values().filter(filterFunc);
-		if (get(schema, '_flags.only') && valids.length) {
-			swagger.enum = valids;
-		}
-	}
+function parseValidsAndInvalids(schema, filterFunc) {
+  const swagger = {};
+  if (schema._valids) {
+    const valids = schema._valids.values().filter(filterFunc);
+    if (get(schema, "_flags.only") && valids.length) {
+      swagger.enum = valids;
+    }
+  }
 
-	/*if (schema._invalids) {
+  /*if (schema._invalids) {
 		const invalids = schema._invalids.values().filter(filterFunc);
 		if (invalids.length) {
 			swagger.not = { enum: invalids };
 		}
 	}*/
 
-	return swagger;
+  return swagger;
 }
 
 const parseAsType = {
-	number: (schema) => {
-		const swagger = {};
+  number: schema => {
+    const swagger = {};
 
-		if (find(schema._rules, { name: 'integer' })) {
-			swagger.type = 'integer';
-		} else {
-			swagger.type = 'number';
-			//if (find(schema._rules, { name: 'precision' })) {
-			//	swagger.format = 'double';
-			//} else {
-				swagger.format = 'float';
-			//}
-		}
+    if (find(schema._rules, { name: "integer" })) {
+      swagger.type = "integer";
+    } else {
+      swagger.type = "number";
+      //if (find(schema._rules, { name: 'precision' })) {
+      //	swagger.format = 'double';
+      //} else {
+      swagger.format = "float";
+      //}
+    }
 
-		const sign = find(schema._rules, { name: 'sign' });
-		/*if (sign) {
+    const sign = find(schema._rules, { name: "sign" });
+    /*if (sign) {
 			if (sign.args.sign === 'positive') {
 				swagger.minimum = 1;
 			} else if (sign.args.sign === 'negative') {
@@ -129,71 +142,77 @@ const parseAsType = {
 			}
 		}*/
 
-		const min = find(schema._rules, { name: 'min' });
-		if (min) {
-			swagger.minimum = min.args.limit;
-		}
+    const min = find(schema._rules, { name: "min" });
+    if (min) {
+      swagger.minimum = min.args.limit;
+    }
 
-		const max = find(schema._rules, { name: 'max' });
-		if (max) {
-			swagger.maximum = max.args.limit;
-		}
+    const max = find(schema._rules, { name: "max" });
+    if (max) {
+      swagger.maximum = max.args.limit;
+    }
 
-		Object.assign(swagger, parseValidsAndInvalids(schema, (s) => isNumber(s)));
+    Object.assign(
+      swagger,
+      parseValidsAndInvalids(schema, s => isNumber(s))
+    );
 
-		return swagger;
-	},
-	string: (schema) => {
-		const swagger = { type: 'string' };
+    return swagger;
+  },
+  string: schema => {
+    const swagger = { type: "string" };
 
-		/*if (find(schema._rules, { name: 'alphanum' })) {
+    /*if (find(schema._rules, { name: 'alphanum' })) {
 			const strict = get(schema, '_preferences.convert') === false;
 			swagger.pattern = patterns[`alphanum${strict ? getCaseSuffix(schema) : ''}`];
 		}*/
 
-		/*if (find(schema._rules, { name: 'token' })) {
+    /*if (find(schema._rules, { name: 'token' })) {
 			swagger.pattern = patterns.token;
 		}*/
 
-		if (find(schema._rules, { name: 'email' })) {
-			swagger.format = 'email';
-			if (swagger.pattern) delete swagger.pattern;
-		}
+    if (find(schema._rules, { name: "email" })) {
+      swagger.format = "email";
+      if (swagger.pattern) delete swagger.pattern;
+    }
 
-		if (find(schema._rules, { name: 'isoDate' })) {
-			swagger.format = 'date-time';
-			if (swagger.pattern) delete swagger.pattern;
-		}
+    if (find(schema._rules, { name: "isoDate" })) {
+      swagger.format = "date-time";
+      if (swagger.pattern) delete swagger.pattern;
+    }
 
-		/*if (find(schema._rules, { name: 'guid' })) {
+    /*if (find(schema._rules, { name: 'guid' })) {
 			swagger.format = 'uuid';
 			if (swagger.pattern) delete swagger.pattern;
 		}*/
 
-		/*const pattern = find(schema._rules, { name: 'pattern' });
+    /*const pattern = find(schema._rules, { name: 'pattern' });
 		if (pattern) {
 			swagger.pattern = pattern.args.regex.toString().slice(1, -1);
 		}*/
 
-		Object.assign(swagger, getMinMax(schema));
-		Object.assign(swagger, parseValidsAndInvalids(schema, (s) => isString(s)));
+    Object.assign(swagger, getMinMax(schema));
+    Object.assign(
+      swagger,
+      parseValidsAndInvalids(schema, s => isString(s))
+    );
 
-		return swagger;
-	},
-	binary: (schema) => {
-		const swagger = { type: 'string', format: 'binary' };
+    return swagger;
+  },
+  binary: schema => {
+    const swagger = { type: "string", format: "binary" };
 
-		if (get(schema, '_flags.encoding') === 'base64') {
-			swagger.format = 'byte';
-		}
+    if (get(schema, "_flags.encoding") === "base64") {
+      swagger.format = "byte";
+    }
 
-		Object.assign(swagger, getMinMax(schema));
+    Object.assign(swagger, getMinMax(schema));
 
-		return swagger;
-	},
-//	date: (/* schema */) => ({ type: 'string', format: 'date-time' }),
-	boolean: (/* schema */) => ({ type: 'boolean' }),
-	/*alternatives: (schema, existingComponents, newComponentsByRef) => {
+    return swagger;
+  },
+  //	date: (/* schema */) => ({ type: 'string', format: 'date-time' }),
+  boolean: (/* schema */) => ({ type: "boolean" }),
+  /*alternatives: (schema, existingComponents, newComponentsByRef) => {
 		const matches = get(schema, '$_terms.matches');
 		const mode = `${get(schema, '_flags.match') || 'any'}Of`;
 
@@ -215,81 +234,89 @@ const parseAsType = {
 
 		return schemaForAlternatives(alternatives, existingComponents, newComponentsByRef, mode);
 	},*/
-	array: (schema, existingComponents, newComponentsByRef) => {
-		const items = get(schema, '$_terms.items');
-		const mode = 'oneOf';
+  array: (schema, existingComponents, newComponentsByRef) => {
+    const items = get(schema, "$_terms.items");
+    const mode = "oneOf";
 
-		const alternatives = items;
+    const alternatives = items;
 
-		let swaggers = [];
-		for (const joiSchema of alternatives) {
-			// eslint-disable-next-line max-len
-			const { swagger, components } = parse(joiSchema, merge({}, existingComponents || {}, newComponentsByRef || {}));
-			if (!swagger) continue; // swagger is falsy if joi.forbidden()
+    let swaggers = [];
+    for (const joiSchema of alternatives) {
+      // eslint-disable-next-line max-len
+      const { swagger, components } = parse(
+        joiSchema,
+        merge({}, existingComponents || {}, newComponentsByRef || {})
+      );
+      if (!swagger) continue; // swagger is falsy if joi.forbidden()
 
-			merge(newComponentsByRef, components || {});
+      merge(newComponentsByRef, components || {});
 
-			swaggers.push(swagger);
-		}
-		swaggers = uniqWith(swaggers, isEqual);
+      swaggers.push(swagger);
+    }
+    swaggers = uniqWith(swaggers, isEqual);
 
-		const openapi = {
-			type: 'array',
-			items: { [mode]: swaggers },
-		};
-		if (swaggers.length <= 1) {
-			openapi.items = get(swaggers, [ 0 ]) || {};
-		}
+    const openapi = {
+      type: "array",
+      items: { [mode]: swaggers }
+    };
+    if (swaggers.length <= 1) {
+      openapi.items = get(swaggers, [0]) || {};
+    }
 
-		Object.assign(openapi, getMinMax(schema, 'Items'));
+    Object.assign(openapi, getMinMax(schema, "Items"));
 
-		/*if (find(schema._rules, { name: 'unique' })) {
+    /*if (find(schema._rules, { name: 'unique' })) {
 			openapi.uniqueItems = true;
 		}*/
 
-		return openapi;
-	},
-	object: (schema, existingComponents, newComponentsByRef) => {
+    return openapi;
+  },
+  object: (schema, existingComponents, newComponentsByRef) => {
+    const requireds = [];
+    const properties = {};
 
-		const requireds = [];
-		const properties = {};
+    const combinedComponents = merge(
+      {},
+      existingComponents || {},
+      newComponentsByRef || {}
+    );
 
-		const combinedComponents = merge({}, existingComponents || {}, newComponentsByRef || {});
-
-		const children = get(schema, '$_terms.keys') || [];
-		children.forEach((child) => {
-			const key = child.key;
-			const { swagger, components } = parse(child.schema, combinedComponents);
-			/*if (!swagger) { // swagger is falsy if joi.forbidden()
+    const children = get(schema, "$_terms.keys") || [];
+    children.forEach(child => {
+      const key = child.key;
+      const { swagger: parsedSwagger, components } = parse(
+        child.schema,
+        combinedComponents
+      );
+      /*if (!swagger) { // swagger is falsy if joi.forbidden()
 				return;
 			}*/
 
-			merge(newComponentsByRef, components || {});
-			merge(combinedComponents, components || {});
+      merge(newComponentsByRef, components || {});
+      merge(combinedComponents, components || {});
 
-			properties[key] = swagger;
+      properties[key] = parsedSwagger;
 
-			if (get(child, 'schema._flags.presence') === 'required') {
-				requireds.push(key);
-			}
+      if (get(child, "schema._flags.presence") === "required") {
+        requireds.push(key);
+      }
+    });
 
-		});
+    const swagger = {
+      type: "object",
+      properties
+    };
+    if (requireds.length) {
+      swagger.required = requireds;
+    }
 
-		const swagger = {
-			type: 'object',
-			properties,
-		};
-		if (requireds.length) {
-			swagger.required = requireds;
-		}
-
-		/*if (get(schema, '_flags.unknown') !== true) {
+    /*if (get(schema, '_flags.unknown') !== true) {
 			swagger.additionalProperties = false;
 		}*/
 
-		return swagger;
-	},
-/*	any: (schema) => {
+    return swagger;
+  }
+  /*	any: (schema) => {
 		const swagger = {};
 		// convert property to file upload, if indicated by meta property
 		if (meta(schema, 'swaggerType') === 'file') {
@@ -303,94 +330,101 @@ const parseAsType = {
 	},*/
 };
 
-function parse (schema, existingComponents) {
-	// inspect(schema);
+function parse(schema, existingComponents) {
+  // inspect(schema);
 
-	if (!schema) throw new Error('No schema was passed.');
+  if (!schema) throw new Error("No schema was passed.");
 
-	/*if (isPlainObject(schema)) {
+  /*if (isPlainObject(schema)) {
 		schema = joi.object().keys(schema);
 	}*/
 
-	if (!joi.isSchema(schema)) throw new TypeError('Passed schema does not appear to be a joi schema.');
+  if (!joi.isSchema(schema))
+    throw new TypeError("Passed schema does not appear to be a joi schema.");
 
-	const flattenMeta = Object.assign.apply(null, [ {} ].concat(schema.$_terms.metas));
+  const flattenMeta = Object.assign.apply(
+    null,
+    [{}].concat(schema.$_terms.metas)
+  );
 
-	/*const override = flattenMeta.swagger;
+  /*const override = flattenMeta.swagger;
 	if (override && flattenMeta.swaggerOverride) {
 		return { swagger: override, components: {} };
 	}*/
 
-	const metaDefName = flattenMeta.className;
-	const metaDefType = flattenMeta.classTarget || 'schemas';
+  const metaDefName = flattenMeta.className;
+  const metaDefType = flattenMeta.classTarget || "schemas";
 
-	// if the schema has a definition class name, and that
-	// definition is already defined, just use that definition
-	/*if (metaDefName && get(existingComponents, [ metaDefType, metaDefName ])) {
+  // if the schema has a definition class name, and that
+  // definition is already defined, just use that definition
+  /*if (metaDefName && get(existingComponents, [ metaDefType, metaDefName ])) {
 		return { swagger: refDef(metaDefType, metaDefName) };
 	}*/
 
-	/*if (get(schema, '_flags.presence') === 'forbidden') {
+  /*if (get(schema, '_flags.presence') === 'forbidden') {
 		return false;
 	}*/
 
-	const type = meta(schema, 'baseType') || schema.type;
+  const type = meta(schema, "baseType") || schema.type;
 
-	/*if (!parseAsType[type]) {
+  /*if (!parseAsType[type]) {
 		throw new TypeError(`${type} is not a recognized Joi type.`);
 	}*/
 
-	const components = {};
-	const swagger =  parseAsType[type](schema, existingComponents, components);
-	//if(flattenMeta) {
-		Object.assign(swagger, { meta: flattenMeta })
-	//}
-	/*if (get(schema, '$_terms.whens')) {
+  const components = {};
+  const swagger = parseAsType[type](schema, existingComponents, components);
+  //if(flattenMeta) {
+  Object.assign(swagger, { meta: flattenMeta });
+  //}
+  /*if (get(schema, '$_terms.whens')) {
 		Object.assign(swagger, parseWhens(schema, existingComponents, components));
 	}*/
 
-	//if (!swagger) return { swagger, components };
+  //if (!swagger) return { swagger, components };
 
-	if (schema._valids && schema._valids.has(null)) {
-		swagger.nullable = true;
-	}
+  if (schema._valids && schema._valids.has(null)) {
+    swagger.nullable = true;
+  }
 
-	const description = get(schema, '_flags.description');
-	if (description) {
-		swagger.description = description;
-	}
+  const description = get(schema, "_flags.description");
+  if (description) {
+    swagger.description = description;
+  }
 
-	if (schema.$_terms.examples) {
-		//if (schema.$_terms.examples.length === 1) {
-			swagger.example = schema.$_terms.examples[0];
-		/*} else {
+  if (schema.$_terms.examples) {
+    //if (schema.$_terms.examples.length === 1) {
+    swagger.example = schema.$_terms.examples[0];
+    /*} else {
 			swagger.examples = schema.$_terms.examples;
 		}*/
-	}
+  }
 
-	/*const label = get(schema, '_flags.label');
+  /*const label = get(schema, '_flags.label');
 	if (label) {
 		swagger.title = label;
 	}*/
 
-	const defaultValue = get(schema, '_flags.default');
-	if ((defaultValue || typeof defaultValue === 'boolean') && typeof defaultValue !== 'function') {
-		swagger.default = defaultValue;
-	}
+  const defaultValue = get(schema, "_flags.default");
+  if (
+    (defaultValue ||
+      typeof defaultValue === "boolean" ||
+      typeof defaultValue === "number") &&
+    typeof defaultValue !== "function"
+  ) {
+    swagger.default = defaultValue;
+  }
 
-/*	if (metaDefName) {
+  /*	if (metaDefName) {
 		set(components, [ metaDefType, metaDefName ], swagger);
 		return { swagger: refDef(metaDefType, metaDefName), components };
 	}*/
 
-	/*if (override) {
+  /*if (override) {
 		Object.assign(swagger, override);
 	}*/
 
-	return { swagger, components };
+  return { swagger, components };
 }
 
 module.exports = exports = parse;
 exports.default = parse;
-
-

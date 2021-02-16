@@ -95,7 +95,6 @@ Object {
             },
           },
           "description": "Full body description.",
-          "required": true,
         },
         "responses": Object {
           "200": Object {
@@ -166,7 +165,6 @@ Object {
             },
           },
           "description": "Body does not have a description.",
-          "required": true,
         },
         "responses": Object {
           "200": Object {

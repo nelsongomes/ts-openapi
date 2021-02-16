@@ -57,7 +57,7 @@ describe("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { body },
+            requestSchema: { body },
             responses: {
               200: textPlain("Successful operation.")
             },
@@ -88,7 +88,7 @@ describe("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { body },
+            requestSchema: { body },
             responses: {
               200: textPlain("Successful operation.")
             },

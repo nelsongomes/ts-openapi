@@ -20,8 +20,18 @@ type StringEnumParameters = {
 } & Common;
 
 type EmailParameters = StringParameters;
-type PasswordParameters = StringParameters;
-type UuidParameters = StringParameters;
+type UriParameters = StringParameters;
+type HostnameParameters = StringParameters;
+type PasswordParameters = {
+  minLength?: number;
+  maxLength?: number;
+} & Common;
+type UuidParameters = {
+  example?: string;
+} & Common;
+type IpParameters = {
+  example?: string;
+} & Common;
 type BinaryParameters = StringParameters;
 type ByteParameters = StringParameters;
 
@@ -82,8 +92,8 @@ export const Types = {
         joiType = joiType.description(description);
       }
 
-      if (typeof required === "boolean" && required) {
-        joiType = joiType.required();
+      if (typeof required === "boolean") {
+        joiType = required ? joiType.required() : joiType.optional();
       }
 
       if (typeof nullable === "boolean" && nullable) {
@@ -123,7 +133,39 @@ export const Types = {
   },
 
   Uuid: (parameters?: UuidParameters) => {
-    return Types.String(parameters).meta({ format: "uuid" });
+    return Types.String(parameters)
+      .uuid({ version: "uuidv4" })
+      .meta({ format: "uuid" })
+      .min(36)
+      .max(36);
+  },
+
+  Uri: (parameters?: UriParameters) => {
+    return Types.String(parameters)
+      .uri()
+      .meta({ format: "uri" });
+  },
+
+  Hostname: (parameters?: HostnameParameters) => {
+    return Types.String(parameters)
+      .hostname()
+      .meta({ format: "hostname" });
+  },
+
+  Ipv4: (parameters?: IpParameters) => {
+    return Types.String(parameters)
+      .ip({ version: ["ipv4"] })
+      .meta({ format: "ipv4" })
+      .min(7)
+      .max(15);
+  },
+
+  Ipv6: (parameters?: IpParameters) => {
+    return Types.String(parameters)
+      .ip({ version: ["ipv6"] })
+      .meta({ format: "ipv6" })
+      .min(3)
+      .max(45);
   },
 
   Binary: (parameters?: BinaryParameters) => {
@@ -143,8 +185,8 @@ export const Types = {
         joiType = joiType.description(description);
       }
 
-      if (typeof required === "boolean" && required) {
-        joiType = joiType.required();
+      if (typeof required === "boolean") {
+        joiType = required ? joiType.required() : joiType.optional();
       }
 
       if (typeof nullable === "boolean" && nullable) {
@@ -187,8 +229,8 @@ export const Types = {
         joiType = joiType.description(description);
       }
 
-      if (typeof required === "boolean" && required) {
-        joiType = joiType.required();
+      if (typeof required === "boolean") {
+        joiType = required ? joiType.required() : joiType.optional();
       }
 
       if (typeof nullable === "boolean" && nullable) {
@@ -231,19 +273,19 @@ export const Types = {
         joiType = joiType.allow(null);
       }
 
-      if (minValue) {
+      if (typeof minValue === "number") {
         joiType = joiType.min(minValue);
       }
 
-      if (maxValue) {
+      if (typeof maxValue === "number") {
         joiType = joiType.max(maxValue);
       }
 
-      if (parameters.default) {
+      if (typeof parameters.default === "number") {
         joiType = joiType.default(parameters.default);
       }
 
-      if (parameters.example) {
+      if (typeof parameters.example === "number") {
         joiType = joiType.example(example);
       }
     }
@@ -273,8 +315,8 @@ export const Types = {
         joiType = joiType.description(description);
       }
 
-      if (typeof required === "boolean" && required) {
-        joiType = joiType.required();
+      if (typeof required === "boolean") {
+        joiType = required ? joiType.required() : joiType.optional();
       }
 
       if (typeof nullable === "boolean" && nullable) {
@@ -301,8 +343,8 @@ export const Types = {
       joiType = joiType.description(description);
     }
 
-    if (required) {
-      joiType = joiType.required();
+    if (typeof required === "boolean") {
+      joiType = required ? joiType.required() : joiType.optional();
     }
 
     if (nullable) {
@@ -336,8 +378,8 @@ export const Types = {
       joiType = joiType.description(description);
     }
 
-    if (required) {
-      joiType = joiType.required();
+    if (typeof required === "boolean") {
+      joiType = required ? joiType.required() : joiType.optional();
     }
 
     if (nullable) {

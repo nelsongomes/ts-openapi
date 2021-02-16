@@ -38,11 +38,11 @@ export function limitations(parameter: any): string {
     delete parameter.maximum;
   }
 
-  if (parameter.minimum) {
+  if (typeof parameter.minimum === "number") {
     limitationArray.push(`min:${parameter.minimum}`);
   }
 
-  if (parameter.maximum) {
+  if (typeof parameter.maximum === "number") {
     limitationArray.push(`max:${parameter.maximum}`);
   }
 
@@ -92,8 +92,7 @@ export function bodyParams(schema: ObjectSchema): Body {
         schema: objectSchema(parameter),
         ...(parameter.example && { example: parameter.example })
       }
-    },
-    required: true
+    }
   };
 }
 
@@ -254,8 +253,12 @@ export function numberSchema(parameter: any): SchemaTypeNumber {
     description,
     ...(parameter.default && { default: parameter.default }),
     ...(parameter.enum && { enum: parameter.enum }),
-    ...(parameter.minimum && { minimum: parameter.minimum }),
-    ...(parameter.maximum && { maximum: parameter.maximum }),
+    ...(typeof parameter.minimum === "number" && {
+      minimum: parameter.minimum
+    }),
+    ...(typeof parameter.maximum === "number" && {
+      maximum: parameter.maximum
+    }),
     ...(typeof parameter.nullable === "boolean" && {
       nullable: parameter.nullable
     }),
@@ -292,10 +295,19 @@ export function integerSchema(parameter: any): SchemaTypeInteger {
 
   const output: SchemaTypeInteger = {
     description,
-    ...(parameter.default && { default: parameter.default }),
+    ...(typeof parameter.default === "number" && {
+      default: parameter.default
+    }),
+    ...(typeof parameter.example === "number" && {
+      example: parameter.example
+    }),
     ...(parameter.enum && { enum: parameter.enum }),
-    ...(parameter.minimum && { minimum: parameter.minimum }),
-    ...(parameter.maximum && { maximum: parameter.maximum }),
+    ...(typeof parameter.minimum === "number" && {
+      minimum: parameter.minimum
+    }),
+    ...(typeof parameter.maximum === "number" && {
+      maximum: parameter.maximum
+    }),
     ...(typeof parameter.nullable === "boolean" && {
       nullable: parameter.nullable
     }),

@@ -28,7 +28,36 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { query },
+            requestSchema: { query },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          }
+        },
+        true
+      );
+      expect(openApi.generateJson()).toMatchSnapshot();
+    });
+
+    test("integer simple, 0-valued", async () => {
+      const query = {
+        user_name: Types.Integer({
+          minValue: 0,
+          maxValue: 0,
+          default: 0,
+          example: 0
+        })
+      };
+
+      openApi.addPath(
+        "/test",
+        {
+          get: {
+            description: "Test endpoint",
+            operationId: "id",
+            requestSchema: { query },
             responses: {
               200: textPlain("Successful operation.")
             },
@@ -60,7 +89,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { query },
+            requestSchema: { query },
             responses: {
               200: textPlain("Successful operation.")
             },
@@ -93,7 +122,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { query },
+            requestSchema: { query },
             responses: {
               200: textPlain("Successful operation.")
             },
@@ -126,7 +155,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { query },
+            requestSchema: { query },
             responses: {
               200: textPlain("Successful operation.")
             },
@@ -160,7 +189,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { query },
+            requestSchema: { query },
             responses: {
               200: textPlain("Successful operation.")
             },
@@ -194,7 +223,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { query },
+            requestSchema: { query },
             responses: {
               200: textPlain("Successful operation.")
             },
@@ -231,7 +260,7 @@ describe("src/openapi/openapi", () => {
           get: {
             description: "Test endpoint",
             operationId: "id",
-            validationSchema: { query },
+            requestSchema: { query },
             responses: {
               200: textPlain("Successful operation.")
             },

@@ -7,14 +7,19 @@ All string types here defined have all parameters defined, as a sample, but in m
 ### String
 
 ```ts
-    Joi.string()
-        .description("Parameter description.")
-        .min(5)                 // min length 
-        .max(100)               // max length
-        .required()             // required ?
-        .default("name")        // default value that is used if not present
-        .example("John Doe")    // sample value used to prefill API
-        .allow(null);           // nullable ?
+    // a simple example
+    Types.String()
+
+    // a more complete declaration
+    Types.String({
+        description: "Customer name",  
+        minLength: 5,
+        maxLength: 100,
+        required: true,
+        default: "name",        // validation default value
+        example: "John Doe",    // example has precedence over default in the UI
+        nullable: true
+    })
 ```
 
 ### String Enum
@@ -26,108 +31,152 @@ All string types here defined have all parameters defined, as a sample, but in m
         CCC = "planes",
     }
 
-    Joi.string()
-        .valid(...Object.values(EnumValues))
-        .description("Select vehicle type")
-        .required()             // required ?
-        .default("cars")        // default value that is used if not present
-        .example("planes")      // sample value used to prefill API
-        .allow(null);           // nullable ?
+    // a simple example
+    Types.StringEnum({ values: Object.values(EnumValues) }
+
+    // a more complete declaration, note that length does not apply because it's already an enum
+    Types.StringEnum({
+        description: "Select vehicle type",
+        values: Object.values(EnumValues),
+        required: true,
+        default: EnumValues.AAA,    // validation default value
+        example: EnumValues.CCC,    // example has precedence over default in the UI
+        nullable: true
+    })
 ```
 
 ### Email
 
 ```ts
-    Joi.string()
-        .description("User email.")
-        .email()
-        .required()                     // required ?
-        .min(50)                        // min length 
-        .max(255)                       // max length 
-        .default("john.doe@domain.com") // default value that is used if not present
-        .example("john.doe@domain.com") // sample value used to prefill API
-        .allow(null);                   // nullable ?
+    // a simple example
+    Types.Email()
+
+    // a more complete declaration
+    Types.Email({
+        description: "User email.",
+        required: true,
+        minLength: 50,
+        maxLength: 255,
+        default: "john.doe@domain.com", // validation default value
+        example: "john.doe@domain.com", // example has precedence over default in the UI
+        nullable: true
+    })
 ```
 
 ### Password
 
 ```ts
-    Joi.string()
-        .description("User password.")
-        .meta({ format: "password" })
-        .required()                     // required ?
-        .min(50)                        // min length 
-        .max(255)                       // max length
-        .example("****")                // sample value used to prefill API
-        .allow(null);                   // nullable ?
+    // a simple example
+    Types.Password()
+
+    // a more complete declaration (no default or example for password types)
+    Types.Password({
+        description: "User password.",
+        required: true,
+        minLength: 50,
+        maxLength: 255,
+        nullable: true
+    })
 ```
 
 ### Uuid
 
 ```ts
-    Joi.string()
-        .meta({ format: "uuid" })
-        .description("Some uuid.")
-        .required()                                         // required ?
-        .min(50)                                            // min length
-        .max(255)                                           // max length
-        .default("ac7744d6-eefb-4437-9fe3-617abda4b659")    // default value that is used if not present
-        .example("ac7744d6-eefb-4437-9fe3-617abda4b659")    // sample value used to prefill API
-        .allow(null);                                       // nullable ?
+    // a simple example
+    Types.Uuid()
+
+    // a more complete declaration, always 36 chars long, with no default
+    Types.Uuid({
+        description: "An unique identifier",  
+        required: true,
+        example: "3d22b5e2-b786-47e5-acfc-e4b7a959c114",
+        nullable: true
+    })
 ```
 
 ### Uri
 
 ```ts
-    Joi.string()
-        .description("Uri to something")
-        .meta({ format: "uri" })
-        .required()                         // required ?
-        .min(50)                            // min length
-        .max(255)                           // max length
-        .default("https://www.domain.com")  // default value that is used if not present
-        .example("https://www.domain.com")  // sample value used to prefill API
-        .allow(null);                       // nullable ?
+    // a simple example
+    Types.Uri()
+
+    // a more complete declaration
+    Types.Uri({
+        description: "valid RFC 3986 URI",  
+        minLength: 5,
+        maxLength: 100,
+        required: true,
+        default: "https://domain",    // validation default value
+        example: "https://domain",    // example has precedence over default in the UI
+        nullable: true
+    })
 ```
 
 ### Hostname
 
 ```ts
-    Joi.string()
-        .description("Hostname")
-        .meta({ format: "hostname" })
-        .required()                         // required ?
-        .min(50)                            // min length
-        .max(255)                           // max length
-        .default("www.domain.com")          // default value that is used if not present
-        .example("www.domain.com")          // sample value used to prefill API
-        .allow(null);                       // nullable ?
+    // a simple example
+    Types.Hostname()
+
+    // a more complete declaration
+    Types.Hostname({
+        description: "valid RFC1123 hostname",  
+        minLength: 5,
+        maxLength: 100,
+        required: true,
+        default: "https://domain",    // validation default value
+        example: "https://domain",    // example has precedence over default in the UI
+        nullable: true
+    })
 ```
 
 ### IpV4
 
 ```ts
-    Joi.string()
-        .description("Ipv4")
-        .meta({ format: "ipv4" })
-        .required()                         // required ?
-        .min(50)                            // min length
-        .max(255)                           // max length
-        .default("192.168.1.1")             // default value that is used if not present
-        .example("192.168.1.1")             // sample value used to prefill API
-        .allow(null);                       // nullable ?
+    // a simple example
+    Types.Ipv4()
+
+    // a more complete declaration
+    Types.Ipv4({
+        description: "Ipv4 address",
+        required: true,
+        default: "8.8.8.8",     // validation default value
+        example: "127.0.0.1",   // example has precedence over default in the UI
+        nullable: true
+    })
 ```
 
 ### IpV6
 
 ```ts
-    Joi.string()
-        .description("Ipv6")
-        .meta({ format: "ipv6" })
-        .required()                         // required ?
-        .min(50)                            // min length
-        .max(255)                           // max length
-        .default("::1")                     // default value that is used if not present
-        .example("::1")                     // sample value used to prefill API
-        .allow(null);                       // nullable ?
+    // a simple example
+    Types.Ipv6()
+
+    // a more complete declaration
+    Types.Ipv6({
+        description: "Ipv6 address",
+        required: true,
+        default: "::1",                                     // validation default value
+        example: "0000:0000:0000:0000:0000:ffff:c0a8:64e4", // example has precedence over default in the UI
+        nullable: true
+    })
+```
+
+### Hex (or how to adapt types)
+Under the hood these types are wrappers for Joi schema types, so we can use Joi functions to extend functionality to create in this case an Hex string type:
+
+```ts
+    // a simple example
+    Types.String().hex()
+
+    // a more complete declaration
+    Types.String({
+        description: "Customer name",  
+        minLength: 5,
+        maxLength: 100,
+        required: true,
+        default: "name",        // validation default value
+        example: "John Doe",    // example has precedence over default in the UI
+        nullable: true
+    }).hex()
 ```

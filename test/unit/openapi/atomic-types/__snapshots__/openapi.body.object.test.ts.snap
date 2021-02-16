@@ -44,7 +44,6 @@ Object {
             },
           },
           "description": "My body description",
-          "required": true,
         },
         "responses": Object {
           "200": Object {
@@ -146,7 +145,7 @@ Object {
                         "type": "boolean",
                       },
                       "uuid": Object {
-                        "description": "Parameter without description.",
+                        "description": "Parameter without description. (min:36 chars, max:36 chars)",
                         "format": "uuid",
                         "type": "string",
                       },
@@ -165,7 +164,7 @@ Object {
                               "type": "boolean",
                             },
                             "uuid": Object {
-                              "description": "Parameter without description.",
+                              "description": "Parameter without description. (min:36 chars, max:36 chars)",
                               "format": "uuid",
                               "type": "string",
                             },
@@ -194,7 +193,6 @@ Object {
             },
           },
           "description": "Body does not have a description.",
-          "required": true,
         },
         "responses": Object {
           "200": Object {

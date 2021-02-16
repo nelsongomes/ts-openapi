@@ -36,7 +36,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -75,7 +74,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -118,7 +116,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -161,7 +158,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -201,7 +197,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -253,7 +248,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -304,7 +298,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -354,7 +347,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -405,7 +397,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -445,7 +436,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },
@@ -533,7 +523,6 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
-              validationSchema: {},
               responses: {
                 200: textPlain("Successful operation.")
               },

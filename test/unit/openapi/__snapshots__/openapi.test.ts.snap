@@ -37,7 +37,6 @@ Object {
             },
           },
           "description": "Sample body",
-          "required": true,
         },
         "responses": Object {
           "200": Object {
