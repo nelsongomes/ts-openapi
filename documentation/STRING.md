@@ -16,8 +16,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         minLength: 5,
         maxLength: 100,
         required: true,
-        default: "name",        // validation default value
-        example: "John Doe",    // example has precedence over default in the UI
+        default: "name",        // default value, if none provided
+        example: "John Doe",    // example data
         nullable: true
     })
 ```
@@ -39,8 +39,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         description: "Select vehicle type",
         values: Object.values(EnumValues),
         required: true,
-        default: EnumValues.AAA,    // validation default value
-        example: EnumValues.CCC,    // example has precedence over default in the UI
+        default: EnumValues.AAA,    // default value, if none provided
+        example: EnumValues.CCC,    // example data
         nullable: true
     })
 ```
@@ -57,8 +57,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         required: true,
         minLength: 50,
         maxLength: 255,
-        default: "john.doe@domain.com", // validation default value
-        example: "john.doe@domain.com", // example has precedence over default in the UI
+        default: "john.doe@domain.com", // default value, if none provided
+        example: "john.doe@domain.com", // example data
         nullable: true
     })
 ```
@@ -106,8 +106,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         minLength: 5,
         maxLength: 100,
         required: true,
-        default: "https://domain",    // validation default value
-        example: "https://domain",    // example has precedence over default in the UI
+        default: "https://domain",    // default value, if none provided
+        example: "https://domain",    // example data
         nullable: true
     })
 ```
@@ -124,8 +124,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         minLength: 5,
         maxLength: 100,
         required: true,
-        default: "https://domain",    // validation default value
-        example: "https://domain",    // example has precedence over default in the UI
+        default: "https://domain",    // default value, if none provided
+        example: "https://domain",    // example data
         nullable: true
     })
 ```
@@ -140,8 +140,8 @@ All string types here defined have all parameters defined, as a sample, but in m
     Types.Ipv4({
         description: "Ipv4 address",
         required: true,
-        default: "8.8.8.8",     // validation default value
-        example: "127.0.0.1",   // example has precedence over default in the UI
+        default: "8.8.8.8",     // default value, if none provided
+        example: "127.0.0.1",   // example data
         nullable: true
     })
 ```
@@ -156,8 +156,8 @@ All string types here defined have all parameters defined, as a sample, but in m
     Types.Ipv6({
         description: "Ipv6 address",
         required: true,
-        default: "::1",                                     // validation default value
-        example: "0000:0000:0000:0000:0000:ffff:c0a8:64e4", // example has precedence over default in the UI
+        default: "::1",                                     // default value, if none provided
+        example: "0000:0000:0000:0000:0000:ffff:c0a8:64e4", // example data
         nullable: true
     })
 ```
@@ -175,8 +175,8 @@ Under the hood these types are wrappers for Joi schema types, so we can use Joi 
         minLength: 5,
         maxLength: 100,
         required: true,
-        default: "name",        // validation default value
-        example: "John Doe",    // example has precedence over default in the UI
+        default: "name",        // default value, if none provided
+        example: "John Doe",    // example data
         nullable: true
     }).hex()
 ```

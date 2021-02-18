@@ -7,26 +7,35 @@ All binary types here defined have all parameters defined, as a sample, but in m
 ### Binary
 
 ```ts
-    Joi.binary()
-        .description("Binary string")
-        .required()                                 // required ?
-        .min(512)                                   // min length
-        .max(1024)                                  // max length
-        .default("binary string")                   // default value that is used if not present
-        .example("binary string")                   // sample value used to prefill API
-        .allow(null);                               // nullable ?
+    // a simple example
+    Types.Binary()
+
+    // a more complete declaration
+    Types.Binary({
+        description: "some binary string",
+        required: true,
+        minLength: 512,
+        maxLength: 1024,
+        default: "12345", // default value, if none provided
+        example: "12345", // example data
+        nullable: true
+    })
 ```
 
 ### Byte
 
 ```ts
-    Joi.binary()
-        .encoding("base64")
-        .description("Base-64 encoded string")
-        .required()                                 // required ?
-        .min(512)                                   // min length
-        .max(1024)                                  // max length
-        .default("c2FtcGxlMQ==")                    // default value that is used if not present
-        .example("c2FtcGxlMQ==")                    // sample value used to prefill API
-        .allow(null);                               // nullable ?
+    // a simple example
+    Types.Byte()
+
+    // a more complete declaration
+    Types.Byte({
+        description: "a base64 encoded string",
+        required: true,
+        minLength: 512,
+        maxLength: 1024,
+        default: "c2FtcGxlMQ==", // default value, if none provided
+        example: "c2FtcGxlMQ==", // example data
+        nullable: true
+    })
 ```

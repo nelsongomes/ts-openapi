@@ -7,24 +7,31 @@ All date-time types here defined have all parameters defined, as a sample, but i
 ### Date-Time
 
 ```ts
-    Joi.string()
-        .isoDate()
-        .required()                                 // required ?
-        .description("When did it happen.")
-        .default("2020-10-14T22:12:53.065Z")        // default value that is used if not present
-        .example("2020-10-14T22:12:53.065Z")        // sample value used to prefill API
-        .allow(null);                               // nullable ?
+    // a simple example
+    Types.DateTime()
+
+    // a more complete declaration
+    Types.DateTime({
+        description: "When did it happened.",
+        required: true,
+        nullable: true,
+        default: "2020-10-14T22:12:53.065Z",    // default value, if none provided
+        example: "2020-10-14T22:12:53.065Z"     // example data
+    })
 ```
 
 ### Date
 
 ```ts
-    Joi.string()
-        .isoDate()
-        .meta({ format: "date" })
-        .required()                                 // required ?
-        .description("When did it happen.")
-        .default("2020-10-14")                      // default value that is used if not present
-        .example("2020-10-14")                      // sample value used to prefill API
-        .allow(null);                               // nullable ?
+    // a simple example
+    Types.Date()
+
+    // a more complete declaration
+    Types.Date({
+        description: "When did it happened.",
+        required: true,
+        nullable: true,
+        default: "2020-10-14",    // default value, if none provided
+        example: "2020-10-14"     // example data
+    })
 ```

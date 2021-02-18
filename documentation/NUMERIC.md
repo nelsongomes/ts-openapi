@@ -7,15 +7,19 @@ All numeric types here defined have all parameters defined, as a sample, but in 
 ### Integer
 
 ```ts
-    Joi.number()
-        .integer()
-        .description("Integer description")
-        .min(5)                               // min value 
-        .max(100)                             // max value
-        .required()                           // required ?
-        .default(99)                          // default value that is used if not present
-        .example(5)                           // sample value used to prefill API
-        .allow(null);                         // nullable ?
+    // a simple example
+    Types.Integer()
+    
+    // a more complete declaration
+    Types.Integer({
+        description: "Integer description",
+        required: true,
+        minValue: 5,
+        maxValue: 100,
+        default: 99,    // default value, if none provided
+        example: 5,     // example data
+        nullable: true
+    })
 ```
 
 ### Integer Enum
@@ -27,27 +31,38 @@ All numeric types here defined have all parameters defined, as a sample, but in 
         CCC = 20,
     }
 
-    option: Joi.number()
-        .integer()
-        .description("Integer options from enum")
-        .required()                                 // required ?
-        .valid(...Object.values(EnumValues))        // enum values (min and max don't make sense to use in this context)
-        .default(5)                                 // default value that is used if not present
-        .example(20)                                // sample value used to prefill API
-        .allow(null);                               // nullable ?
+    // a simple example
+    Types.IntegerEnum({
+        values: Object.values((EnumValues as unknown) as number[])
+    })          
+    
+    // a more complete declaration
+    Types.IntegerEnum({
+        required: true,
+        values: Object.values(EnumValues),
+        description: "Integer options from enum",
+        default: 5,     // default value, if none provided
+        example: 20,    // example data
+        nullable: true
+    })
 ```
 
 ### Number
 
 ```ts
-    Joi.number()
-        .description("Number description")
-        .required()                                 // required ?
-        .min(0.5)                                   // min value 
-        .max(100.66)                                // max value
-        .default(1)                                 // default value that is used if not present
-        .example(33.333)                            // sample value used to prefill API
-        .allow(null);                               // nullable ?
+    // a simple example
+    Types.Number()
+
+    // a more complete declaration
+    Types.Number({
+        description: "Sensor value.",
+        required: true,
+        minValue: 0.5,
+        maxValue: 100.66,
+        default: 1,         // default value, if none provided
+        example: 33.333,    // example data
+        nullable: true
+    })
 ```
 
 ### Number Enum
@@ -59,11 +74,16 @@ All numeric types here defined have all parameters defined, as a sample, but in 
         CCC = 30.3,
     }
 
-    Joi.number()
-        .description("Number options from enum")
-        .required()                                 // required ?
-        .valid(...Object.values(EnumValues))        // enum values (min and max don't make sense to use in this context)
-        .default(10.1)                              // default value that is used if not present
-        .example(30.3)                              // sample value used to prefill API
-        .allow(null);                               // nullable ?
+    // a simple example
+    Types.NumberEnum({ values: Object.values(EnumValues) })
+
+    // a more complete declaration
+    Types.NumberEnum({
+        values: Object.values(EnumValues),
+        description: "Sensor value.",
+        required: true,
+        default: 10.1,
+        example: 30.3,
+        nullable: true
+    })
 ```

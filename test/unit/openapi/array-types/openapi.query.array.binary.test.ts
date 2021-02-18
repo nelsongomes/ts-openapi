@@ -52,15 +52,15 @@ describe("src/openapi/openapi", () => {
             default: "c2FtcGxlMQ==",
             example: "c2FtcGxlMQ==",
             nullable: true
-          })
+          }),
+          description: "bin array",
+          minLength: 10,
+          maxLength: 20,
+          required: true,
+          default: ["c2FtcGxlMQ=="],
+          example: ["c2FtcGxlMQ=="],
+          nullable: true
         })
-          .required()
-          .min(10)
-          .max(20)
-          .default(["c2FtcGxlMQ=="])
-          .example(["c2FtcGxlMQ=="])
-          .description("bin array")
-          .allow(null)
       };
 
       openApi.addPath(
