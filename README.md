@@ -45,6 +45,7 @@ Object                                                                  | NO    
 [Binary Types](documentation/BINARY.md)<br/>
 [Array Type](documentation/ARRAY.md)<br/>
 [Object Type](documentation/OBJECT.md)<br/>
+[Security Schemes](documentation/SECURITY.md)<br/>
 
 ## Declaring an API
 
