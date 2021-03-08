@@ -71,7 +71,7 @@ In the event your API is based on docker instances you should call setServers wh
     ]);
 ```
 
-### Now you need to declare your endpoints
+### Now you need to declare your endpoints (once per http verb)
 
 ```ts
     openApi.addPath(
@@ -103,3 +103,85 @@ Note that the paths just need to be added one time, during server init, after th
 ```ts
     openApi.generateJson();
 ```
+
+## Declaring a GET request
+
+```ts
+
+    function errorSchema(description: string) {
+        return bodySchema(
+            Types.Object({
+                description,
+                properties: {
+                    message: Types.String({ description: "Error message" }),
+                    code: Types.Integer({ description: "Error code" }),
+                },
+            })
+        );
+    }
+
+    // body response schema
+    const responseSchema = {
+        id: Types.Uuid({ description: "Customer ID" }),
+        name: Types.String({
+            description: "Customer name",
+            maxLength: 100,
+            required: true,
+        }),
+        type: Types.StringEnum({
+            values: Object.values(CustomerType),
+            description: "Customer Type",
+        }),
+        birthdate: Types.Date({ description: "Birthdate" }),
+    };
+
+    openApi.addPath(
+        "/customer/:id", // path parameter
+        {
+            get: {
+                summary: "Get a customer data",
+                description: "This operation retrieves customer information",
+                operationId: "get-customer-op",
+                requestSchema: {
+                    params: { // path parameter
+                        id: Types.Uuid({
+                            description: "Customer ID",
+                            required: true, // param values MUST be required
+                            example: "37237d6a-bb7e-459a-b75d-d1733210ad5c",
+                        }),
+                    },
+                },
+                tags: ["Customer Operations"],
+                responses: {
+                    200: bodySchema(
+                        Types.Object({
+                            description: "Successful Operation",
+                            properties: responseSchema,
+                        })
+                    ),
+                    400: errorSchema("Bad Request"),
+                },
+            },
+        },
+        true
+  );
+```
+
+## Declaring other HTTP methods
+
+You can declare:
+
+* get requests
+* post requests
+* delete requests
+* put methods
+
+## Declaring the inputs of your request
+
+When you declare your request you can use as inputs:
+
+* query parameters '?a=1&b=2'
+* param parameter '/:userid/list'
+* cookie parameter (a cookie)
+* header parameters
+* body content
