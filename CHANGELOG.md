@@ -15,4 +15,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Added helpers for security and types.
 
-[0.2.2]: https://github.com/nelsongomes/ts-openapi/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/nelsongomes/ts-openapi/compare/v0.2.2...HEAD
+[0.2.1]: https://github.com/nelsongomes/ts-openapi/compare/v0.2.1...v0.2.2
