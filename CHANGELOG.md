@@ -6,12 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.1] - 2021-03-08
+## [0.2.2] - 2021-03-08
 ### Added
+- First generally available release.
 - Updated documentation.
 - First release.
 
 ### Changed
 - Added helpers for security and types.
 
-[Unreleased]: https://github.com/nelsongomes/ts-openapi/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/nelsongomes/ts-openapi/compare/v0.2.2...HEAD
+[0.2.1]: https://github.com/nelsongomes/ts-openapi/compare/v0.2.1...v0.2.2
