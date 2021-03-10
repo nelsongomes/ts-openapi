@@ -71,6 +71,18 @@ In the event your API is based on docker instances you should call setServers wh
     ]);
 ```
 
+### Optionally you can set your license information
+
+This is used to document the API license type, url of the license and terms of service.
+
+```ts
+    openApi.setLicense(
+        "Apache 2.0", // license name
+        "http://www.apache.org/licenses/LICENSE-2.0.html", // url for the api license
+        "http://swagger.io/terms/" // terms of service
+    );
+```
+
 ### Now you need to declare your endpoints (once per http verb)
 
 ```ts
