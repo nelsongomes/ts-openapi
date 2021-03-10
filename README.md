@@ -197,3 +197,7 @@ When you declare your request you can use as inputs:
 * cookie parameter (a cookie)
 * header parameters
 * body content
+
+## Sample server
+
+[GitHub Repo for a demo server](https://github.com/nelsongomes/server)
