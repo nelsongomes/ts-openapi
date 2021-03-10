@@ -29,7 +29,8 @@
     "update": "ncu -u && npm i"
   },
   "dependencies": {
-    "joi": "17.3.0"
+    "joi": "17.3.0",
+    "lodash": "4.17.21"
   },
   "devDependencies": {
     "@types/jest": "25.1.3",
