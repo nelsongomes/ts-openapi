@@ -8,16 +8,39 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       
-      # this steps needs to be tested
-      - name: Build Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v1
-        env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Python
+        uses: actions/setup-python@v1
         with:
-          commitMode: true
+          python-version: "3.8"
+      - name: Update version
+        id: version
+        run: |
+          echo "GITHUB_REF is a tag you set for the release"
+          echo "Your GitHub ref: ${GITHUB_REF}"
+          VERSION=`echo "${GITHUB_REF}" | cut -f 3 -d "/"`
+          echo "Preparing version ${VERSION}"
+          echo "__version__ = \"${VERSION}\"" > __version__.py
+          echo "##[set-output name=version;]$(echo ${VERSION})"
+      - uses: vemel/update-changelog@0.0.1
+        id: changelog
+        with:
+          version: ${{ steps.version.outputs.version }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v2
+        with:
+          commit-message: Release ${{ steps.version.outputs.version }}
+          labels: release, bot
+          title: "Release ${{ steps.version.outputs.version }}"
+          body: |
+            # Release ${{ steps.version.outputs.version }}
+
+            Merge this PR to update your version and changelog!
+
+            ## Included Pull Requests
+
+            ${{ steps.changelog.outputs.pulls_list_md }}
 
       - uses: actions/setup-node@v1
         with:
