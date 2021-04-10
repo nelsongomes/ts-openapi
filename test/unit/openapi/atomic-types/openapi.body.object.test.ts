@@ -87,8 +87,17 @@ describe("src/openapi/openapi", () => {
         {
           post: {
             description: "Test endpoint",
-            operationId: "id",
+            operationId: "postid",
             requestSchema: { body },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          },
+          get: {
+            description: "Test endpoint",
+            operationId: "getid",
             responses: {
               200: textPlain("Successful operation.")
             },

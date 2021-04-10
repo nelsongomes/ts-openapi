@@ -115,59 +115,70 @@ export class OpenApi {
 
     path = this.replaceParameters(path);
 
-    const pathDefinition =
-      (inputDefinition.get as PathInputDefinition) ||
-      (inputDefinition.post as PathInputDefinition) ||
-      (inputDefinition.put as PathInputDefinition) ||
-      (inputDefinition.delete as PathInputDefinition);
+    const methods: [string, PathInputDefinition][] = [];
+    Object.getOwnPropertyNames(inputDefinition).forEach((method: string) => {
+      methods.push([
+        method,
+        (inputDefinition as any)[method] as PathInputDefinition
+      ]);
+    });
 
-    const method = Object.getOwnPropertyNames(inputDefinition)[0];
+    for (const [method, pathDefinition] of methods) {
+      const operationId = pathDefinition.operationId;
+      const responses = pathDefinition.responses;
 
-    const operationId = pathDefinition.operationId;
-    const responses = pathDefinition.responses;
+      const { requestSchema, ...remainder } = pathDefinition;
+      const { parameters, requestBody } = this.parametersAndBodyFromSchema(
+        pathDefinition.requestSchema || {}
+      );
 
-    const { requestSchema, ...remainder } = pathDefinition;
-    const { parameters, requestBody } = this.parametersAndBodyFromSchema(
-      pathDefinition.requestSchema || {}
-    );
+      const definition: PathDefinition = {
+        ...remainder,
+        ...(parameters && { parameters }),
+        ...(requestBody && { requestBody })
+      };
 
-    const definition: PathDefinition = {
-      ...remainder,
-      ...(parameters && { parameters }),
-      ...(requestBody && { requestBody })
-    };
+      if (method === "get" && definition.requestBody) {
+        throw new Error("GET operations cannot have a requestBody.");
+      }
 
-    if (inputDefinition.get && definition.requestBody) {
-      throw new Error("GET operations cannot have a requestBody.");
+      if (Object.getOwnPropertyNames(responses).length === 0) {
+        throw new Error("Should define at least one response.");
+      }
+
+      if (pathDefinition.security) {
+        // TODO verify security scheme exists
+        pathDefinition.security.forEach(securityScheme => {
+          const securitySchemeName = Object.getOwnPropertyNames(
+            securityScheme
+          )[0];
+
+          if (!this.securitySchemeIds.includes(securitySchemeName)) {
+            throw new Error(`Unknown security scheme '${securitySchemeName}'`);
+          }
+        });
+      }
+
+      if (!operationId) {
+        throw new Error("No operationId supplied.");
+      }
+
+      if (this.operationIds.includes(operationId)) {
+        throw new Error("Operations must have unique operationIds.");
+      }
+
+      this.operationIds.push(operationId);
+      if (this.schema.paths[path]) {
+        // add a secondary method on path
+        this.schema.paths[path] = {
+          [method]: definition,
+          ...this.schema.paths[path]
+        };
+      } else {
+        // add first method in this path
+        this.schema.paths[path] = { [method]: definition };
+      }
     }
-
-    if (Object.getOwnPropertyNames(responses).length === 0) {
-      throw new Error("Should define at least one response.");
-    }
-
-    if (pathDefinition.security) {
-      // TODO verify security scheme exists
-      pathDefinition.security.forEach(securityScheme => {
-        const securitySchemeName = Object.getOwnPropertyNames(
-          securityScheme
-        )[0];
-
-        if (!this.securitySchemeIds.includes(securitySchemeName)) {
-          throw new Error(`Unknown security scheme '${securitySchemeName}'`);
-        }
-      });
-    }
-
-    if (!operationId) {
-      throw new Error("No operationId supplied.");
-    }
-
-    if (this.operationIds.includes(operationId)) {
-      throw new Error("Operations must have unique operationIds.");
-    }
-
-    this.operationIds.push(operationId);
-    this.schema.paths[path] = { [method]: definition };
   }
 
   public setLicense(name: string, url: string, termsOfService: string) {
