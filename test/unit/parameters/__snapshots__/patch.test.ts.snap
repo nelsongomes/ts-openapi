@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/openapi/openapi Body parameters should succeed with an object with all types 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/test": Object {
+      "patch": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "example": Object {
+                "password": "*******",
+                "username": "johndoe@acme.com",
+              },
+              "schema": Object {
+                "description": "Full body description.",
+                "properties": Object {
+                  "array": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                  "arrayOfObjects": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "properties": Object {
+                        "internalString": Object {
+                          "description": "Parameter without description.",
+                          "type": "string",
+                        },
+                      },
+                      "type": "object",
+                    },
+                    "type": "array",
+                  },
+                  "boolean": Object {
+                    "description": "Parameter without description.",
+                    "type": "boolean",
+                  },
+                  "date": Object {
+                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "format": "date",
+                    "type": "string",
+                  },
+                  "dateTime": Object {
+                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "integer": Object {
+                    "description": "Parameter without description.",
+                    "format": "int64",
+                    "type": "integer",
+                  },
+                  "number": Object {
+                    "description": "Parameter without description.",
+                    "format": "double",
+                    "type": "number",
+                  },
+                  "object": Object {
+                    "description": "Parameter without description.",
+                    "properties": Object {
+                      "internalString": Object {
+                        "description": "Parameter without description.",
+                        "type": "string",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "string": Object {
+                    "description": "Username",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "Full body description.",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi Body parameters should succeed with an object, without description 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/test": Object {
+      "patch": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "example": Object {
+                "password": "*******",
+                "username": "johndoe@acme.com",
+              },
+              "schema": Object {
+                "description": "Parameter without description.",
+                "properties": Object {
+                  "password": Object {
+                    "description": "User password",
+                    "format": "password",
+                    "type": "string",
+                  },
+                  "username": Object {
+                    "description": "Username",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "Body does not have a description.",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;

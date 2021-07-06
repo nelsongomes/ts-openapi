@@ -56,7 +56,17 @@ describe("src/openapi/openapi", () => {
         {
           post: {
             description: "Test endpoint",
-            operationId: "id",
+            operationId: "postid",
+            requestSchema: { body },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          },
+          patch: {
+            description: "Test endpoint",
+            operationId: "patchid",
             requestSchema: { body },
             responses: {
               200: textPlain("Successful operation.")
@@ -88,6 +98,16 @@ describe("src/openapi/openapi", () => {
           post: {
             description: "Test endpoint",
             operationId: "postid",
+            requestSchema: { body },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          },
+          patch: {
+            description: "Test endpoint",
+            operationId: "patchid",
             requestSchema: { body },
             responses: {
               200: textPlain("Successful operation.")

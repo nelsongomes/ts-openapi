@@ -34,6 +34,46 @@ Object {
           "Internals",
         ],
       },
+      "patch": Object {
+        "description": "Test endpoint",
+        "operationId": "patchid",
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "example": Object {
+                "parameter1": "default",
+              },
+              "schema": Object {
+                "default": Object {
+                  "parameter1": "default",
+                },
+                "description": "My body description",
+                "nullable": true,
+                "properties": Object {
+                  "parameter1": Object {
+                    "description": "String parameter",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "My body description",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
       "post": Object {
         "description": "Test endpoint",
         "operationId": "postid",
@@ -102,9 +142,130 @@ Object {
   "openapi": "3.0.1",
   "paths": Object {
     "/test": Object {
+      "patch": Object {
+        "description": "Test endpoint",
+        "operationId": "patchid",
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "schema": Object {
+                "description": "Parameter without description.",
+                "properties": Object {
+                  "base64array": Object {
+                    "items": Object {
+                      "description": "Parameter without description. (base64 encoded string)",
+                      "format": "byte",
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                  "binary": Object {
+                    "description": "Parameter without description. (binary string)",
+                    "format": "binary",
+                    "type": "string",
+                  },
+                  "boolean": Object {
+                    "description": "Parameter without description.",
+                    "type": "boolean",
+                  },
+                  "byte": Object {
+                    "description": "Parameter without description. (base64 encoded string)",
+                    "format": "byte",
+                    "type": "string",
+                  },
+                  "date": Object {
+                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "format": "date",
+                    "type": "string",
+                  },
+                  "dateTime": Object {
+                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "float": Object {
+                    "description": "Parameter without description.",
+                    "format": "double",
+                    "type": "number",
+                  },
+                  "integer": Object {
+                    "description": "Parameter without description.",
+                    "format": "int64",
+                    "type": "integer",
+                  },
+                  "internalobject": Object {
+                    "description": "Parameter without description.",
+                    "properties": Object {
+                      "boolean": Object {
+                        "description": "Parameter without description.",
+                        "type": "boolean",
+                      },
+                      "uuid": Object {
+                        "description": "Parameter without description. (min:36 chars, max:36 chars)",
+                        "format": "uuid",
+                        "type": "string",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "objectArray": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "properties": Object {
+                        "obj": Object {
+                          "description": "Parameter without description.",
+                          "properties": Object {
+                            "boolean": Object {
+                              "description": "Parameter without description.",
+                              "type": "boolean",
+                            },
+                            "uuid": Object {
+                              "description": "Parameter without description. (min:36 chars, max:36 chars)",
+                              "format": "uuid",
+                              "type": "string",
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                      "type": "object",
+                    },
+                    "type": "array",
+                  },
+                  "string": Object {
+                    "description": "Parameter without description.",
+                    "type": "string",
+                  },
+                  "stringarray": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "Body does not have a description.",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
       "post": Object {
         "description": "Test endpoint",
-        "operationId": "id",
+        "operationId": "postid",
         "requestBody": Object {
           "content": Object {
             "application/json": Object {

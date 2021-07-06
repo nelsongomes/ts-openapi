@@ -35,7 +35,17 @@ describe("src/openapi/openapi", () => {
         "/something",
         {
           post: {
-            operationId: "id",
+            operationId: "postid",
+            description: "desc",
+            summary: "summary",
+            tags: ["example"],
+            responses: {
+              [200]: { description: "Success", content: { "plain/text": {} } }
+            },
+            requestSchema: { body }
+          },
+          patch: {
+            operationId: "patchid",
             description: "desc",
             summary: "summary",
             tags: ["example"],

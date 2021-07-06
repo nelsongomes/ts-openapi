@@ -18,9 +18,42 @@ Object {
   "openapi": "3.0.1",
   "paths": Object {
     "/something": Object {
+      "patch": Object {
+        "description": "desc",
+        "operationId": "patchid",
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "schema": Object {
+                "description": "Sample body",
+                "properties": Object {
+                  "username": Object {
+                    "description": "Parameter without description.",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "Sample body",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "plain/text": Object {},
+            },
+            "description": "Success",
+          },
+        },
+        "summary": "summary",
+        "tags": Array [
+          "example",
+        ],
+      },
       "post": Object {
         "description": "desc",
-        "operationId": "id",
+        "operationId": "postid",
         "requestBody": Object {
           "content": Object {
             "application/json": Object {

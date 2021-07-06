@@ -27,7 +27,7 @@ Array[]                                                                 | YES (4
 Object                                                                  | NO      | NO           | NO     | NO      | YES (7)
 <sup>
 (1) Values included in url parameters are always required because they're part of the url.<br/>
-(2) [Ajax bestpractices](https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html "OWASP CheatSheet's").<br/>
+(2) [Ajax bestpractices - "OWASP CheatSheet's"](https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html).<br/>
 (3) this type is a Base64 binary encoded string.<br/>
 (4) array of scalar values.<br/>
 (5) all scalar values, arrays of objects and other objects go inside json object.<br/>
@@ -183,9 +183,10 @@ Note that the paths just need to be added one time, during server init, after th
 
 You can declare:
 
-* get requests
-* post requests
 * delete requests
+* get requests
+* patch requests
+* post requests
 * put methods
 
 ## Declaring the inputs of your request
