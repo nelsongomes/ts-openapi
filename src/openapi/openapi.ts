@@ -96,16 +96,18 @@ export class OpenApi {
    * this replaces path parameters from express to openapi format
    * @param apiPath
    */
-  private replaceParameters(apiPath: string): string {
+  private replaceParameters(apiPath: string) {
     let newPath = apiPath;
     const paramsRegex = apiPath.match(/:([A-Za-z0-9_]+)/g);
+    const checkParams = [];
 
     if (paramsRegex) {
       for (const param of paramsRegex) {
         newPath = newPath.replace(param, `{${param.substring(1)}}`);
+        checkParams.push(param.substring(1));
       }
     }
-    return newPath;
+    return { newPath, checkParams };
   }
 
   public addPath(path: string, inputDefinition: PathInput, visible: boolean) {
@@ -113,7 +115,8 @@ export class OpenApi {
       return;
     }
 
-    path = this.replaceParameters(path);
+    const { newPath, checkParams } = this.replaceParameters(path);
+    path = newPath;
 
     const methods: [string, PathInputDefinition][] = [];
     Object.getOwnPropertyNames(inputDefinition).forEach((method: string) => {
@@ -137,6 +140,8 @@ export class OpenApi {
         ...(parameters && { parameters }),
         ...(requestBody && { requestBody })
       };
+
+      this.checkParameters(checkParams, definition);
 
       if (method === "get" && definition.requestBody) {
         throw new Error("GET operations cannot have a requestBody.");
@@ -164,7 +169,9 @@ export class OpenApi {
       }
 
       if (this.operationIds.includes(operationId)) {
-        throw new Error("Operations must have unique operationIds.");
+        throw new Error(
+          `Operations must have unique operationIds, id '${operationId}' already exists.`
+        );
       }
 
       this.operationIds.push(operationId);
@@ -178,6 +185,33 @@ export class OpenApi {
         // add first method in this path
         this.schema.paths[path] = { [method]: definition };
       }
+    }
+  }
+
+  private checkParameters(checkParams: string[], definition: PathDefinition) {
+    if (checkParams.length) {
+      if (!definition.parameters?.length) {
+        throw new Error("Parameters in path must be declared");
+      }
+
+      checkParams.forEach(paramCheck => {
+        let found = false;
+
+        definition.parameters?.forEach(detectedParam => {
+          if (
+            detectedParam.in === ParameterIn.Path &&
+            detectedParam.name === paramCheck
+          ) {
+            found = true;
+          }
+        });
+
+        if (!found) {
+          throw new Error(
+            `Parameters in path must be declared, missing ${paramCheck}`
+          );
+        }
+      });
     }
   }
 
@@ -298,7 +332,7 @@ export class OpenApi {
     return swagger.required && swagger.required.includes(key);
   }
 
-  public generateJson(): {} {
+  public generateJson(): object {
     if (this.schema.servers.length === 0) {
       throw new ApplicationError(
         500,

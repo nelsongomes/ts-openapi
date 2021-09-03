@@ -1,0 +1,409 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/openapi/openapi-mingle Mingle services Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from file 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "license",
+      "url": "http://license",
+    },
+    "termsOfService": "http://terms",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/users/{userId}": Object {
+      "patch": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "ID of user",
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": Object {
+              "format": "int64",
+              "minimum": "1.0",
+              "type": "integer",
+            },
+          },
+        ],
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "example": Object {
+                "integer": 123,
+                "password": "*******",
+                "username": "johndoe@acme.com",
+              },
+              "schema": Object {
+                "description": "Full body description.",
+                "properties": Object {
+                  "array": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                  "arrayOfs": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "properties": Object {
+                        "internalString": Object {
+                          "description": "Parameter without description.",
+                          "type": "string",
+                        },
+                      },
+                      "type": "object",
+                    },
+                    "type": "array",
+                  },
+                  "boolean": Object {
+                    "description": "Parameter without description.",
+                    "type": "boolean",
+                  },
+                  "date": Object {
+                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "format": "date",
+                    "type": "string",
+                  },
+                  "dateTime": Object {
+                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "integer": Object {
+                    "description": "Parameter without description.",
+                    "format": "int64",
+                    "type": "integer",
+                  },
+                  "number": Object {
+                    "description": "Parameter without description.",
+                    "format": "double",
+                    "type": "number",
+                  },
+                  "object": Object {
+                    "description": "Parameter without description.",
+                    "properties": Object {
+                      "internalString": Object {
+                        "description": "Parameter without description.",
+                        "type": "string",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "string": Object {
+                    "description": "Username",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "Full body description.",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://explorer-eu.awesome-api.com",
+    },
+    Object {
+      "url": "https://explorer-us.awesome-api.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi-mingle Mingle services Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from http 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "license",
+      "url": "http://license",
+    },
+    "termsOfService": "http://terms",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/users/{userId}": Object {
+      "patch": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "ID of user",
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": Object {
+              "format": "int64",
+              "minimum": "1.0",
+              "type": "integer",
+            },
+          },
+        ],
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "example": Object {
+                "integer": 123,
+                "password": "*******",
+                "username": "johndoe@acme.com",
+              },
+              "schema": Object {
+                "description": "Full body description.",
+                "properties": Object {
+                  "array": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                  "arrayOfs": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "properties": Object {
+                        "internalString": Object {
+                          "description": "Parameter without description.",
+                          "type": "string",
+                        },
+                      },
+                      "type": "object",
+                    },
+                    "type": "array",
+                  },
+                  "boolean": Object {
+                    "description": "Parameter without description.",
+                    "type": "boolean",
+                  },
+                  "date": Object {
+                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "format": "date",
+                    "type": "string",
+                  },
+                  "dateTime": Object {
+                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "integer": Object {
+                    "description": "Parameter without description.",
+                    "format": "int64",
+                    "type": "integer",
+                  },
+                  "number": Object {
+                    "description": "Parameter without description.",
+                    "format": "double",
+                    "type": "number",
+                  },
+                  "object": Object {
+                    "description": "Parameter without description.",
+                    "properties": Object {
+                      "internalString": Object {
+                        "description": "Parameter without description.",
+                        "type": "string",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "string": Object {
+                    "description": "Username",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "Full body description.",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://explorer-eu.awesome-api.com",
+    },
+    Object {
+      "url": "https://explorer-us.awesome-api.com",
+    },
+  ],
+}
+`;
+
+exports[`src/openapi/openapi-mingle Mingle services Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from https 1`] = `
+Object {
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "license",
+      "url": "http://license",
+    },
+    "termsOfService": "http://terms",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.1",
+  "paths": Object {
+    "/users/{userId}": Object {
+      "patch": Object {
+        "description": "Test endpoint",
+        "operationId": "id",
+        "parameters": Array [
+          Object {
+            "description": "ID of user",
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": Object {
+              "format": "int64",
+              "minimum": "1.0",
+              "type": "integer",
+            },
+          },
+        ],
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "example": Object {
+                "integer": 123,
+                "password": "*******",
+                "username": "johndoe@acme.com",
+              },
+              "schema": Object {
+                "description": "Full body description.",
+                "properties": Object {
+                  "array": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                  "arrayOfs": Object {
+                    "items": Object {
+                      "description": "Parameter without description.",
+                      "properties": Object {
+                        "internalString": Object {
+                          "description": "Parameter without description.",
+                          "type": "string",
+                        },
+                      },
+                      "type": "object",
+                    },
+                    "type": "array",
+                  },
+                  "boolean": Object {
+                    "description": "Parameter without description.",
+                    "type": "boolean",
+                  },
+                  "date": Object {
+                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "format": "date",
+                    "type": "string",
+                  },
+                  "dateTime": Object {
+                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "integer": Object {
+                    "description": "Parameter without description.",
+                    "format": "int64",
+                    "type": "integer",
+                  },
+                  "number": Object {
+                    "description": "Parameter without description.",
+                    "format": "double",
+                    "type": "number",
+                  },
+                  "object": Object {
+                    "description": "Parameter without description.",
+                    "properties": Object {
+                      "internalString": Object {
+                        "description": "Parameter without description.",
+                        "type": "string",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "string": Object {
+                    "description": "Username",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "description": "Full body description.",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "text-plain": Object {},
+            },
+            "description": "Successful operation.",
+          },
+        },
+        "summary": "Server Test",
+        "tags": Array [
+          "Internals",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://explorer-eu.awesome-api.com",
+    },
+    Object {
+      "url": "https://explorer-us.awesome-api.com",
+    },
+  ],
+}
+`;

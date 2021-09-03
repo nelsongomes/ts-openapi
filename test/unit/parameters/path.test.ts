@@ -44,6 +44,39 @@ describe("src/openapi/openapi", () => {
       done();
     });
 
+    test("should fail because path param does not exist", done => {
+      const params = {
+        username: Types.String({ required: true })
+      };
+
+      try {
+        openApi.addPath(
+          "/test/:usernameFail",
+          {
+            get: {
+              description: "Test endpoint",
+              operationId: "id",
+              requestSchema: { params },
+              responses: {
+                200: textPlain("Successful operation.")
+              },
+              summary: "Server Test",
+              tags: ["Internals"]
+            }
+          },
+          true
+        );
+
+        fail("Should have thrown exception");
+      } catch (e) {
+        expect(e.message).toBe(
+          "Parameters in path must be declared, missing usernameFail"
+        );
+      }
+
+      done();
+    });
+
     test("should throw an exception if path parameter name is not made up of “word characters” ([A-Za-z0-9_])", done => {
       const params = {
         "user#name": Types.String()

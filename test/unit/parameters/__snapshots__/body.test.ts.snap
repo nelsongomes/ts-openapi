@@ -150,9 +150,29 @@ Object {
               "schema": Object {
                 "description": "Parameter without description.",
                 "properties": Object {
+                  "hostname": Object {
+                    "description": "server",
+                    "format": "hostname",
+                    "type": "string",
+                  },
+                  "ipv4": Object {
+                    "description": "ip (min:7 chars, max:15 chars)",
+                    "format": "ipv4",
+                    "type": "string",
+                  },
+                  "ipv6": Object {
+                    "description": "ip (min:3 chars, max:45 chars)",
+                    "format": "ipv6",
+                    "type": "string",
+                  },
                   "password": Object {
                     "description": "User password",
                     "format": "password",
+                    "type": "string",
+                  },
+                  "uri": Object {
+                    "description": "Uri",
+                    "format": "uri",
                     "type": "string",
                   },
                   "username": Object {

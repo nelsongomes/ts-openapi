@@ -274,7 +274,9 @@ describe("src/openapi/openapi", () => {
 
         fail("Expected to throw exception");
       } catch (e) {
-        expect(e.message).toBe("Operations must have unique operationIds.");
+        expect(e.message).toBe(
+          "Operations must have unique operationIds, id 'repeated' already exists."
+        );
       }
     });
 
