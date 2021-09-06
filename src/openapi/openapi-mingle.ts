@@ -23,14 +23,17 @@ export type ServiceList = {
 export class OpenApiMingle {
   private openApi: OpenApi;
   private json: object | undefined;
+  private logFn: ((message: string, e?: Error) => void) | undefined;
 
   constructor(
     version: string,
     title: string,
     description: string,
-    email: string
+    email: string,
+    logFn?: (message: string, e?: Error) => void
   ) {
     this.openApi = new OpenApi(version, title, description, email);
+    this.logFn = logFn;
   }
 
   public setServers(servers: Servers) {
@@ -56,20 +59,20 @@ export class OpenApiMingle {
       );
     }
 
+    this.log("Successfully generated mingled schema.");
     return this.json;
   }
 
-  private log(_message: string, e?: Error) {
-    if (e) {
-      // console.log(message, e);
-    } else {
-      // console.log(message);
+  private log(message: string, e?: Error) {
+    if (this.logFn) {
+      this.logFn(message, e);
     }
   }
 
   public async combineServices(serviceList: ServiceList) {
     const serviceNames = Object.getOwnPropertyNames(serviceList);
 
+    this.log(`***** Started at ${new Date().toISOString()}' *****`);
     for (const serviceName of serviceNames) {
       const serviceDefinition = serviceList[serviceName];
 
@@ -90,11 +93,15 @@ export class OpenApiMingle {
           serviceDefinition
         );
 
-        Object.getOwnPropertyNames(filteredPaths).forEach(path => {
+        const paths = Object.getOwnPropertyNames(filteredPaths);
+        paths.forEach(path => {
+          this.log(`\tAdding ${path}`);
           this.openApi.addPath(path, filteredPaths[path], true);
         });
       }
     }
+
+    this.log(`***** Ended at ${new Date().toISOString()}' *****`);
 
     this.json = this.openApi.generateJson();
   }
@@ -107,7 +114,10 @@ export class OpenApiMingle {
     pathsNames.forEach((pathString: string) => {
       // clone methods
       const pathDefinition: Path = implementedPaths[pathString];
-      const methods = Object.getOwnPropertyNames(pathDefinition);
+      const methods = Object.getOwnPropertyNames(pathDefinition)
+        .sort()
+        .join(",")
+        .toUpperCase();
 
       if (pathString.startsWith(serviceDefinition.privatePrefix)) {
         const newPath = `${
@@ -116,19 +126,11 @@ export class OpenApiMingle {
 
         output[newPath] = pathDefinition;
 
-        methods.forEach((method: string) => {
-          this.log(
-            `Remapping ${method.toUpperCase()} from ${pathString} to ${newPath}`
-          );
-        });
+        this.log(`\tRemapping ${methods} from [${pathString}] to [${newPath}]`);
       } else {
-        methods.forEach((method: string) => {
-          this.log(
-            `Skipping ${method.toUpperCase()} ${pathString} because it's outside private path ${
-              serviceDefinition.privatePrefix
-            }*`
-          );
-        });
+        this.log(
+          `\tSkipping ${methods} [${pathString}] because it's outside private path [${serviceDefinition.privatePrefix}*]`
+        );
       }
     });
 
@@ -143,34 +145,18 @@ export class OpenApiMingle {
 
     this.log(`Retrieving service '${serviceName}' from uri ${schemaUrl}`);
 
-    const serviceDefinition = await this.readJsonUrl(schemaUrl);
-
-    if (serviceDefinition) {
-      this.log(JSON.stringify(serviceDefinition));
-    }
-
-    return serviceDefinition;
+    return this.readJsonUrl(schemaUrl);
   }
 
   /**
    * Read a resource uri, from a file or an uri
    */
   private async readJsonUrl(uri: string): Promise<OpenApiSchema | undefined> {
-    try {
-      if (uri.startsWith("file://")) {
-        return JSON.parse(fs.readFileSync(uri.substr(7), "utf8"));
-      }
-    } catch (e) {
-      this.log(`Failed to read uri ${uri} from local file ${uri.substr(7)}`, e);
+    if (uri.startsWith("file://")) {
+      return JSON.parse(fs.readFileSync(uri.substr(7), "utf8"));
     }
 
-    // try to read schema from remote uri
-    try {
-      return this.readRemoteUri(uri);
-    } catch (e) {
-      this.log(`Failed to read uri ${uri} from remote address ${uri}`, e);
-    }
-    return;
+    return this.readRemoteUri(uri);
   }
 
   /**
@@ -179,10 +165,6 @@ export class OpenApiMingle {
   private async readRemoteUri(url: string): Promise<OpenApiSchema> {
     const result = await axios.get<OpenApiSchema>(url, {});
 
-    if (result.status >= 200 && result.status < 300) {
-      return result.data;
-    }
-
-    throw new Error("bad request");
+    return result.data;
   }
 }

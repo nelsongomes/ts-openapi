@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export type Server = { url: string };
+export type Server = { url: string; description?: string };
 export type Servers = Server[];
 export type Method = "put" | "get" | "post" | "delete" | "patch";
 export type Tags = string[];

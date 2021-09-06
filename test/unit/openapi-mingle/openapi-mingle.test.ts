@@ -4,7 +4,20 @@ import {
   ServiceList
 } from "../../../src/openapi/openapi-mingle";
 import { OpenApiSchema } from "../../../src/openapi/openapi.types";
-import data from "./samples/sample1.json";
+
+import sample1Data from "./samples/sample1.json";
+import openapiData from "./samples/openapi.json";
+// import editorSwaggerIoData from "./samples/editor.swagger.io.json";
+
+// tslint:disable:no-console
+function log(message: string, e?: Error) {
+  if (e) {
+    console.log(message, e);
+  } else {
+    console.log(message);
+  }
+}
+// tslint:enable:no-console
 
 describe("src/openapi/openapi-mingle", () => {
   describe("Constructor", () => {
@@ -17,8 +30,14 @@ describe("src/openapi/openapi-mingle", () => {
       );
 
       serviceMingle.setServers([
-        { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        {
+          url: "https://explorer-eu.awesome-api.com",
+          description: "EU Server"
+        },
+        {
+          url: "https://explorer-us.awesome-api.com",
+          description: "US Server"
+        }
       ]);
 
       serviceMingle.setLicense("license", "http://license", "http://terms");
@@ -30,6 +49,10 @@ describe("src/openapi/openapi-mingle", () => {
   });
 
   describe("Mingle services", () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
     test("Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from file", async done => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
@@ -68,7 +91,7 @@ describe("src/openapi/openapi-mingle", () => {
       done();
     });
 
-    test.only("Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from http", async done => {
+    test("Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from remote", async done => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -92,9 +115,12 @@ describe("src/openapi/openapi-mingle", () => {
         { url: "https://explorer-us.awesome-api.com" }
       ]);
 
+      // mock axios get request
       jest
         .spyOn(axios, "get")
-        .mockImplementation(() => Promise.resolve({ data, status: 200 }));
+        .mockImplementation(() =>
+          Promise.resolve({ data: sample1Data, status: 200 })
+        );
 
       await serviceMingle.combineServices(services);
 
@@ -110,7 +136,59 @@ describe("src/openapi/openapi-mingle", () => {
       done();
     });
 
-    test("Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from https", async done => {
+    test("Simple service remap from local file and remote uri", async done => {
+      const serviceMingle = new OpenApiMingle(
+        "1.0.0",
+        "Server API",
+        "Some test api",
+        "nelson.ricardo.gomes@gmail.com",
+        log
+      );
+
+      serviceMingle.setLicense("license", "http://license", "http://terms");
+
+      const services: ServiceList = {
+        users: {
+          schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
+          publicPrefix: "/users/",
+          privatePrefix: "/public/",
+          type: "consul"
+        },
+        demo: {
+          schemaUrl: "https://generator3.swagger.io/openapi.json",
+          publicPrefix: "/openapi/",
+          privatePrefix: "/",
+          type: "consul"
+        }
+      };
+
+      serviceMingle.setServers([
+        { url: "https://explorer-eu.awesome-api.com" },
+        { url: "https://explorer-us.awesome-api.com" }
+      ]);
+
+      // mock axios get request
+      jest
+        .spyOn(axios, "get")
+        .mockImplementation(() =>
+          Promise.resolve({ data: openapiData, status: 200 })
+        );
+
+      await serviceMingle.combineServices(services);
+
+      const json = serviceMingle.generateJson() as OpenApiSchema;
+
+      expect(serviceMingle instanceof OpenApiMingle).toBe(true);
+
+      // combined output will be 8 methods
+      expect(Object.getOwnPropertyNames(json.paths).length).toBe(8);
+
+      expect(json).toMatchSnapshot();
+
+      done();
+    });
+
+    test("Should throw because remote uri does not exist", async done => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -122,7 +200,7 @@ describe("src/openapi/openapi-mingle", () => {
 
       const services: ServiceList = {
         users: {
-          schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
+          schemaUrl: "http://www.server.test/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
           type: "consul"
@@ -134,16 +212,20 @@ describe("src/openapi/openapi-mingle", () => {
         { url: "https://explorer-us.awesome-api.com" }
       ]);
 
-      await serviceMingle.combineServices(services);
+      // mock axios get request
+      jest
+        .spyOn(axios, "get")
+        .mockImplementation(() =>
+          Promise.reject(new Error("Request failed with status code 404"))
+        );
 
-      const json = serviceMingle.generateJson() as OpenApiSchema;
+      try {
+        await serviceMingle.combineServices(services);
 
-      expect(serviceMingle instanceof OpenApiMingle).toBe(true);
-
-      expect(Object.getOwnPropertyNames(json.paths).length).toBe(1);
-      expect(Object.getOwnPropertyNames(json.paths)[0]).toBe("/users/{userId}");
-
-      expect(json).toMatchSnapshot();
+        fail("Should have thrown");
+      } catch (e) {
+        expect(e.message).toBe("Request failed with status code 404");
+      }
 
       done();
     });

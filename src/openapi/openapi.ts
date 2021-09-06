@@ -152,7 +152,6 @@ export class OpenApi {
       }
 
       if (pathDefinition.security) {
-        // TODO verify security scheme exists
         pathDefinition.security.forEach(securityScheme => {
           const securitySchemeName = Object.getOwnPropertyNames(
             securityScheme
