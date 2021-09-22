@@ -19,7 +19,7 @@ describe("src/openapi/openapi", () => {
 
     test("should succeed", done => {
       const params = {
-        username: Types.String({ required: true })
+        username: Types.String({ required: true, isParameter: true })
       };
 
       openApi.addPath(

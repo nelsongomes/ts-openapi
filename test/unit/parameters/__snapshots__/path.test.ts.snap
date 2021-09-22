@@ -2,6 +2,20 @@
 
 exports[`src/openapi/openapi Path parameters should succeed 1`] = `
 Object {
+  "components": Object {
+    "parameters": Object {
+      "username": Object {
+        "description": "Parameter without description.",
+        "in": "path",
+        "name": "username",
+        "required": true,
+        "schema": Object {
+          "description": "Parameter without description.",
+          "type": "string",
+        },
+      },
+    },
+  },
   "info": Object {
     "contact": Object {
       "email": "nelson.ricardo.gomes@gmail.com",
@@ -23,14 +37,7 @@ Object {
         "operationId": "id",
         "parameters": Array [
           Object {
-            "description": "Parameter without description.",
-            "in": "path",
-            "name": "username",
-            "required": true,
-            "schema": Object {
-              "description": "Parameter without description.",
-              "type": "string",
-            },
+            "$ref": "#/components/parameters/username",
           },
         ],
         "responses": Object {

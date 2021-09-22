@@ -142,6 +142,7 @@ Object {
   "paths": Object {
     "/health": Object {
       "get": Object {
+        "deprecated": true,
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
         "responses": Object {

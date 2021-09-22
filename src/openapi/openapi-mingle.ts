@@ -23,6 +23,7 @@ export type ServiceList = {
 export class OpenApiMingle {
   private openApi: OpenApi;
   private json: object | undefined;
+  private declaredPaths: string[] = [];
   private logFn: ((message: string, e?: Error) => void) | undefined;
 
   constructor(
@@ -83,9 +84,7 @@ export class OpenApiMingle {
       );
 
       if (openApiDefinition) {
-        // validate openApiDefinition
-        // check version
-        // check paths
+        this.checkOpenApiVersion(openApiDefinition.openapi);
 
         // filter paths
         const filteredPaths = this.filterPaths(
@@ -93,10 +92,19 @@ export class OpenApiMingle {
           serviceDefinition
         );
 
+        // copy referenced #/components/parameters/*
+        // copy referenced #/components/schemas/*
+
         const paths = Object.getOwnPropertyNames(filteredPaths);
-        paths.forEach(path => {
+        paths.forEach((path: string) => {
           this.log(`\tAdding ${path}`);
+
+          if (this.declaredPaths.includes(path)) {
+            throw new Error(`Path ${path} was already declared.`);
+          }
+
           this.openApi.addPath(path, filteredPaths[path], true);
+          this.declaredPaths.push(path);
         });
       }
     }
@@ -104,6 +112,15 @@ export class OpenApiMingle {
     this.log(`***** Ended at ${new Date().toISOString()}' *****`);
 
     this.json = this.openApi.generateJson();
+  }
+
+  // openapi 3.1 changes:
+  // https://apisyouwonthate.com/blog/openapi-v31-and-json-schema
+  // https://blog.stoplight.io/difference-between-open-v2-v3-v31
+  private checkOpenApiVersion(version: string) {
+    if (!version.startsWith("3.0.")) {
+      throw new Error(`We only support OpenApi version 3.0.x, not ${version}`);
+    }
   }
 
   private filterPaths(implementedPaths: Paths, serviceDefinition: Service) {
