@@ -87,5 +87,127 @@ describe("src/openapi/openapi", () => {
       );
       expect(openApi.generateJson()).toMatchSnapshot();
     });
+
+    test("binary all options, declared as parameter", async () => {
+      const query = {
+        base64string: Types.Binary({
+          description: "some binary base64 value",
+          required: true,
+          minLength: 512,
+          maxLength: 1024,
+          default: "c2FtcGxlMQ==",
+          example: "c2FtcGxlMQ==",
+          nullable: true,
+          isParameter: true
+        })
+      };
+
+      openApi.addPath(
+        "/test",
+        {
+          get: {
+            description: "Test endpoint",
+            operationId: "id",
+            requestSchema: { query },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          }
+        },
+        true
+      );
+      expect(openApi.generateJson()).toMatchSnapshot();
+    });
+
+    test("binary all options, declared as parameter should throw an exception, because parameter has 2 variations", async () => {
+      const query = {
+        base64string: Types.Binary({
+          description: "some binary base64 value",
+          required: true,
+          minLength: 512,
+          maxLength: 1024,
+          default: "c2FtcGxlMQ==",
+          example: "c2FtcGxlMQ==",
+          nullable: true,
+          isParameter: true
+        })
+      };
+
+      const queryVariation = {
+        base64string: Types.Binary({
+          description: "some binary base64 value",
+          required: true,
+          minLength: 512,
+          maxLength: 1000,
+          default: "c2FtcGxlMQ==",
+          example: "c2FtcGxlMQ==",
+          nullable: true,
+          isParameter: true
+        })
+      };
+
+      openApi.addPath(
+        "/test",
+        {
+          get: {
+            description: "Test endpoint",
+            operationId: "id",
+            requestSchema: { query },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          }
+        },
+        true
+      );
+
+      openApi.addPath(
+        "/testValid",
+        {
+          get: {
+            description: "Test endpoint",
+            operationId: "id2",
+            requestSchema: { query },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          }
+        },
+        true
+      );
+
+      try {
+        openApi.addPath(
+          "/testInvalid",
+          {
+            get: {
+              description: "Test endpoint",
+              operationId: "id3",
+              requestSchema: { query: queryVariation },
+              responses: {
+                200: textPlain("Successful operation.")
+              },
+              summary: "Server Test",
+              tags: ["Internals"]
+            }
+          },
+          true
+        );
+
+        fail("Should have thrown exception");
+      } catch (e) {
+        expect(e.message).toBe(
+          "There is a conflicting declaration of base64string parameter, the parameter cannot change."
+        );
+      }
+
+      expect(openApi.generateJson()).toMatchSnapshot();
+    });
   });
 });

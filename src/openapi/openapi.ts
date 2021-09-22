@@ -13,7 +13,6 @@ import {
 import { validateParameters } from "./openapi-validation";
 import {
   OpenApiSchema,
-  Parameter,
   ParameterIn,
   Parameters,
   PathInputDefinition,
@@ -22,14 +21,23 @@ import {
   SecurityScheme,
   WebRequestSchema,
   PathInput,
-  PathDefinition
+  PathDefinition,
+  Scheme,
+  FlowCommon,
+  SecuritySchemeArray,
+  ReferencedParameter,
+  TypedParameter
 } from "./openapi.types";
+// tslint:disable:no-var-requires
+const hasher = require("node-object-hash")();
+// tslint:enable:no-var-requires
 
 const REQUIRED_TYPES = [ParameterIn.Path];
 
 export class OpenApi {
   private schema: OpenApiSchema;
   private operationIds: string[] = [];
+  private declaredParameters: Map<string, string> = new Map<string, string>();
   private securitySchemeIds: string[] = [];
 
   constructor(
@@ -96,16 +104,18 @@ export class OpenApi {
    * this replaces path parameters from express to openapi format
    * @param apiPath
    */
-  private replaceParameters(apiPath: string): string {
+  private replaceParameters(apiPath: string) {
     let newPath = apiPath;
     const paramsRegex = apiPath.match(/:([A-Za-z0-9_]+)/g);
+    const checkParams = [];
 
     if (paramsRegex) {
       for (const param of paramsRegex) {
         newPath = newPath.replace(param, `{${param.substring(1)}}`);
+        checkParams.push(param.substring(1));
       }
     }
-    return newPath;
+    return { newPath, checkParams };
   }
 
   public addPath(path: string, inputDefinition: PathInput, visible: boolean) {
@@ -113,7 +123,8 @@ export class OpenApi {
       return;
     }
 
-    path = this.replaceParameters(path);
+    const { newPath, checkParams } = this.replaceParameters(path);
+    path = newPath;
 
     const methods: [string, PathInputDefinition][] = [];
     Object.getOwnPropertyNames(inputDefinition).forEach((method: string) => {
@@ -138,6 +149,8 @@ export class OpenApi {
         ...(requestBody && { requestBody })
       };
 
+      this.checkParameters(checkParams, definition);
+
       if (method === "get" && definition.requestBody) {
         throw new Error("GET operations cannot have a requestBody.");
       }
@@ -147,16 +160,7 @@ export class OpenApi {
       }
 
       if (pathDefinition.security) {
-        // TODO verify security scheme exists
-        pathDefinition.security.forEach(securityScheme => {
-          const securitySchemeName = Object.getOwnPropertyNames(
-            securityScheme
-          )[0];
-
-          if (!this.securitySchemeIds.includes(securitySchemeName)) {
-            throw new Error(`Unknown security scheme '${securitySchemeName}'`);
-          }
-        });
+        this.checkSecurityDefinition(pathDefinition.security);
       }
 
       if (!operationId) {
@@ -164,7 +168,9 @@ export class OpenApi {
       }
 
       if (this.operationIds.includes(operationId)) {
-        throw new Error("Operations must have unique operationIds.");
+        throw new Error(
+          `Operations must have unique operationIds, id '${operationId}' already exists.`
+        );
       }
 
       this.operationIds.push(operationId);
@@ -178,6 +184,96 @@ export class OpenApi {
         // add first method in this path
         this.schema.paths[path] = { [method]: definition };
       }
+    }
+  }
+
+  private checkSecurityDefinition(security: SecuritySchemeArray) {
+    security.forEach((securityScheme: Scheme) => {
+      const securitySchemeName = Object.getOwnPropertyNames(securityScheme)[0];
+
+      if (!this.securitySchemeIds.includes(securitySchemeName)) {
+        throw new Error(`Unknown security scheme '${securitySchemeName}'`);
+      }
+
+      // check security scheme scopes exist
+      const scopes = securityScheme[securitySchemeName];
+      const schemeDefinition: SecurityScheme = this.schema.components!
+        .securitySchemes![securitySchemeName];
+
+      if (scopes.length) {
+        if (schemeDefinition.type !== "oauth2") {
+          throw new Error(
+            `Security scheme '${securitySchemeName}' does not have scopes`
+          );
+        }
+
+        scopes.forEach(scope => {
+          const flowName = Object.getOwnPropertyNames(
+            schemeDefinition.flows
+          )[0];
+
+          if (
+            ![
+              "authorizationCode",
+              "implicit",
+              "password",
+              "clientCredentials"
+            ].includes(flowName)
+          ) {
+            throw new Error(
+              `${flowName} is not a valid flow for ${securitySchemeName}`
+            );
+          }
+
+          const flow = (schemeDefinition.flows as any)[flowName] as FlowCommon;
+          const scopeNames = Object.getOwnPropertyNames(flow.scopes);
+
+          if (!scopeNames.includes(scope)) {
+            throw new Error(
+              `Security scope '${scope}' does not have exist in ${securitySchemeName} flow '${flowName}' declaration.`
+            );
+          }
+        });
+      }
+    });
+  }
+
+  private checkParameters(checkParams: string[], definition: PathDefinition) {
+    if (checkParams.length) {
+      if (!definition.parameters?.length) {
+        throw new Error("Parameters in path must be declared");
+      }
+
+      checkParams.forEach(paramCheck => {
+        let found = false;
+
+        definition.parameters?.forEach((detectedParam: any) => {
+          if (
+            detectedParam.$ref &&
+            detectedParam.$ref.startsWith("#/components/parameters/") &&
+            this.schema.components &&
+            this.schema.components.parameters
+          ) {
+            // fetch declaration for check
+            detectedParam = this.schema.components.parameters[
+              detectedParam.$ref.substring(24)
+            ] as any;
+          }
+
+          if (
+            detectedParam.in === ParameterIn.Path &&
+            detectedParam.name === paramCheck
+          ) {
+            found = true;
+          }
+        });
+
+        if (!found) {
+          throw new Error(
+            `Parameters in path must be declared, missing ${paramCheck}`
+          );
+        }
+      });
     }
   }
 
@@ -262,31 +358,84 @@ export class OpenApi {
 
       switch (parameter.type) {
         case "string":
-          parameters.push(
-            this.stringParameter(key, parameter, isParameterRequired, type)
-          );
+          {
+            const preparedParameter = this.stringParameter(
+              key,
+              parameter,
+              isParameterRequired,
+              type
+            );
+
+            this.declareParameter(
+              parameter,
+              parameters,
+              key,
+              preparedParameter
+            );
+          }
           break;
         case "number":
         case "integer":
           if (parameter.format && parameter.format === "float") {
-            parameters.push(
-              this.numberParameter(key, parameter, isParameterRequired, type)
+            const preparedParameter = this.numberParameter(
+              key,
+              parameter,
+              isParameterRequired,
+              type
+            );
+
+            this.declareParameter(
+              parameter,
+              parameters,
+              key,
+              preparedParameter
             );
           } else {
-            parameters.push(
-              this.integerParameter(key, parameter, isParameterRequired, type)
+            const preparedParameter = this.integerParameter(
+              key,
+              parameter,
+              isParameterRequired,
+              type
+            );
+            this.declareParameter(
+              parameter,
+              parameters,
+              key,
+              preparedParameter
             );
           }
           break;
         case "boolean":
-          parameters.push(
-            this.booleanParameter(key, parameter, isParameterRequired, type)
-          );
+          {
+            const preparedParameter = this.booleanParameter(
+              key,
+              parameter,
+              isParameterRequired,
+              type
+            );
+            this.declareParameter(
+              parameter,
+              parameters,
+              key,
+              preparedParameter
+            );
+          }
           break;
         case "array":
-          parameters.push(
-            this.arrayParameter(key, parameter, isParameterRequired, type)
-          );
+          {
+            const preparedParameter = this.arrayParameter(
+              key,
+              parameter,
+              isParameterRequired,
+              type
+            );
+            this.declareParameter(
+              parameter,
+              parameters,
+              key,
+              preparedParameter
+            );
+          }
           break;
         default:
           throw new Error(`Unknown type '${parameter.type}' in openapi`);
@@ -294,11 +443,52 @@ export class OpenApi {
     }
   }
 
+  private declareParameter(
+    parameter: any,
+    parameters: Parameters,
+    key: string,
+    preparedParameter: TypedParameter
+  ) {
+    if (parameter.meta.parameter) {
+      const reference = `#/components/parameters/${key}`;
+      const parameterHash = hasher.hash(preparedParameter);
+
+      if (!this.declaredParameters.get(key)) {
+        // new parameter
+        this.declaredParameters.set(key, parameterHash);
+
+        // store declared component
+        if (!this.schema.components) {
+          this.schema.components = {};
+        }
+
+        if (!this.schema.components.parameters) {
+          this.schema.components.parameters = {
+            [key]: preparedParameter
+          };
+        }
+
+        this.schema.components.parameters[key] = preparedParameter;
+      } else {
+        // check if parameter is different
+        if (parameterHash !== this.declaredParameters.get(key)) {
+          throw new Error(
+            `There is a conflicting declaration of ${key} parameter, the parameter cannot change.`
+          );
+        }
+      }
+
+      parameters.push(this.referencedParameter(reference));
+    } else {
+      parameters.push(preparedParameter);
+    }
+  }
+
   private isRequiredProperty(swagger: SwaggerSchema, key: string) {
     return swagger.required && swagger.required.includes(key);
   }
 
-  public generateJson(): {} {
+  public generateJson(): object {
     if (this.schema.servers.length === 0) {
       throw new ApplicationError(
         500,
@@ -321,9 +511,9 @@ export class OpenApi {
     parameter: any,
     required: boolean,
     type: ParameterIn
-  ): Parameter {
+  ): TypedParameter {
     const limitationDetail = limitations(parameter);
-    const p: Parameter = {
+    const p: TypedParameter = {
       description:
         (parameter.description || "Parameter without description.") +
         (limitationDetail || ""),
@@ -337,15 +527,19 @@ export class OpenApi {
     return p;
   }
 
+  private referencedParameter(reference: string): ReferencedParameter {
+    return { $ref: reference };
+  }
+
   private numberParameter(
     name: string,
     parameter: any,
     required: boolean,
     type: ParameterIn
-  ): Parameter {
+  ): TypedParameter {
     const limitationDetail = limitations(parameter);
 
-    const p: Parameter = {
+    const p: TypedParameter = {
       description:
         (parameter.description || "Parameter without description.") +
         (limitationDetail || ""),
@@ -364,10 +558,10 @@ export class OpenApi {
     parameter: any,
     required: boolean,
     type: ParameterIn
-  ): Parameter {
+  ): TypedParameter {
     const limitationDetail = limitations(parameter);
 
-    const p: Parameter = {
+    const p: TypedParameter = {
       description:
         (parameter.description || "Parameter without description.") +
         (limitationDetail || ""),
@@ -386,10 +580,10 @@ export class OpenApi {
     parameter: any,
     required: boolean,
     type: ParameterIn
-  ): Parameter {
+  ): TypedParameter {
     const limitationDetail = limitations(parameter);
 
-    const p: Parameter = {
+    const p: TypedParameter = {
       description:
         (parameter.description || "Parameter without description.") +
         (limitationDetail || ""),
@@ -410,11 +604,11 @@ export class OpenApi {
     parameter: any,
     required: boolean,
     type: ParameterIn
-  ): Parameter {
+  ): TypedParameter {
     const limitationDetail = limitations(parameter);
     const schema = arraySchema(parameter);
 
-    const p: Parameter = {
+    const p: TypedParameter = {
       description:
         (parameter.description || "Parameter without description.") +
         (limitationDetail || ""),

@@ -1,7 +1,6 @@
 {
-  "editor.formatOnSave": true,  
+  "editor.formatOnSave": true,
   "[yaml]": {
     "editor.formatOnSave": false
-  },
-  "jest.pathToJest": "node_modules/jest/bin/jest.js"
+  }
 }

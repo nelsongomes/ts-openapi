@@ -24,6 +24,22 @@ describe.only("src/openapi/openapi", () => {
           password: Types.Password({
             required: true,
             description: "User password"
+          }),
+          ipv4: Types.Ipv4({
+            required: true,
+            description: "ip"
+          }),
+          ipv6: Types.Ipv6({
+            required: true,
+            description: "ip"
+          }),
+          hostname: Types.Hostname({
+            required: true,
+            description: "server"
+          }),
+          uri: Types.Uri({
+            required: true,
+            description: "Uri"
           })
         },
         required: true,

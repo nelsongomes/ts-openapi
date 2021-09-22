@@ -6,18 +6,22 @@ type Common = {
   nullable?: boolean;
 };
 
+type ParameterCommon = { isParameter?: boolean };
+
 type StringParameters = {
   default?: string;
   example?: string;
   minLength?: number;
   maxLength?: number;
-} & Common;
+} & Common &
+  ParameterCommon;
 
 type StringEnumParameters = {
   values: string[];
   default?: string;
   example?: string;
-} & Common;
+} & Common &
+  ParameterCommon;
 
 type EmailParameters = StringParameters;
 type UriParameters = StringParameters;
@@ -25,40 +29,47 @@ type HostnameParameters = StringParameters;
 type PasswordParameters = {
   minLength?: number;
   maxLength?: number;
-} & Common;
+} & Common &
+  ParameterCommon;
 type UuidParameters = {
   example?: string;
-} & Common;
+} & Common &
+  ParameterCommon;
 type IpParameters = {
   example?: string;
-} & Common;
+} & Common &
+  ParameterCommon;
 type BinaryParameters = StringParameters;
 type ByteParameters = StringParameters;
 
 type DateParameters = {
   default?: string;
   example?: string;
-} & Common;
+} & Common &
+  ParameterCommon;
 
 type IntegerParameters = {
   default?: number;
   example?: number;
   minValue?: number;
   maxValue?: number;
-} & Common;
+} & Common &
+  ParameterCommon;
 
 type IntegerEnumParameters = {
   values: any[];
   default?: number;
   example?: number;
-} & Common;
+} & Common &
+  ParameterCommon;
 
-type NumberEnumParameters = IntegerEnumParameters;
+type NumberEnumParameters = IntegerEnumParameters & ParameterCommon;
 
 type BooleanParameters = {
   default?: boolean;
   example?: boolean;
-} & Common;
+} & Common &
+  ParameterCommon;
 
 type ObjectParameters = {
   properties: Joi.SchemaMap<any>;
@@ -72,7 +83,8 @@ type ArrayParameters = {
   example?: object;
   minLength?: number;
   maxLength?: number;
-} & Common;
+} & Common &
+  ParameterCommon;
 
 export const Types = {
   String: (parameters?: StringParameters) => {
@@ -114,6 +126,10 @@ export const Types = {
 
       if (parameters.example) {
         joiType = joiType.example(example);
+      }
+
+      if (parameters.isParameter) {
+        joiType = joiType.meta({ parameter: true });
       }
     }
 
@@ -208,6 +224,10 @@ export const Types = {
       if (parameters.example) {
         joiType = joiType.example(example);
       }
+
+      if (parameters.isParameter) {
+        joiType = joiType.meta({ parameter: true });
+      }
     }
 
     return joiType;
@@ -235,6 +255,10 @@ export const Types = {
 
       if (typeof nullable === "boolean" && nullable) {
         joiType = joiType.allow(null);
+      }
+
+      if (parameters.isParameter) {
+        joiType = joiType.meta({ parameter: true });
       }
     }
 
@@ -288,6 +312,10 @@ export const Types = {
       if (typeof parameters.example === "number") {
         joiType = joiType.example(example);
       }
+
+      if (parameters.isParameter) {
+        joiType = joiType.meta({ parameter: true });
+      }
     }
 
     return joiType;
@@ -329,6 +357,10 @@ export const Types = {
 
       if (typeof parameters.example === "boolean") {
         joiType = joiType.example(example);
+      }
+
+      if (parameters.isParameter) {
+        joiType = joiType.meta({ parameter: true });
       }
     }
 
@@ -400,6 +432,10 @@ export const Types = {
 
     if (maxLength) {
       joiType = joiType.max(maxLength);
+    }
+
+    if (parameters.isParameter) {
+      joiType = joiType.meta({ parameter: true });
     }
 
     return joiType;
