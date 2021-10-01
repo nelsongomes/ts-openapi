@@ -7,6 +7,7 @@ type Common = {
 };
 
 type ParameterCommon = { isParameter?: boolean };
+type ObjectCommon = { modelName?: string };
 
 type StringParameters = {
   default?: string;
@@ -75,7 +76,8 @@ type ObjectParameters = {
   properties: Joi.SchemaMap<any>;
   default?: object;
   example?: object;
-} & Common;
+} & Common &
+  ObjectCommon;
 
 type ArrayParameters = {
   arrayType: Joi.SchemaLikeWithoutArray;
@@ -389,6 +391,10 @@ export const Types = {
 
     if (parameters.example) {
       joiType = joiType.example(example);
+    }
+
+    if (parameters.modelName) {
+      joiType = joiType.meta({ modelName: parameters.modelName });
     }
 
     return joiType;

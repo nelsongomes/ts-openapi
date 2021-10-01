@@ -61,6 +61,54 @@ describe("src/openapi/openapi", () => {
       expect(openApi.generateJson()).toMatchSnapshot();
     });
 
+    test("add body, referenced", async () => {
+      const openApi = new OpenApi(
+        "1.0.0",
+        "Server API",
+        "Some test api",
+        "nelson.ricardo.gomes@gmail.com"
+      );
+
+      const body = Types.Object({
+        properties: {
+          username: Types.String()
+        },
+        description: "Sample body",
+        modelName: "Username"
+      });
+
+      openApi.setServers([{ url: "https://server.com" }]);
+
+      openApi.addPath(
+        "/something",
+        {
+          post: {
+            operationId: "postid",
+            description: "desc",
+            summary: "summary",
+            tags: ["example"],
+            responses: {
+              [200]: { description: "Success", content: { "plain/text": {} } }
+            },
+            requestSchema: { body }
+          },
+          patch: {
+            operationId: "patchid",
+            description: "desc",
+            summary: "summary",
+            tags: ["example"],
+            responses: {
+              [200]: { description: "Success", content: { "plain/text": {} } }
+            },
+            requestSchema: { body }
+          }
+        },
+        true
+      );
+
+      expect(openApi.generateJson()).toMatchSnapshot();
+    });
+
     test("simple, but no servers were added", async () => {
       const openApi = new OpenApi(
         "1.0.0",

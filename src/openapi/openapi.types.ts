@@ -102,7 +102,7 @@ export type SchemaTypeArray = {
   example?: string[] | number[];
   nullable?: boolean;
 };
-export type SchemaTypeObject = {
+export type TypedObject = {
   type: "object";
   properties: { [k: string]: SchemaTypes };
   default?: string;
@@ -110,13 +110,15 @@ export type SchemaTypeObject = {
   $ref?: string;
   description: string;
 };
+export type SchemaTypeObject = TypedObject | ReferencedObject;
 export type SchemaTypes =
   | SchemaTypeString
   | SchemaTypeInteger
   | SchemaTypeNumber
   | SchemaTypeArray
   | SchemaTypeBoolean
-  | SchemaTypeObject;
+  | TypedObject
+  | ReferencedObject;
 
 export type TypedParameter = {
   name: string;
@@ -129,6 +131,7 @@ export type TypedParameter = {
   example?: string | number | string[] | number[];
 };
 export type ReferencedParameter = { $ref: string };
+export type ReferencedObject = ReferencedParameter;
 export type Parameter = TypedParameter | ReferencedParameter;
 export type Parameters = Parameter[];
 export type PathDefinition = {

@@ -8,7 +8,8 @@ import {
   numberSchema,
   integerSchema,
   booleanSchema,
-  arraySchema
+  arraySchema,
+  openapiEscapeChars
 } from "./openapi-functions";
 import { validateParameters } from "./openapi-validation";
 import {
@@ -38,6 +39,7 @@ export class OpenApi {
   private schema: OpenApiSchema;
   private operationIds: string[] = [];
   private declaredParameters: Map<string, string> = new Map<string, string>();
+  private declaredModels: Map<string, string> = new Map<string, string>();
   private securitySchemeIds: string[] = [];
 
   constructor(
@@ -287,7 +289,6 @@ export class OpenApi {
     requestSchema: WebRequestSchema
   ): { parameters: Parameters | undefined; requestBody: Body | undefined } {
     const parameters: Parameters = [];
-    let requestBody: Body | undefined;
 
     if (requestSchema.query) {
       // get parameters
@@ -326,13 +327,66 @@ export class OpenApi {
     }
 
     if (requestSchema.body) {
-      // request body
-      requestBody = bodyParams(requestSchema.body);
+      const { description, schema, example, modelName } = bodyParams(
+        requestSchema.body
+      );
+
+      if (modelName) {
+        const escapedName = openapiEscapeChars(modelName);
+        const reference = `#/components/schemas/${escapedName}`;
+        const schemaHash = hasher.hash(schema);
+
+        if (this.declaredModels.has(escapedName)) {
+          // check if model definition is different
+          if (schemaHash !== this.declaredModels.get(modelName)) {
+            throw new Error(
+              `There is a conflicting declaration of model ${modelName}, model cannot change.`
+            );
+          }
+        } else {
+          if (!this.schema.components) {
+            this.schema.components = {};
+          }
+
+          if (!this.schema.components.schemas) {
+            this.schema.components.schemas = {};
+          }
+
+          this.schema.components.schemas[escapedName] = schema;
+          this.declaredModels.set(escapedName, schemaHash);
+
+          return {
+            parameters: parameters.length > 0 ? parameters : undefined,
+            requestBody: {
+              description,
+              content: {
+                "application/json": {
+                  schema: { $ref: reference },
+                  ...(example && { example })
+                }
+              }
+            }
+          };
+        }
+      }
+
+      return {
+        parameters: parameters.length > 0 ? parameters : undefined,
+        requestBody: {
+          description,
+          content: {
+            "application/json": {
+              schema,
+              ...(example && { example })
+            }
+          }
+        }
+      };
     }
 
     return {
       parameters: parameters.length > 0 ? parameters : undefined,
-      requestBody
+      requestBody: undefined
     };
   }
 
@@ -450,7 +504,8 @@ export class OpenApi {
     preparedParameter: TypedParameter
   ) {
     if (parameter.meta.parameter) {
-      const reference = `#/components/parameters/${key}`;
+      const escapedKey = openapiEscapeChars(key);
+      const reference = `#/components/parameters/${escapedKey}`;
       const parameterHash = hasher.hash(preparedParameter);
 
       if (!this.declaredParameters.get(key)) {
@@ -468,7 +523,7 @@ export class OpenApi {
           };
         }
 
-        this.schema.components.parameters[key] = preparedParameter;
+        this.schema.components.parameters[escapedKey] = preparedParameter;
       } else {
         // check if parameter is different
         if (parameterHash !== this.declaredParameters.get(key)) {

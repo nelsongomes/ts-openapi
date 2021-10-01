@@ -1,14 +1,13 @@
 import Joi, { ObjectSchema } from "joi";
 import joiToSwagger from "../joi-conversion";
 import {
-  Body,
   IntegerFormats,
   NumberFormats,
   SchemaTypeArray,
   SchemaTypeBoolean,
   SchemaTypeInteger,
   SchemaTypeNumber,
-  SchemaTypeObject,
+  TypedObject,
   SchemaTypeString,
   StringFormats
 } from "./openapi.types";
@@ -76,7 +75,18 @@ export function limitations(parameter: any): string {
   return limitationArray.length > 0 ? ` (${limitationArray.join(", ")})` : "";
 }
 
-export function bodyParams(schema: ObjectSchema): Body {
+export function openapiEscapeChars(key: string) {
+  return key.replace(/~/g, "~0").replace(/\//g, "~1");
+}
+
+export function bodyParams(
+  schema: ObjectSchema
+): {
+  description: string;
+  schema: TypedObject;
+  example: any;
+  modelName?: string;
+} {
   const internalSchema = Joi.object().keys({ object: schema.required() });
   const query = joiToSwagger(internalSchema, {});
 
@@ -87,21 +97,18 @@ export function bodyParams(schema: ObjectSchema): Body {
     description:
       query.swagger.properties[key].description ||
       "Body does not have a description.",
-    content: {
-      "application/json": {
-        schema: objectSchema(parameter),
-        ...(parameter.example && { example: parameter.example })
-      }
-    }
+    schema: objectSchema(parameter),
+    ...(parameter.example && { example: parameter.example }),
+    modelName: parameter.meta.modelName
   };
 }
 
-function objectSchema(parameter: any): SchemaTypeObject {
+function objectSchema(parameter: any): TypedObject {
   const description =
     (parameter.description || "Parameter without description.") +
     (limitations(parameter) || "");
 
-  const output: SchemaTypeObject = {
+  const output: TypedObject = {
     description,
     ...(typeof parameter.default === "object" && {
       default: parameter.default
@@ -407,6 +414,8 @@ export function arraySchema(parameter: any): SchemaTypeArray {
   return output;
 }
 
-export function bodySchema(schema: ObjectSchema): Body {
-  return bodyParams(schema);
-}
+/*export function bodySchema(schema: ObjectSchema): Body {
+  const { body } = bodyParams(schema);
+
+  return body;
+}*/

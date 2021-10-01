@@ -1,7 +1,6 @@
 import Joi, { Schema } from "joi";
 import { OpenApi } from "./openapi/openapi";
 import { WebRequestSchema, Responses } from "./openapi/openapi.types";
-import { bodySchema } from "./openapi/openapi-functions";
 import {
   basicAuth,
   apiKeyAuth,
@@ -16,7 +15,7 @@ import { textPlain } from "./openapi/helpers/body-mimetype";
 import { Types } from "./openapi/helpers/types";
 
 export { Joi, Schema };
-export { OpenApi, bodySchema };
+export { OpenApi };
 export { WebRequestSchema, Responses };
 
 // export security schemes
