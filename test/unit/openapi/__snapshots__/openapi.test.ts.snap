@@ -133,14 +133,7 @@ Object {
           "content": Object {
             "application/json": Object {
               "schema": Object {
-                "description": "Sample body",
-                "properties": Object {
-                  "username": Object {
-                    "description": "Parameter without description.",
-                    "type": "string",
-                  },
-                },
-                "type": "object",
+                "$ref": "#/components/schemas/Username",
               },
             },
           },

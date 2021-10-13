@@ -86,7 +86,8 @@ type ArrayParameters = {
   minLength?: number;
   maxLength?: number;
 } & Common &
-  ParameterCommon;
+  ParameterCommon &
+  ObjectCommon;
 
 export const Types = {
   String: (parameters?: StringParameters) => {
@@ -408,7 +409,9 @@ export const Types = {
       nullable,
       example,
       minLength,
-      maxLength
+      maxLength,
+      modelName,
+      isParameter
     } = parameters;
     let joiType = Joi.array().items(arrayType);
 
@@ -440,8 +443,12 @@ export const Types = {
       joiType = joiType.max(maxLength);
     }
 
-    if (parameters.isParameter) {
+    if (isParameter) {
       joiType = joiType.meta({ parameter: true });
+    }
+
+    if (modelName) {
+      joiType = joiType.meta({ modelName });
     }
 
     return joiType;

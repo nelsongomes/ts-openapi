@@ -1,14 +1,12 @@
-import Joi, { Schema } from "joi";
+import Joi, { ObjectSchema, Schema } from "joi";
 import { ApplicationError } from "../errors/application-error";
 import joiToSwagger, { SwaggerSchema } from "../joi-conversion";
 import {
-  bodyParams,
   limitations,
   stringSchema,
   numberSchema,
   integerSchema,
   booleanSchema,
-  arraySchema,
   openapiEscapeChars
 } from "./openapi-functions";
 import { validateParameters } from "./openapi-validation";
@@ -27,7 +25,11 @@ import {
   FlowCommon,
   SecuritySchemeArray,
   ReferencedParameter,
-  TypedParameter
+  TypedParameter,
+  TypedObject,
+  SchemaTypeArray,
+  SchemaTypeString,
+  ReferencedObject
 } from "./openapi.types";
 // tslint:disable:no-var-requires
 const hasher = require("node-object-hash")();
@@ -189,6 +191,201 @@ export class OpenApi {
     }
   }
 
+  private objectSchema(parameter: any): TypedObject | ReferencedObject {
+    const description =
+      (parameter.description || "Parameter without description.") +
+      (limitations(parameter) || "");
+
+    const output: TypedObject = {
+      description,
+      ...(typeof parameter.default === "object" && {
+        default: parameter.default
+      }),
+      ...(parameter.minItems && { minItems: parameter.minItems }),
+      ...(parameter.maxItems && { maxItems: parameter.maxItems }),
+      ...(typeof parameter.nullable === "boolean" && {
+        nullable: parameter.nullable
+      }),
+      type: "object",
+      properties: {}
+    };
+
+    for (const propertyKey of Object.keys(parameter.properties)) {
+      const property = parameter.properties[propertyKey];
+
+      switch (property.type) {
+        case "string":
+          const {
+            default: ignoreA1,
+            nullable: ignoreA2,
+            minLength,
+            maxLength,
+            ...restOfStringSchema
+          } = stringSchema(property);
+
+          output.properties[propertyKey] = restOfStringSchema;
+          break;
+        case "number":
+          const {
+            default: ignoreB1,
+            nullable: ignoreB2,
+            minimum: ignoreB3,
+            maximum: ignoreB4,
+            ...restNumberOfSchema
+          } = numberSchema(property);
+
+          output.properties[propertyKey] = restNumberOfSchema;
+          break;
+        case "boolean":
+          const {
+            default: ignoreE1,
+            nullable: ignorE2,
+            ...restBooleanOfSchema
+          } = booleanSchema(property);
+
+          output.properties[propertyKey] = restBooleanOfSchema;
+          break;
+        case "integer":
+          const {
+            default: ignoreC1,
+            nullable: ignoreC2,
+            minimum: ignoreC3,
+            maximum: ignoreC4,
+            ...restIntegerOfSchema
+          } = integerSchema(property);
+
+          output.properties[propertyKey] = restIntegerOfSchema;
+          break;
+        case "object":
+          const objSchema = this.objectSchema(property);
+
+          if (!objSchema.$ref) {
+            // typedobject
+            const {
+              default: ignoreD1,
+              nullable: ignoreD2,
+              ...restOfObjectSchema
+            } = objSchema as TypedObject;
+
+            output.properties[propertyKey] = restOfObjectSchema;
+          }
+
+          // referenced object
+          output.properties[propertyKey] = objSchema;
+
+          break;
+        case "array":
+          const {
+            default: ignoreF1,
+            nullable: ignoreF2,
+            ...restOfArraySchema
+          } = this.arraySchema(property);
+
+          output.properties[propertyKey] = restOfArraySchema;
+          break;
+        default:
+          throw new Error(`${property.type} not implemented`);
+      }
+    }
+
+    if (parameter.meta.modelName) {
+      const reference = this.checkAndSetModel(parameter.meta.modelName, output);
+
+      return { $ref: reference };
+    }
+
+    return output;
+  }
+
+  private arraySchema(parameter: any): SchemaTypeArray {
+    const output: SchemaTypeArray = {
+      ...(typeof parameter.default === "object" && {
+        default: parameter.default
+      }),
+      ...(parameter.minItems && { minItems: parameter.minItems }),
+      ...(parameter.maxItems && { maxItems: parameter.maxItems }),
+      ...(typeof parameter.nullable === "boolean" && {
+        nullable: parameter.nullable
+      }),
+      type: "array"
+    };
+
+    switch (parameter.items.type) {
+      case "string":
+        const {
+          default: ignoreA1,
+          nullable: ignoreA2,
+          minLength,
+          maxLength,
+          ...restOfStringSchema
+        } = stringSchema(parameter.items);
+
+        output.items = restOfStringSchema;
+        break;
+      case "number":
+        const {
+          default: ignoreB1,
+          nullable: ignoreB2,
+          minimum: ignoreB3,
+          maximum: ignoreB4,
+          ...restNumberOfSchema
+        } = numberSchema(parameter.items);
+
+        output.items = restNumberOfSchema;
+        break;
+      case "integer":
+        const {
+          default: ignoreC1,
+          nullable: ignoreC2,
+          minimum: ignoreC3,
+          maximum: ignoreC4,
+          ...restIntegerOfSchema
+        } = integerSchema(parameter.items);
+
+        output.items = restIntegerOfSchema;
+        break;
+      case "object":
+        const objSchema = this.objectSchema(parameter.items);
+
+        if (!objSchema.$ref) {
+          // typedobject
+          const {
+            default: ignoreD1,
+            nullable: ignoreD2,
+            ...restOfObjectSchema
+          } = objSchema as TypedObject;
+
+          output.items = restOfObjectSchema;
+        }
+
+        // referenced object
+        output.items = objSchema;
+        break;
+      default:
+        throw new Error("not implemented");
+    }
+
+    if (parameter.items.enum instanceof Array) {
+      // default values must be part of enum
+      if (
+        output.default instanceof Array &&
+        !output.default.every((element: any, _index: number, _array: any[]) =>
+          parameter.items.enum.includes(element)
+        )
+      ) {
+        delete output.default;
+      }
+
+      // string enums are already limited
+      if (parameter.items.type === "string") {
+        delete (output.items as SchemaTypeString).minLength;
+        delete (output.items as SchemaTypeString).maxLength;
+      }
+    }
+
+    return output;
+  }
+
   private checkSecurityDefinition(security: SecuritySchemeArray) {
     security.forEach((securityScheme: Scheme) => {
       const securitySchemeName = Object.getOwnPropertyNames(securityScheme)[0];
@@ -327,47 +524,25 @@ export class OpenApi {
     }
 
     if (requestSchema.body) {
-      const { description, schema, example, modelName } = bodyParams(
+      const { description, schema, example, modelName } = this.bodyParams(
         requestSchema.body
       );
 
-      if (modelName) {
-        const escapedName = openapiEscapeChars(modelName);
-        const reference = `#/components/schemas/${escapedName}`;
-        const schemaHash = hasher.hash(schema);
+      if (modelName && !schema.$ref) {
+        const reference = this.checkAndSetModel(modelName, schema);
 
-        if (this.declaredModels.has(escapedName)) {
-          // check if model definition is different
-          if (schemaHash !== this.declaredModels.get(modelName)) {
-            throw new Error(
-              `There is a conflicting declaration of model ${modelName}, model cannot change.`
-            );
-          }
-        } else {
-          if (!this.schema.components) {
-            this.schema.components = {};
-          }
-
-          if (!this.schema.components.schemas) {
-            this.schema.components.schemas = {};
-          }
-
-          this.schema.components.schemas[escapedName] = schema;
-          this.declaredModels.set(escapedName, schemaHash);
-
-          return {
-            parameters: parameters.length > 0 ? parameters : undefined,
-            requestBody: {
-              description,
-              content: {
-                "application/json": {
-                  schema: { $ref: reference },
-                  ...(example && { example })
-                }
+        return {
+          parameters: parameters.length > 0 ? parameters : undefined,
+          requestBody: {
+            description,
+            content: {
+              "application/json": {
+                schema: { $ref: reference },
+                ...(example && { example })
               }
             }
-          };
-        }
+          }
+        };
       }
 
       return {
@@ -388,6 +563,38 @@ export class OpenApi {
       parameters: parameters.length > 0 ? parameters : undefined,
       requestBody: undefined
     };
+  }
+
+  private checkAndSetModel(
+    modelName: string,
+    schema: TypedObject | ReferencedObject
+  ) {
+    const schemaHash = hasher.hash(schema);
+    const escapedName = openapiEscapeChars(modelName);
+    const reference = `#/components/schemas/${escapedName}`;
+
+    if (this.declaredModels.has(escapedName)) {
+      // check if model definition is different
+      if (schemaHash !== this.declaredModels.get(modelName)) {
+        throw new Error(
+          `There is a conflicting declaration of model ${modelName}, model cannot change.`
+        );
+      }
+    } else {
+      // init object
+      if (!this.schema.components) {
+        this.schema.components = {};
+      }
+
+      if (!this.schema.components.schemas) {
+        this.schema.components.schemas = {};
+      }
+    }
+
+    this.schema!.components!.schemas![escapedName] = schema;
+    this.declaredModels.set(escapedName, schemaHash);
+
+    return reference;
   }
 
   private genericParams(
@@ -661,7 +868,7 @@ export class OpenApi {
     type: ParameterIn
   ): TypedParameter {
     const limitationDetail = limitations(parameter);
-    const schema = arraySchema(parameter);
+    const schema = this.arraySchema(parameter);
 
     const p: TypedParameter = {
       description:
@@ -675,6 +882,43 @@ export class OpenApi {
     };
 
     return p;
+  }
+
+  bodySchema(description: string, outerSchema: ObjectSchema): Body {
+    const { schema, modelName } = this.bodyParams(outerSchema);
+
+    if (modelName) {
+      return {
+        description,
+        content: { "application/json": { schema } }
+      };
+    }
+
+    return { description, content: { "application/json": { schema } } };
+  }
+
+  private bodyParams(
+    schema: ObjectSchema
+  ): {
+    description: string;
+    schema: TypedObject | ReferencedObject;
+    example: any;
+    modelName?: string;
+  } {
+    const internalSchema = Joi.object().keys({ object: schema.required() });
+    const query = joiToSwagger(internalSchema, {});
+
+    const key = Object.keys(query.swagger.properties)[0];
+    const parameter = query.swagger.properties[key];
+
+    return {
+      description:
+        query.swagger.properties[key].description ||
+        "Body does not have a description.",
+      schema: this.objectSchema(parameter),
+      ...(parameter.example && { example: parameter.example }),
+      modelName: parameter.meta.modelName
+    };
   }
 }
 
