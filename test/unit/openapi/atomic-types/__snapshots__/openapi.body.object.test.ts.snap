@@ -549,28 +549,6 @@ Object {
             },
             "description": "Successful operation.",
           },
-          "400": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
-                  "description": "Error object",
-                  "properties": Object {
-                    "id": Object {
-                      "description": "Customer ID (min:36 chars, max:36 chars)",
-                      "format": "uuid",
-                      "type": "string",
-                    },
-                    "name": Object {
-                      "description": "Customer name (max:100 chars)",
-                      "type": "string",
-                    },
-                  },
-                  "type": "object",
-                },
-              },
-            },
-            "description": "Failed Operation",
-          },
         },
         "summary": "Server Test",
         "tags": Array [
@@ -712,6 +690,92 @@ exports[`src/openapi/openapi Object object simple, with models 1`] = `
 Object {
   "components": Object {
     "schemas": Object {
+      "InternalObject": Object {
+        "description": "Parameter without description.",
+        "properties": Object {
+          "boolean": Object {
+            "description": "Parameter without description.",
+            "type": "boolean",
+          },
+          "uuid": Object {
+            "description": "Parameter without description. (min:36 chars, max:36 chars)",
+            "format": "uuid",
+            "type": "string",
+          },
+        },
+        "type": "object",
+      },
+      "ObjectSimple": Object {
+        "description": "Parameter without description.",
+        "properties": Object {
+          "base64array": Object {
+            "items": Object {
+              "description": "Parameter without description. (base64 encoded string)",
+              "format": "byte",
+              "type": "string",
+            },
+            "type": "array",
+          },
+          "binary": Object {
+            "description": "Parameter without description. (binary string)",
+            "format": "binary",
+            "type": "string",
+          },
+          "boolean": Object {
+            "description": "Parameter without description.",
+            "type": "boolean",
+          },
+          "byte": Object {
+            "description": "Parameter without description. (base64 encoded string)",
+            "format": "byte",
+            "type": "string",
+          },
+          "date": Object {
+            "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+            "format": "date",
+            "type": "string",
+          },
+          "dateTime": Object {
+            "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+            "format": "date-time",
+            "type": "string",
+          },
+          "float": Object {
+            "description": "Parameter without description.",
+            "format": "double",
+            "type": "number",
+          },
+          "integer": Object {
+            "description": "Parameter without description.",
+            "format": "int64",
+            "type": "integer",
+          },
+          "internalobject": Object {
+            "$ref": "#/components/schemas/InternalObject",
+          },
+          "objectArray": Object {
+            "$ref": "#/components/schemas/UuidList",
+          },
+          "string": Object {
+            "description": "Parameter without description.",
+            "type": "string",
+          },
+          "stringarray": Object {
+            "items": Object {
+              "description": "Parameter without description.",
+              "type": "string",
+            },
+            "type": "array",
+          },
+        },
+        "type": "object",
+      },
+      "UuidList": Object {
+        "items": Object {
+          "$ref": "#/components/schemas/UuidObject",
+        },
+        "type": "array",
+      },
       "UuidObject": Object {
         "description": "Parameter without description.",
         "properties": Object {
@@ -758,84 +822,7 @@ Object {
           "content": Object {
             "application/json": Object {
               "schema": Object {
-                "description": "Parameter without description.",
-                "properties": Object {
-                  "base64array": Object {
-                    "items": Object {
-                      "description": "Parameter without description. (base64 encoded string)",
-                      "format": "byte",
-                      "type": "string",
-                    },
-                    "type": "array",
-                  },
-                  "binary": Object {
-                    "description": "Parameter without description. (binary string)",
-                    "format": "binary",
-                    "type": "string",
-                  },
-                  "boolean": Object {
-                    "description": "Parameter without description.",
-                    "type": "boolean",
-                  },
-                  "byte": Object {
-                    "description": "Parameter without description. (base64 encoded string)",
-                    "format": "byte",
-                    "type": "string",
-                  },
-                  "date": Object {
-                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
-                    "format": "date",
-                    "type": "string",
-                  },
-                  "dateTime": Object {
-                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
-                    "format": "date-time",
-                    "type": "string",
-                  },
-                  "float": Object {
-                    "description": "Parameter without description.",
-                    "format": "double",
-                    "type": "number",
-                  },
-                  "integer": Object {
-                    "description": "Parameter without description.",
-                    "format": "int64",
-                    "type": "integer",
-                  },
-                  "internalobject": Object {
-                    "description": "Parameter without description.",
-                    "properties": Object {
-                      "boolean": Object {
-                        "description": "Parameter without description.",
-                        "type": "boolean",
-                      },
-                      "uuid": Object {
-                        "description": "Parameter without description. (min:36 chars, max:36 chars)",
-                        "format": "uuid",
-                        "type": "string",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "objectArray": Object {
-                    "items": Object {
-                      "$ref": "#/components/schemas/UuidObject",
-                    },
-                    "type": "array",
-                  },
-                  "string": Object {
-                    "description": "Parameter without description.",
-                    "type": "string",
-                  },
-                  "stringarray": Object {
-                    "items": Object {
-                      "description": "Parameter without description.",
-                      "type": "string",
-                    },
-                    "type": "array",
-                  },
-                },
-                "type": "object",
+                "$ref": "#/components/schemas/ObjectSimple",
               },
             },
           },
@@ -861,84 +848,7 @@ Object {
           "content": Object {
             "application/json": Object {
               "schema": Object {
-                "description": "Parameter without description.",
-                "properties": Object {
-                  "base64array": Object {
-                    "items": Object {
-                      "description": "Parameter without description. (base64 encoded string)",
-                      "format": "byte",
-                      "type": "string",
-                    },
-                    "type": "array",
-                  },
-                  "binary": Object {
-                    "description": "Parameter without description. (binary string)",
-                    "format": "binary",
-                    "type": "string",
-                  },
-                  "boolean": Object {
-                    "description": "Parameter without description.",
-                    "type": "boolean",
-                  },
-                  "byte": Object {
-                    "description": "Parameter without description. (base64 encoded string)",
-                    "format": "byte",
-                    "type": "string",
-                  },
-                  "date": Object {
-                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
-                    "format": "date",
-                    "type": "string",
-                  },
-                  "dateTime": Object {
-                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
-                    "format": "date-time",
-                    "type": "string",
-                  },
-                  "float": Object {
-                    "description": "Parameter without description.",
-                    "format": "double",
-                    "type": "number",
-                  },
-                  "integer": Object {
-                    "description": "Parameter without description.",
-                    "format": "int64",
-                    "type": "integer",
-                  },
-                  "internalobject": Object {
-                    "description": "Parameter without description.",
-                    "properties": Object {
-                      "boolean": Object {
-                        "description": "Parameter without description.",
-                        "type": "boolean",
-                      },
-                      "uuid": Object {
-                        "description": "Parameter without description. (min:36 chars, max:36 chars)",
-                        "format": "uuid",
-                        "type": "string",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "objectArray": Object {
-                    "items": Object {
-                      "$ref": "#/components/schemas/UuidObject",
-                    },
-                    "type": "array",
-                  },
-                  "string": Object {
-                    "description": "Parameter without description.",
-                    "type": "string",
-                  },
-                  "stringarray": Object {
-                    "items": Object {
-                      "description": "Parameter without description.",
-                      "type": "string",
-                    },
-                    "type": "array",
-                  },
-                },
-                "type": "object",
+                "$ref": "#/components/schemas/ObjectSimple",
               },
             },
           },

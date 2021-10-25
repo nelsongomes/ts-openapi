@@ -95,12 +95,13 @@ export type SchemaTypeNumber = {
   nullable?: boolean;
   description?: string;
 };
-export type SchemaTypeArray = {
+export type TypedArray = {
   type: "array";
   items?: SchemaTypes;
   default?: string[] | number[];
   example?: string[] | number[];
   nullable?: boolean;
+  $ref?: string;
 };
 export type TypedObject = {
   type: "object";
@@ -115,7 +116,7 @@ export type SchemaTypes =
   | SchemaTypeString
   | SchemaTypeInteger
   | SchemaTypeNumber
-  | SchemaTypeArray
+  | TypedArray
   | SchemaTypeBoolean
   | TypedObject
   | ReferencedObject;

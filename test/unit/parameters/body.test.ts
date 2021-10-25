@@ -2,7 +2,7 @@ import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../src/openapi/helpers/types";
 
-describe.only("src/openapi/openapi", () => {
+describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
 
   describe("Body parameters", () => {

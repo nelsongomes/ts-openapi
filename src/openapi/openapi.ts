@@ -27,7 +27,7 @@ import {
   ReferencedParameter,
   TypedParameter,
   TypedObject,
-  SchemaTypeArray,
+  TypedArray,
   SchemaTypeString,
   ReferencedObject
 } from "./openapi.types";
@@ -275,13 +275,23 @@ export class OpenApi {
 
           break;
         case "array":
-          const {
-            default: ignoreF1,
-            nullable: ignoreF2,
-            ...restOfArraySchema
-          } = this.arraySchema(property);
+          const arraySchema = this.arraySchema(property);
 
-          output.properties[propertyKey] = restOfArraySchema;
+          if (!arraySchema.$ref) {
+            // typedarray
+            const {
+              default: ignoreF1,
+              nullable: ignoreF2,
+              ...restOfArraySchema
+            } = arraySchema as TypedArray;
+
+            output.properties[propertyKey] = restOfArraySchema;
+            break;
+          }
+
+          // referenced array
+          output.properties[propertyKey] = arraySchema;
+
           break;
         default:
           throw new Error(`${property.type} not implemented`);
@@ -297,8 +307,8 @@ export class OpenApi {
     return output;
   }
 
-  private arraySchema(parameter: any): SchemaTypeArray {
-    const output: SchemaTypeArray = {
+  private arraySchema(parameter: any): TypedArray | ReferencedObject {
+    const output: TypedArray = {
       ...(typeof parameter.default === "object" && {
         default: parameter.default
       }),
@@ -381,6 +391,12 @@ export class OpenApi {
         delete (output.items as SchemaTypeString).minLength;
         delete (output.items as SchemaTypeString).maxLength;
       }
+    }
+
+    if (parameter.meta.modelName) {
+      const reference = this.checkAndSetModel(parameter.meta.modelName, output);
+
+      return { $ref: reference };
     }
 
     return output;
@@ -567,7 +583,7 @@ export class OpenApi {
 
   private checkAndSetModel(
     modelName: string,
-    schema: TypedObject | ReferencedObject
+    schema: TypedObject | TypedArray | ReferencedObject
   ) {
     const schemaHash = hasher.hash(schema);
     const escapedName = openapiEscapeChars(modelName);
@@ -884,7 +900,7 @@ export class OpenApi {
     return p;
   }
 
-  bodySchema(description: string, outerSchema: ObjectSchema): Body {
+  declareSchema(description: string, outerSchema: ObjectSchema): Body {
     const { schema, modelName } = this.bodyParams(outerSchema);
 
     if (modelName) {

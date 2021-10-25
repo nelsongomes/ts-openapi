@@ -51,7 +51,7 @@ describe("src/openapi/openapi", () => {
         }
       });
 
-      const errorBody = openApi.bodySchema(
+      const errorBody = openApi.declareSchema(
         "Failed Operation",
         Types.Object({
           description: "Error object",
@@ -96,7 +96,7 @@ describe("src/openapi/openapi", () => {
       expect(openApi.generateJson()).toMatchSnapshot();
     });
 
-    test.only("object simple, with named response model", async () => {
+    test("object simple, with named response model", async () => {
       const body = Types.Object({
         properties: {
           float: Types.Number(),
@@ -130,7 +130,7 @@ describe("src/openapi/openapi", () => {
         }
       });
 
-      const errorBody = openApi.bodySchema(
+      const errorBody = openApi.declareSchema(
         "Failed Operation",
         Types.Object({
           description: "Error object",
@@ -176,7 +176,7 @@ describe("src/openapi/openapi", () => {
       expect(openApi.generateJson()).toMatchSnapshot();
     });
 
-    test("object simple, with models", async () => {
+    test("object simple", async () => {
       const body = Types.Object({
         properties: {
           float: Types.Number(),
@@ -204,12 +204,77 @@ describe("src/openapi/openapi", () => {
                     boolean: Types.Boolean()
                   }
                 })
+              }
+            })
+          })
+        }
+      });
+
+      openApi.addPath(
+        "/test",
+        {
+          post: {
+            description: "Test endpoint",
+            operationId: "postid",
+            requestSchema: { body },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          },
+          patch: {
+            description: "Test endpoint",
+            operationId: "patchid",
+            requestSchema: { body },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          }
+        },
+        true
+      );
+      expect(openApi.generateJson()).toMatchSnapshot();
+    });
+
+    test("object simple, with models", async () => {
+      const body = Types.Object({
+        properties: {
+          float: Types.Number(),
+          integer: Types.Integer(),
+          string: Types.String(),
+          binary: Types.Binary(),
+          byte: Types.Byte(),
+          boolean: Types.Boolean(),
+          date: Types.Date(),
+          dateTime: Types.DateTime(),
+          stringarray: Types.Array({ arrayType: Types.String() }),
+          base64array: Types.Array({ arrayType: Types.Byte() }),
+          internalobject: Types.Object({
+            properties: {
+              uuid: Types.Uuid(),
+              boolean: Types.Boolean()
+            },
+            modelName: "InternalObject"
+          }),
+          objectArray: Types.Array({
+            arrayType: Types.Object({
+              properties: {
+                obj: Types.Object({
+                  properties: {
+                    uuid: Types.Uuid(),
+                    boolean: Types.Boolean()
+                  }
+                })
               },
               modelName: "UuidObject"
             }),
             modelName: "UuidList"
           })
-        }
+        },
+        modelName: "ObjectSimple"
       });
 
       openApi.addPath(
