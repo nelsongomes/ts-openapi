@@ -99,6 +99,16 @@ describe("src/openapi/openapi", () => {
           example: "c2FtcGxlMQ==",
           nullable: true,
           isParameter: true
+        }),
+        base64string2: Types.Binary({
+          description: "some binary base64 value",
+          required: true,
+          minLength: 512,
+          maxLength: 1024,
+          default: "c2FtcGxlMQ==",
+          example: "c2FtcGxlMQ==",
+          nullable: true,
+          isParameter: true
         })
       };
 

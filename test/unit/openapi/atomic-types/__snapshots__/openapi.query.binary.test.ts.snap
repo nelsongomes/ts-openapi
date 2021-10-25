@@ -100,6 +100,22 @@ Object {
           "type": "string",
         },
       },
+      "base64string2": Object {
+        "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
+        "example": "c2FtcGxlMQ==",
+        "in": "query",
+        "name": "base64string2",
+        "required": true,
+        "schema": Object {
+          "default": "c2FtcGxlMQ==",
+          "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
+          "format": "binary",
+          "maxLength": 1024,
+          "minLength": 512,
+          "nullable": true,
+          "type": "string",
+        },
+      },
     },
   },
   "info": Object {
@@ -142,6 +158,9 @@ Object {
         "parameters": Array [
           Object {
             "$ref": "#/components/parameters/base64string",
+          },
+          Object {
+            "$ref": "#/components/parameters/base64string2",
           },
         ],
         "responses": Object {
