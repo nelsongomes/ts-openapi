@@ -15,7 +15,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/openapi/clients": Object {
       "get": Object {
@@ -446,7 +446,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/users/{userId}": Object {
       "patch": Object {
@@ -582,7 +582,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/users/{userId}": Object {
       "patch": Object {

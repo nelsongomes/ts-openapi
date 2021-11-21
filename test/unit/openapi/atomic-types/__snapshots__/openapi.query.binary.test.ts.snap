@@ -15,7 +15,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/health": Object {
       "get": Object {
@@ -131,7 +131,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/health": Object {
       "get": Object {
@@ -221,7 +221,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/health": Object {
       "get": Object {
@@ -311,7 +311,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/health": Object {
       "get": Object {

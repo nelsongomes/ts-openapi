@@ -64,7 +64,7 @@ export class OpenApi {
         title,
         version
       },
-      openapi: "3.0.1",
+      openapi: "3.0.3",
       paths: {},
       servers: []
     };

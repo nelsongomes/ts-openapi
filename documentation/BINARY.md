@@ -18,7 +18,8 @@ All binary types here defined have all parameters defined, as a sample, but in m
         maxLength: 1024,
         default: "12345", // default value, if none provided
         example: "12345", // example data
-        nullable: true
+        nullable: true,
+        isParameter: true, // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -36,6 +37,7 @@ All binary types here defined have all parameters defined, as a sample, but in m
         maxLength: 1024,
         default: "c2FtcGxlMQ==", // default value, if none provided
         example: "c2FtcGxlMQ==", // example data
-        nullable: true
+        nullable: true,
+        isParameter: true, // optional, make this a named parameter, check documentation for parameters
     })
 ```

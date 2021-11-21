@@ -18,7 +18,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         required: true,
         default: "name",        // default value, if none provided
         example: "John Doe",    // example data
-        nullable: true
+        nullable: true,
+        isParameter: true,      // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -41,7 +42,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         required: true,
         default: EnumValues.AAA,    // default value, if none provided
         example: EnumValues.CCC,    // example data
-        nullable: true
+        nullable: true,
+        isParameter: true,          // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -59,7 +61,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         maxLength: 255,
         default: "john.doe@domain.com", // default value, if none provided
         example: "john.doe@domain.com", // example data
-        nullable: true
+        nullable: true,
+        isParameter: true,              // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -75,7 +78,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         required: true,
         minLength: 50,
         maxLength: 255,
-        nullable: true
+        nullable: true,
+        isParameter: true,      // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -90,7 +94,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         description: "An unique identifier",  
         required: true,
         example: "3d22b5e2-b786-47e5-acfc-e4b7a959c114",
-        nullable: true
+        nullable: true,
+        isParameter: true,      // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -108,7 +113,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         required: true,
         default: "https://domain",    // default value, if none provided
         example: "https://domain",    // example data
-        nullable: true
+        nullable: true,
+        isParameter: true,      // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -126,7 +132,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         required: true,
         default: "https://domain",    // default value, if none provided
         example: "https://domain",    // example data
-        nullable: true
+        nullable: true,
+        isParameter: true,            // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -142,7 +149,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         required: true,
         default: "8.8.8.8",     // default value, if none provided
         example: "127.0.0.1",   // example data
-        nullable: true
+        nullable: true,
+        isParameter: true,      // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -158,7 +166,8 @@ All string types here defined have all parameters defined, as a sample, but in m
         required: true,
         default: "::1",                                     // default value, if none provided
         example: "0000:0000:0000:0000:0000:ffff:c0a8:64e4", // example data
-        nullable: true
+        nullable: true,
+        isParameter: true,      // optional, make this a named parameter, check documentation for parameters
     })
 ```
 

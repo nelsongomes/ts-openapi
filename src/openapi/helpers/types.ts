@@ -243,7 +243,7 @@ export const Types = {
   DateTime: (parameters?: DateParameters) => {
     let joiType = Joi.string()
       .isoDate()
-      .max(24);
+      .max(25);
 
     if (parameters) {
       const { description, required, nullable } = parameters;
@@ -272,7 +272,7 @@ export const Types = {
     return Types.DateTime(parameters)
       .meta({ format: "date" })
       .min(10)
-      .max(10);
+      .max(25);
   },
 
   Number: (parameters?: IntegerParameters) => {

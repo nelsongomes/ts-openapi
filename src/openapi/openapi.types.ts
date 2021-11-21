@@ -247,7 +247,7 @@ export type OpenApiSchema = {
     title: string;
     version: string;
   };
-  openapi: "3.0.1";
+  openapi: "3.0.3";
   paths: Paths;
   servers: Servers;
   components?: OpenApiComponents;

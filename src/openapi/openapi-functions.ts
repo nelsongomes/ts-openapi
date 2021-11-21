@@ -108,12 +108,12 @@ export function stringSchema(parameter: any): SchemaTypeString {
 
     switch (parameter.format) {
       case StringFormats.Date:
-        output.maxLength = 10; // 2020-10-14
-        output.minLength = 10;
+        output.maxLength = 25; // 2021-11-05T00:00:00.000Z or 2020-10-14T21:44:03+00:00
+        output.minLength = 10; // 2020-10-14
         break;
       case StringFormats.DateTime:
         output.minLength = 16; // 20201014T214403Z
-        output.maxLength = 25; // 2020-10-14T21:44:03+00:00
+        output.maxLength = 25; // 2021-11-05T00:00:00.000Z or 2020-10-14T21:44:03+00:00
         break;
       case StringFormats.Password:
         delete output.default; // no defaults for passwords

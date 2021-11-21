@@ -15,7 +15,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/test": Object {
       "get": Object {
@@ -139,7 +139,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/test": Object {
       "patch": Object {
@@ -174,12 +174,12 @@ Object {
                     "type": "string",
                   },
                   "date": Object {
-                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
                   "dateTime": Object {
-                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
@@ -317,12 +317,12 @@ Object {
                     "type": "string",
                   },
                   "date": Object {
-                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
                   "dateTime": Object {
-                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
@@ -431,7 +431,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/test": Object {
       "patch": Object {
@@ -466,12 +466,12 @@ Object {
                     "type": "string",
                   },
                   "date": Object {
-                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
                   "dateTime": Object {
-                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
@@ -587,12 +587,12 @@ Object {
                     "type": "string",
                   },
                   "date": Object {
-                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
                   "dateTime": Object {
-                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
@@ -731,12 +731,12 @@ Object {
             "type": "string",
           },
           "date": Object {
-            "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+            "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
             "format": "date",
             "type": "string",
           },
           "dateTime": Object {
-            "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+            "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
             "format": "date-time",
             "type": "string",
           },
@@ -812,7 +812,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/test": Object {
       "patch": Object {
@@ -911,7 +911,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/test": Object {
       "patch": Object {
@@ -946,12 +946,12 @@ Object {
                     "type": "string",
                   },
                   "date": Object {
-                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
                   "dateTime": Object {
-                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
@@ -1077,12 +1077,12 @@ Object {
                     "type": "string",
                   },
                   "date": Object {
-                    "description": "Parameter without description. (min:10 chars, max:10 chars, date:yyyy-mm-dd)",
+                    "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
                   "dateTime": Object {
-                    "description": "Parameter without description. (max:24 chars, ISO8601 date-time format)",
+                    "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },

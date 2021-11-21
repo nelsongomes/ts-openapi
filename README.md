@@ -45,7 +45,16 @@ Object                                                                  | NO    
 [Binary Types](documentation/BINARY.md)<br/>
 [Array Type](documentation/ARRAY.md)<br/>
 [Object Type](documentation/OBJECT.md)<br/>
+
+## Advanced Topics
+
+### Security
+
 [Security Schemes](documentation/SECURITY.md)<br/>
+
+### Parameters and Models
+
+[Parameters and Models](documentation/PARAMETERS-AND-MODELS.md)<br/>
 
 ## Declaring an API
 
