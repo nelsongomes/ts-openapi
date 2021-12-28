@@ -110,6 +110,9 @@ export type TypedObject = {
   nullable?: boolean;
   $ref?: string;
   description: string;
+  additionalProperties?: {
+    $ref?: string;
+  };
 };
 export type SchemaTypeObject = TypedObject | ReferencedObject;
 export type SchemaTypes =
@@ -131,7 +134,12 @@ export type TypedParameter = {
   schema: SchemaTypes;
   example?: string | number | string[] | number[];
 };
-export type ReferencedParameter = { $ref: string };
+export type ReferencedParameter = {
+  $ref: string;
+  additionalProperties?: {
+    $ref?: string;
+  };
+};
 export type ReferencedObject = ReferencedParameter;
 export type Parameter = TypedParameter | ReferencedParameter;
 export type Parameters = Parameter[];

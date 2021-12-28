@@ -1,12 +1,18 @@
 import axios from "axios";
 import * as fs from "fs";
+import * as _ from "lodash";
 import { OpenApi } from "..";
 import {
+  Method,
   OpenApiSchema,
   Path,
+  PathDefinition,
   Paths,
+  ReferencedParameter,
+  SchemaTypeObject,
   SecurityScheme,
-  Servers
+  Servers,
+  TypedParameter
 } from "./openapi.types";
 
 export type Service = {
@@ -19,6 +25,22 @@ export type Service = {
 export type ServiceList = {
   [serviceName: string]: Service;
 };
+
+function getPropertyValues(object: any, prop: string): string[] {
+  return _.reduce(
+    object,
+    (result: string[], value: string, key: string): string[] => {
+      if (key === prop) {
+        result.push(value);
+      } else if (_.isObjectLike(value)) {
+        return result.concat(getPropertyValues(value, prop) as string[]);
+      }
+
+      return result;
+    },
+    []
+  );
+}
 
 export class OpenApiMingle {
   private openApi: OpenApi;
@@ -92,9 +114,6 @@ export class OpenApiMingle {
           serviceDefinition
         );
 
-        // copy referenced #/components/parameters/*
-        // copy referenced #/components/schemas/*
-
         const paths = Object.getOwnPropertyNames(filteredPaths);
         paths.forEach((path: string) => {
           this.log(`\tAdding ${path}`);
@@ -103,7 +122,15 @@ export class OpenApiMingle {
             throw new Error(`Path ${path} was already declared.`);
           }
 
-          this.openApi.addPath(path, filteredPaths[path], true);
+          const addedPath = filteredPaths[path];
+
+          // copy referenced schemas from #/components/schemas/*
+          this.copyReferenceSchemas(path, addedPath, openApiDefinition);
+
+          // copy referenced parameters #/components/parameters/*
+          this.copyReferencedParameters(path, addedPath, openApiDefinition);
+
+          this.openApi.addPath(path, addedPath, true);
           this.declaredPaths.push(path);
         });
       }
@@ -112,6 +139,134 @@ export class OpenApiMingle {
     this.log(`***** Ended at ${new Date().toISOString()}' *****`);
 
     this.json = this.openApi.generateJson();
+  }
+
+  private copyReferenceSchemas(
+    path: string,
+    addedPath: Path,
+    openApiDefinition: OpenApiSchema
+  ) {
+    for (const verb of Object.getOwnPropertyNames(addedPath)) {
+      const verbInfo: PathDefinition = addedPath[verb as Method] as any;
+      const responseIsJson = verbInfo.requestBody?.content["application/json"];
+
+      // copy body schemas
+      if (responseIsJson) {
+        this.checkSchema(path, verb, openApiDefinition, responseIsJson);
+      }
+
+      // copy referenced responses
+      for (const responseCode of Object.getOwnPropertyNames(
+        verbInfo.responses
+      )) {
+        const response = verbInfo.responses[Number(responseCode)];
+        const responseCodeIsJson = response?.content["application/json"];
+
+        this.checkSchema(
+          path,
+          `${verb} (${responseCode}) `,
+          openApiDefinition,
+          responseCodeIsJson
+        );
+      }
+    }
+  }
+
+  private checkSchema(
+    path: string,
+    verb: string,
+    openApiDefinition: OpenApiSchema,
+    jsonSchema: { schema?: SchemaTypeObject | undefined }
+  ) {
+    if (
+      jsonSchema &&
+      jsonSchema.schema &&
+      (jsonSchema.schema.$ref ||
+        (jsonSchema.schema.additionalProperties &&
+          jsonSchema.schema.additionalProperties.$ref))
+    ) {
+      const ref = (jsonSchema.schema.$ref ||
+        jsonSchema.schema.additionalProperties!.$ref)!;
+
+      this.log(
+        `\tChecking referenced schema ${ref} at ${verb.toUpperCase()} ${path}`
+      );
+
+      const preparedSchema = this.checkReference(ref, openApiDefinition);
+
+      // check inner references
+      const innerReferences = getPropertyValues(preparedSchema, "$ref");
+
+      while (innerReferences.length) {
+        const innerRef = innerReferences.pop()!;
+        const innerSchema = this.checkReference(innerRef, openApiDefinition);
+        const innerSchemaRefs = getPropertyValues(innerSchema, "$ref");
+
+        if (innerSchemaRefs.length) {
+          innerReferences.push(...innerSchemaRefs);
+        }
+      }
+    }
+  }
+
+  private checkReference(ref: string, openApiDefinition: OpenApiSchema) {
+    if (!ref.startsWith("#/components/schemas/")) {
+      throw new Error(
+        `Schema reference ${ref} does not start with #/components/schemas/`
+      );
+    }
+
+    const key = ref.substring(21);
+    const preparedSchema = openApiDefinition.components?.schemas![key] as any;
+
+    if (!preparedSchema) {
+      throw new Error(`Failed to find schema for key ${key}`);
+    }
+
+    this.openApi.checkAndSetSchema(key, preparedSchema);
+
+    return preparedSchema;
+  }
+
+  private copyReferencedParameters(
+    path: string,
+    addedPath: Path,
+    openApiDefinition: OpenApiSchema
+  ) {
+    for (const verb of Object.getOwnPropertyNames(addedPath)) {
+      const verbInfo: PathDefinition = addedPath[verb as Method] as any;
+
+      if (verbInfo.parameters) {
+        for (const parameter of verbInfo.parameters) {
+          const referencedParameter = parameter as ReferencedParameter;
+
+          if (referencedParameter && referencedParameter.$ref) {
+            this.log(
+              `\tChecking referenced parameter ${
+                referencedParameter.$ref
+              } at ${verb.toUpperCase()} ${path}`
+            );
+            const key = referencedParameter.$ref.substring(24);
+
+            if (
+              !openApiDefinition.components ||
+              !openApiDefinition.components.parameters ||
+              !openApiDefinition.components.parameters[key]
+            ) {
+              throw new Error(
+                `Couldn't find definition for parameter ${key} in #/components/parameters/${key} in path ${path}, verb ${verb}`
+              );
+            }
+
+            const preparedParameter = openApiDefinition.components?.parameters[
+              key
+            ] as TypedParameter;
+
+            this.openApi.checkAndSetParameter(key, preparedParameter);
+          }
+        }
+      }
+    }
   }
 
   // openapi 3.1 changes:

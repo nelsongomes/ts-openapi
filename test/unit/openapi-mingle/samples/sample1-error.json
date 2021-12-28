@@ -117,7 +117,7 @@
             "description": "ID of user",
             "required": true,
             "schema": {
-              "minimum": "1.0",
+              "minimum": 1,
               "type": "integer",
               "format": "int64"
             }

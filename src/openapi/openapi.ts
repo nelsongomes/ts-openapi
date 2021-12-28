@@ -727,34 +727,7 @@ export class OpenApi {
     preparedParameter: TypedParameter
   ) {
     if (parameter.meta.parameter) {
-      const escapedKey = openapiEscapeChars(key);
-      const reference = `#/components/parameters/${escapedKey}`;
-      const parameterHash = hasher.hash(preparedParameter);
-
-      if (!this.declaredParameters.get(key)) {
-        // new parameter
-        this.declaredParameters.set(key, parameterHash);
-
-        // store declared component
-        if (!this.schema.components) {
-          this.schema.components = {};
-        }
-
-        if (!this.schema.components.parameters) {
-          this.schema.components.parameters = {
-            [key]: preparedParameter
-          };
-        }
-
-        this.schema.components.parameters[escapedKey] = preparedParameter;
-      } else {
-        // check if parameter is different
-        if (parameterHash !== this.declaredParameters.get(key)) {
-          throw new Error(
-            `There is a conflicting declaration of ${key} parameter, the parameter cannot change.`
-          );
-        }
-      }
+      const reference = this.checkAndSetParameter(key, preparedParameter);
 
       parameters.push(this.referencedParameter(reference));
     } else {
@@ -762,11 +735,51 @@ export class OpenApi {
     }
   }
 
+  public checkAndSetSchema(
+    key: string,
+    schema: TypedObject | TypedArray | ReferencedObject
+  ) {
+    this.checkAndSetModel(key, schema);
+  }
+
+  public checkAndSetParameter(key: string, preparedParameter: TypedParameter) {
+    const escapedKey = openapiEscapeChars(key);
+    const reference = `#/components/parameters/${escapedKey}`;
+    const parameterHash = hasher.hash(preparedParameter);
+
+    if (!this.declaredParameters.get(key)) {
+      // new parameter
+      this.declaredParameters.set(key, parameterHash);
+
+      // store declared component
+      if (!this.schema.components) {
+        this.schema.components = {};
+      }
+
+      if (!this.schema.components.parameters) {
+        this.schema.components.parameters = {
+          [key]: preparedParameter
+        };
+      }
+
+      this.schema.components.parameters[escapedKey] = preparedParameter;
+    } else {
+      // check if parameter is different
+      if (parameterHash !== this.declaredParameters.get(key)) {
+        throw new Error(
+          `There is a conflicting declaration of ${key} parameter, the parameter cannot change.`
+        );
+      }
+    }
+
+    return reference;
+  }
+
   private isRequiredProperty(swagger: SwaggerSchema, key: string) {
     return swagger.required && swagger.required.includes(key);
   }
 
-  public generateJson(): object {
+  public generateJson(): OpenApiSchema {
     if (this.schema.servers.length === 0) {
       throw new ApplicationError(
         500,
