@@ -2,7 +2,7 @@
   "name": "ts-openapi",
   "author": "Nelson Gomes <nelson.ricardo.gomes@gmail.com>",
   "license": "ISC",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "An openapi json generator based on joi information about APIs that will help you to maintain your API documentation up to date.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -59,7 +59,7 @@
     "url": "git+https://github.com/nelsongomes/ts-openapi.git"
   },
   "engines": {
-    "node": ">=12",
+    "node": ">=10",
     "npm": ">=7"
   },
   "jest": {
