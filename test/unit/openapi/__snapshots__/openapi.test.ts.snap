@@ -15,7 +15,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/something": Object {
       "patch": Object {
@@ -94,6 +94,100 @@ Object {
 }
 `;
 
+exports[`src/openapi/openapi Constructor add body, referenced 1`] = `
+Object {
+  "components": Object {
+    "schemas": Object {
+      "Username": Object {
+        "description": "Sample body",
+        "properties": Object {
+          "username": Object {
+            "description": "Parameter without description.",
+            "type": "string",
+          },
+        },
+        "type": "object",
+      },
+    },
+  },
+  "info": Object {
+    "contact": Object {
+      "email": "nelson.ricardo.gomes@gmail.com",
+    },
+    "description": "Some test api",
+    "license": Object {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "Server API",
+    "version": "1.0.0",
+  },
+  "openapi": "3.0.3",
+  "paths": Object {
+    "/something": Object {
+      "patch": Object {
+        "description": "desc",
+        "operationId": "patchid",
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "schema": Object {
+                "$ref": "#/components/schemas/Username",
+              },
+            },
+          },
+          "description": "Sample body",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "plain/text": Object {},
+            },
+            "description": "Success",
+          },
+        },
+        "summary": "summary",
+        "tags": Array [
+          "example",
+        ],
+      },
+      "post": Object {
+        "description": "desc",
+        "operationId": "postid",
+        "requestBody": Object {
+          "content": Object {
+            "application/json": Object {
+              "schema": Object {
+                "$ref": "#/components/schemas/Username",
+              },
+            },
+          },
+          "description": "Sample body",
+        },
+        "responses": Object {
+          "200": Object {
+            "content": Object {
+              "plain/text": Object {},
+            },
+            "description": "Success",
+          },
+        },
+        "summary": "summary",
+        "tags": Array [
+          "example",
+        ],
+      },
+    },
+  },
+  "servers": Array [
+    Object {
+      "url": "https://server.com",
+    },
+  ],
+}
+`;
+
 exports[`src/openapi/openapi Constructor addPath, public vs private method (private method does not get included) 1`] = `
 Object {
   "info": Object {
@@ -109,7 +203,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/health": Object {
       "get": Object {
@@ -153,7 +247,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/health": Object {
       "get": Object {
@@ -197,7 +291,7 @@ Object {
     "title": "Server API",
     "version": "1.0.0",
   },
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "paths": Object {
     "/health": Object {
       "get": Object {

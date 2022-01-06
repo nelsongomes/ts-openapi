@@ -2,7 +2,7 @@ import { OpenApi } from "../../../src/openapi/openapi";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 import { Types } from "../../../src/openapi/helpers/types";
 
-describe.only("src/openapi/openapi", () => {
+describe("src/openapi/openapi", () => {
   let openApi: OpenApi;
 
   describe("Body parameters", () => {
@@ -24,6 +24,22 @@ describe.only("src/openapi/openapi", () => {
           password: Types.Password({
             required: true,
             description: "User password"
+          }),
+          ipv4: Types.Ipv4({
+            required: true,
+            description: "ip"
+          }),
+          ipv6: Types.Ipv6({
+            required: true,
+            description: "ip"
+          }),
+          hostname: Types.Hostname({
+            required: true,
+            description: "server"
+          }),
+          uri: Types.Uri({
+            required: true,
+            description: "Uri"
           })
         },
         required: true,

@@ -17,6 +17,7 @@ All date-time types here defined have all parameters defined, as a sample, but i
         nullable: true,
         default: "2020-10-14T22:12:53.065Z",    // default value, if none provided
         example: "2020-10-14T22:12:53.065Z"     // example data
+        isParameter: true, // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -33,5 +34,6 @@ All date-time types here defined have all parameters defined, as a sample, but i
         nullable: true,
         default: "2020-10-14",    // default value, if none provided
         example: "2020-10-14"     // example data
+        isParameter: true, // optional, make this a named parameter, check documentation for parameters
     })
 ```

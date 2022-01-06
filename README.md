@@ -45,7 +45,20 @@ Object                                                                  | NO    
 [Binary Types](documentation/BINARY.md)<br/>
 [Array Type](documentation/ARRAY.md)<br/>
 [Object Type](documentation/OBJECT.md)<br/>
+
+## Advanced Topics
+
+### Security
+
 [Security Schemes](documentation/SECURITY.md)<br/>
+
+### Parameters and Models
+
+[Parameters and Models](documentation/PARAMETERS-AND-MODELS.md)<br/>
+
+### Mingle multiple services
+
+[Mingle multiple services](documentation/COMBINED.md)<br/>
 
 ## Declaring an API
 
@@ -120,32 +133,31 @@ Note that the paths just need to be added one time, during server init, after th
 
 ```ts
 
-    function errorSchema(description: string) {
-        return bodySchema(
-            Types.Object({
-                description,
-                properties: {
-                    message: Types.String({ description: "Error message" }),
-                    code: Types.Integer({ description: "Error code" }),
-                },
-            })
-        );
-    }
+    const errorSchema = Types.Object({
+        description: "Error description",
+        properties: {
+            message: Types.String({ description: "Error message" }),
+            code: Types.Integer({ description: "Error code" }),
+        },
+    });
 
     // body response schema
-    const responseSchema = {
-        id: Types.Uuid({ description: "Customer ID" }),
-        name: Types.String({
-            description: "Customer name",
-            maxLength: 100,
-            required: true,
-        }),
-        type: Types.StringEnum({
-            values: Object.values(CustomerType),
-            description: "Customer Type",
-        }),
-        birthdate: Types.Date({ description: "Birthdate" }),
-    };
+    const responseSchema = Types.Object({
+        description: "Customer details",
+        properties: {
+            id: Types.Uuid({ description: "Customer ID" }),
+            name: Types.String({
+                description: "Customer name",
+                maxLength: 100,
+                required: true,
+            }),
+            type: Types.StringEnum({
+                values: Object.values(CustomerType),
+                description: "Customer Type",
+            }),
+            birthdate: Types.Date({ description: "Birthdate" }),
+        },
+    });
 
     openApi.addPath(
         "/customer/:id", // path parameter
@@ -165,13 +177,8 @@ Note that the paths just need to be added one time, during server init, after th
                 },
                 tags: ["Customer Operations"],
                 responses: {
-                    200: bodySchema(
-                        Types.Object({
-                            description: "Successful Operation",
-                            properties: responseSchema,
-                        })
-                    ),
-                    400: errorSchema("Bad Request"),
+                    200: openApi.declareSchema("Get customer success", responseSchema),
+                    400: openApi.declareSchema("Bad Request", errorSchema),
                 },
             },
         },

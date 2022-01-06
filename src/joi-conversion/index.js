@@ -242,7 +242,6 @@ const parseAsType = {
 
     let swaggers = [];
     for (const joiSchema of alternatives) {
-      // eslint-disable-next-line max-len
       const { swagger, components } = parse(
         joiSchema,
         merge({}, existingComponents || {}, newComponentsByRef || {})

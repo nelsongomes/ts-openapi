@@ -1,14 +1,9 @@
-import Joi, { ObjectSchema } from "joi";
-import joiToSwagger from "../joi-conversion";
 import {
-  Body,
   IntegerFormats,
   NumberFormats,
-  SchemaTypeArray,
   SchemaTypeBoolean,
   SchemaTypeInteger,
   SchemaTypeNumber,
-  SchemaTypeObject,
   SchemaTypeString,
   StringFormats
 } from "./openapi.types";
@@ -76,115 +71,8 @@ export function limitations(parameter: any): string {
   return limitationArray.length > 0 ? ` (${limitationArray.join(", ")})` : "";
 }
 
-export function bodyParams(schema: ObjectSchema): Body {
-  const internalSchema = Joi.object().keys({ object: schema.required() });
-  const query = joiToSwagger(internalSchema, {});
-
-  const key = Object.keys(query.swagger.properties)[0];
-  const parameter = query.swagger.properties[key];
-
-  return {
-    description:
-      query.swagger.properties[key].description ||
-      "Body does not have a description.",
-    content: {
-      "application/json": {
-        schema: objectSchema(parameter),
-        ...(parameter.example && { example: parameter.example })
-      }
-    }
-  };
-}
-
-function objectSchema(parameter: any): SchemaTypeObject {
-  const description =
-    (parameter.description || "Parameter without description.") +
-    (limitations(parameter) || "");
-
-  const output: SchemaTypeObject = {
-    description,
-    ...(typeof parameter.default === "object" && {
-      default: parameter.default
-    }),
-    ...(parameter.minItems && { minItems: parameter.minItems }),
-    ...(parameter.maxItems && { maxItems: parameter.maxItems }),
-    ...(typeof parameter.nullable === "boolean" && {
-      nullable: parameter.nullable
-    }),
-    type: "object",
-    properties: {}
-  };
-
-  for (const propertyKey of Object.keys(parameter.properties)) {
-    const property = parameter.properties[propertyKey];
-
-    switch (property.type) {
-      case "string":
-        const {
-          default: ignoreA1,
-          nullable: ignoreA2,
-          minLength,
-          maxLength,
-          ...restOfStringSchema
-        } = stringSchema(property);
-
-        output.properties[propertyKey] = restOfStringSchema;
-        break;
-      case "number":
-        const {
-          default: ignoreB1,
-          nullable: ignoreB2,
-          minimum: ignoreB3,
-          maximum: ignoreB4,
-          ...restNumberOfSchema
-        } = numberSchema(property);
-
-        output.properties[propertyKey] = restNumberOfSchema;
-        break;
-      case "boolean":
-        const {
-          default: ignoreE1,
-          nullable: ignorE2,
-          ...restBooleanOfSchema
-        } = booleanSchema(property);
-
-        output.properties[propertyKey] = restBooleanOfSchema;
-        break;
-      case "integer":
-        const {
-          default: ignoreC1,
-          nullable: ignoreC2,
-          minimum: ignoreC3,
-          maximum: ignoreC4,
-          ...restIntegerOfSchema
-        } = integerSchema(property);
-
-        output.properties[propertyKey] = restIntegerOfSchema;
-        break;
-      case "object":
-        const {
-          default: ignoreD1,
-          nullable: ignoreD2,
-          ...restOfObjectSchema
-        } = objectSchema(property);
-
-        output.properties[propertyKey] = restOfObjectSchema;
-        break;
-      case "array":
-        const {
-          default: ignoreF1,
-          nullable: ignoreF2,
-          ...restOfArraySchema
-        } = arraySchema(property);
-
-        output.properties[propertyKey] = restOfArraySchema;
-        break;
-      default:
-        throw new Error(`${property.type} not implemented`);
-    }
-  }
-
-  return output;
+export function openapiEscapeChars(key: string) {
+  return key.replace(/~/g, "~0").replace(/\//g, "~1");
 }
 
 export function stringSchema(parameter: any): SchemaTypeString {
@@ -220,12 +108,12 @@ export function stringSchema(parameter: any): SchemaTypeString {
 
     switch (parameter.format) {
       case StringFormats.Date:
-        output.maxLength = 10; // 2020-10-14
-        output.minLength = 10;
+        output.maxLength = 25; // 2021-11-05T00:00:00.000Z or 2020-10-14T21:44:03+00:00
+        output.minLength = 10; // 2020-10-14
         break;
       case StringFormats.DateTime:
         output.minLength = 16; // 20201014T214403Z
-        output.maxLength = 25; // 2020-10-14T21:44:03+00:00
+        output.maxLength = 25; // 2021-11-05T00:00:00.000Z or 2020-10-14T21:44:03+00:00
         break;
       case StringFormats.Password:
         delete output.default; // no defaults for passwords
@@ -324,89 +212,4 @@ export function integerSchema(parameter: any): SchemaTypeInteger {
   }
 
   return output;
-}
-
-export function arraySchema(parameter: any): SchemaTypeArray {
-  const output: SchemaTypeArray = {
-    ...(typeof parameter.default === "object" && {
-      default: parameter.default
-    }),
-    ...(parameter.minItems && { minItems: parameter.minItems }),
-    ...(parameter.maxItems && { maxItems: parameter.maxItems }),
-    ...(typeof parameter.nullable === "boolean" && {
-      nullable: parameter.nullable
-    }),
-    type: "array"
-  };
-
-  switch (parameter.items.type) {
-    case "string":
-      const {
-        default: ignoreA1,
-        nullable: ignoreA2,
-        minLength,
-        maxLength,
-        ...restOfStringSchema
-      } = stringSchema(parameter.items);
-
-      output.items = restOfStringSchema;
-      break;
-    case "number":
-      const {
-        default: ignoreB1,
-        nullable: ignoreB2,
-        minimum: ignoreB3,
-        maximum: ignoreB4,
-        ...restNumberOfSchema
-      } = numberSchema(parameter.items);
-
-      output.items = restNumberOfSchema;
-      break;
-    case "integer":
-      const {
-        default: ignoreC1,
-        nullable: ignoreC2,
-        minimum: ignoreC3,
-        maximum: ignoreC4,
-        ...restIntegerOfSchema
-      } = integerSchema(parameter.items);
-
-      output.items = restIntegerOfSchema;
-      break;
-    case "object":
-      const {
-        default: ignoreD1,
-        nullable: ignoreD2,
-        ...restOfObjectSchema
-      } = objectSchema(parameter.items);
-
-      output.items = restOfObjectSchema;
-      break;
-    default:
-      throw new Error("not implemented");
-  }
-
-  if (parameter.items.enum instanceof Array) {
-    // default values must be part of enum
-    if (
-      output.default instanceof Array &&
-      !output.default.every((element: any, _index: number, _array: any[]) =>
-        parameter.items.enum.includes(element)
-      )
-    ) {
-      delete output.default;
-    }
-
-    // string enums are already limited
-    if (parameter.items.type === "string") {
-      delete (output.items as SchemaTypeString).minLength;
-      delete (output.items as SchemaTypeString).maxLength;
-    }
-  }
-
-  return output;
-}
-
-export function bodySchema(schema: ObjectSchema): Body {
-  return bodyParams(schema);
 }

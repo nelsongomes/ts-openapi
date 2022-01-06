@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export type Server = { url: string };
+export type Server = { url: string; description?: string };
 export type Servers = Server[];
 export type Method = "put" | "get" | "post" | "delete" | "patch";
 export type Tags = string[];
@@ -95,30 +95,36 @@ export type SchemaTypeNumber = {
   nullable?: boolean;
   description?: string;
 };
-export type SchemaTypeArray = {
+export type TypedArray = {
   type: "array";
   items?: SchemaTypes;
   default?: string[] | number[];
   example?: string[] | number[];
   nullable?: boolean;
+  $ref?: string;
 };
-export type SchemaTypeObject = {
+export type TypedObject = {
   type: "object";
   properties: { [k: string]: SchemaTypes };
   default?: string;
   nullable?: boolean;
   $ref?: string;
   description: string;
+  additionalProperties?: {
+    $ref?: string;
+  };
 };
+export type SchemaTypeObject = TypedObject | ReferencedObject;
 export type SchemaTypes =
   | SchemaTypeString
   | SchemaTypeInteger
   | SchemaTypeNumber
-  | SchemaTypeArray
+  | TypedArray
   | SchemaTypeBoolean
-  | SchemaTypeObject;
+  | TypedObject
+  | ReferencedObject;
 
-export type Parameter = {
+export type TypedParameter = {
   name: string;
   in: ParameterIn;
   description: string;
@@ -128,6 +134,14 @@ export type Parameter = {
   schema: SchemaTypes;
   example?: string | number | string[] | number[];
 };
+export type ReferencedParameter = {
+  $ref: string;
+  additionalProperties?: {
+    $ref?: string;
+  };
+};
+export type ReferencedObject = ReferencedParameter;
+export type Parameter = TypedParameter | ReferencedParameter;
 export type Parameters = Parameter[];
 export type PathDefinition = {
   tags: Tags;
@@ -150,6 +164,7 @@ export type PathInputDefinition = {
   security?: SecuritySchemeArray;
   responses: Responses;
   requestSchema?: WebRequestSchema;
+  deprecated?: boolean;
 };
 export type PathInput = {
   [K in Method]?: PathInputDefinition;
@@ -179,31 +194,40 @@ export type SecurityBearerScheme = {
 export type SecurityOauth2Scopes = {
   [scopeName: string]: string;
 };
+
+export type FlowCommon = {
+  scopes: SecurityOauth2Scopes;
+};
+
+export type AuthorizationCode = {
+  authorizationUrl: string;
+  tokenUrl: string;
+  refreshUrl?: string;
+} & FlowCommon;
+
+export type Implicit = {
+  authorizationUrl: string;
+  refreshUrl?: string;
+} & FlowCommon;
+
+export type Password = {
+  tokenUrl: string;
+  refreshUrl?: string;
+} & FlowCommon;
+
+export type ClientCredentials = {
+  tokenUrl: string;
+  refreshUrl?: string;
+} & FlowCommon;
+
 export type SecurityOauth2Scheme = {
   type: "oauth2";
   description: string;
   flows: {
-    authorizationCode?: {
-      authorizationUrl: string;
-      tokenUrl: string;
-      refreshUrl?: string;
-      scopes: SecurityOauth2Scopes;
-    };
-    implicit?: {
-      authorizationUrl: string;
-      refreshUrl?: string;
-      scopes: SecurityOauth2Scopes;
-    };
-    password?: {
-      tokenUrl: string;
-      refreshUrl?: string;
-      scopes: SecurityOauth2Scopes;
-    };
-    clientCredentials?: {
-      tokenUrl: string;
-      refreshUrl?: string;
-      scopes: SecurityOauth2Scopes;
-    };
+    authorizationCode?: AuthorizationCode;
+    implicit?: Implicit;
+    password?: Password;
+    clientCredentials?: ClientCredentials;
   };
 };
 
@@ -216,6 +240,7 @@ export type SecurityScheme =
 export type OpenApiComponents = {
   schemas?: { [k: string]: SchemaTypes };
   securitySchemes?: { [k: string]: SecurityScheme };
+  parameters?: { [k: string]: Parameter };
 };
 
 export type OpenApiSchema = {
@@ -230,7 +255,7 @@ export type OpenApiSchema = {
     title: string;
     version: string;
   };
-  openapi: "3.0.1";
+  openapi: "3.0.3";
   paths: Paths;
   servers: Servers;
   components?: OpenApiComponents;

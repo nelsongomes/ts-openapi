@@ -79,7 +79,8 @@ describe("src/openapi/openapi", () => {
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ basicSecurity: [] }]
+              security: [{ basicSecurity: [] }],
+              deprecated: true
             }
           },
           true

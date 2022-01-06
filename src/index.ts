@@ -1,7 +1,10 @@
 import Joi, { Schema } from "joi";
 import { OpenApi } from "./openapi/openapi";
-import { WebRequestSchema, Responses } from "./openapi/openapi.types";
-import { bodySchema } from "./openapi/openapi-functions";
+import {
+  WebRequestSchema,
+  Responses,
+  OpenApiSchema
+} from "./openapi/openapi.types";
 import {
   basicAuth,
   apiKeyAuth,
@@ -14,10 +17,12 @@ import {
 } from "./openapi/helpers/auth";
 import { textPlain } from "./openapi/helpers/body-mimetype";
 import { Types } from "./openapi/helpers/types";
+import { OpenApiMingle, ServiceList } from "./openapi/openapi-mingle";
 
 export { Joi, Schema };
-export { OpenApi, bodySchema };
-export { WebRequestSchema, Responses };
+export { OpenApi };
+export { WebRequestSchema, Responses, OpenApiSchema };
+export { OpenApiMingle, ServiceList };
 
 // export security schemes
 export {

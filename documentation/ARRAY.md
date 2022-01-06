@@ -26,6 +26,7 @@ Array type can contain different scalar types, objects and even inner arrays. Th
         default: ["string"],  // default value, if none provided
         example: ["string"],  // example data
         nullable: true,
+        isParameter: true, // optional, make this a named parameter, check documentation for parameters
     })
 ```
 

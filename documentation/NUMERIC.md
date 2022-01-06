@@ -18,7 +18,8 @@ All numeric types here defined have all parameters defined, as a sample, but in 
         maxValue: 100,
         default: 99,    // default value, if none provided
         example: 5,     // example data
-        nullable: true
+        nullable: true,
+        isParameter: true,      // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -43,7 +44,8 @@ All numeric types here defined have all parameters defined, as a sample, but in 
         description: "Integer options from enum",
         default: 5,     // default value, if none provided
         example: 20,    // example data
-        nullable: true
+        nullable: true,
+        isParameter: true, // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -61,7 +63,8 @@ All numeric types here defined have all parameters defined, as a sample, but in 
         maxValue: 100.66,
         default: 1,         // default value, if none provided
         example: 33.333,    // example data
-        nullable: true
+        nullable: true,
+        isParameter: true,  // optional, make this a named parameter, check documentation for parameters
     })
 ```
 
@@ -84,6 +87,7 @@ All numeric types here defined have all parameters defined, as a sample, but in 
         required: true,
         default: 10.1,
         example: 30.3,
-        nullable: true
+        nullable: true,
+        isParameter: true, // optional, make this a named parameter, check documentation for parameters
     })
 ```
