@@ -11,12 +11,12 @@ import { basicAuth, oauth2PasswordAuth } from "../../../src";
 import editorSwaggerIoData from "./samples/editor.swagger.io.json";
 
 // tslint:disable:no-console
-function log(message: string, e?: Error) {
-  if (e) {
+function log(_message: string, _e?: Error) {
+  /*if (e) {
     console.log(message, e);
   } else {
     console.log(message);
-  }
+  }*/
 }
 // tslint:enable:no-console
 

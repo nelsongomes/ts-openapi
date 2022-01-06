@@ -164,7 +164,7 @@ export class OpenApiMingle {
 
         this.checkSchema(
           path,
-          `${verb} (${responseCode}) `,
+          `${verb} (${responseCode})`,
           openApiDefinition,
           responseCodeIsJson
         );
