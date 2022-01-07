@@ -436,7 +436,7 @@ export class OpenApi {
             ].includes(flowName)
           ) {
             throw new Error(
-              `${flowName} is not a valid flow for ${securitySchemeName}`
+              `${flowName} is not a valid flow for ${securitySchemeName}` // TEST
             );
           }
 
@@ -456,7 +456,7 @@ export class OpenApi {
   private checkParameters(checkParams: string[], definition: PathDefinition) {
     if (checkParams.length) {
       if (!definition.parameters?.length) {
-        throw new Error("Parameters in path must be declared");
+        throw new Error("Parameters in path must be declared"); // TEST
       }
 
       checkParams.forEach(paramCheck => {
@@ -545,6 +545,7 @@ export class OpenApi {
       );
 
       if (modelName && !schema.$ref) {
+        // TEST
         const reference = this.checkAndSetModel(modelName, schema);
 
         return {
@@ -592,7 +593,7 @@ export class OpenApi {
     if (this.declaredModels.has(escapedName)) {
       // check if model definition is different
       if (schemaHash !== this.declaredModels.get(modelName)) {
-        throw new Error(
+        throw new Error( // TEST
           `There is a conflicting declaration of model ${modelName}, model cannot change.`
         );
       }

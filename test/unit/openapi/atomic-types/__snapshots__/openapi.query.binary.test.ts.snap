@@ -84,6 +84,20 @@ exports[`src/openapi/openapi Binary binary all options, declared as parameter 1`
 Object {
   "components": Object {
     "parameters": Object {
+      "arrayParameter": Object {
+        "description": "some string array parameter",
+        "in": "query",
+        "name": "arrayParameter",
+        "required": true,
+        "schema": Object {
+          "items": Object {
+            "description": "Parameter without description.",
+            "type": "string",
+          },
+          "nullable": true,
+          "type": "array",
+        },
+      },
       "base64string": Object {
         "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
         "example": "c2FtcGxlMQ==",
@@ -114,6 +128,43 @@ Object {
           "minLength": 512,
           "nullable": true,
           "type": "string",
+        },
+      },
+      "booleanParameter": Object {
+        "description": "some boolean parameter",
+        "in": "query",
+        "name": "booleanParameter",
+        "required": true,
+        "schema": Object {
+          "description": "some boolean parameter",
+          "nullable": true,
+          "type": "boolean",
+        },
+      },
+      "dateTimeParameter": Object {
+        "description": "some datetime parameter (max:25 chars, ISO8601 date-time format)",
+        "in": "query",
+        "name": "dateTimeParameter",
+        "required": true,
+        "schema": Object {
+          "description": "some datetime parameter (max:25 chars, ISO8601 date-time format)",
+          "format": "date-time",
+          "maxLength": 25,
+          "minLength": 16,
+          "nullable": true,
+          "type": "string",
+        },
+      },
+      "numberParameter": Object {
+        "description": "some number parameter",
+        "in": "query",
+        "name": "numberParameter",
+        "required": true,
+        "schema": Object {
+          "description": "some number parameter",
+          "format": "double",
+          "nullable": true,
+          "type": "number",
         },
       },
     },
@@ -161,6 +212,18 @@ Object {
           },
           Object {
             "$ref": "#/components/parameters/base64string2",
+          },
+          Object {
+            "$ref": "#/components/parameters/dateTimeParameter",
+          },
+          Object {
+            "$ref": "#/components/parameters/numberParameter",
+          },
+          Object {
+            "$ref": "#/components/parameters/booleanParameter",
+          },
+          Object {
+            "$ref": "#/components/parameters/arrayParameter",
           },
         ],
         "responses": Object {

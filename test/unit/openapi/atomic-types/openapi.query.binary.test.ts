@@ -109,6 +109,31 @@ describe("src/openapi/openapi", () => {
           example: "c2FtcGxlMQ==",
           nullable: true,
           isParameter: true
+        }),
+        dateTimeParameter: Types.DateTime({
+          description: "some datetime parameter",
+          required: true,
+          nullable: true,
+          isParameter: true
+        }),
+        numberParameter: Types.Number({
+          description: "some number parameter",
+          required: true,
+          nullable: true,
+          isParameter: true
+        }),
+        booleanParameter: Types.Boolean({
+          description: "some boolean parameter",
+          required: true,
+          nullable: true,
+          isParameter: true
+        }),
+        arrayParameter: Types.Array({
+          arrayType: Types.String(),
+          description: "some string array parameter",
+          required: true,
+          nullable: true,
+          isParameter: true
         })
       };
 
