@@ -2,7 +2,7 @@
   "name": "ts-openapi",
   "author": "Nelson Gomes <nelson.ricardo.gomes@gmail.com>",
   "license": "ISC",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "An openapi json generator based on joi information about APIs that will help you to maintain your API documentation up to date.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,7 +24,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --runInBand",
     "start": "'ts-node' src/index.ts",
-    "build": "tsc --pretty -p .",
+    "build": "rm -rf lib/ && tsc --pretty -p .",
     "update": "ncu -u && npm i",
     "release": "release-it",
     "release-dry-run": "release-it --dry-run"
