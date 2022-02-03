@@ -178,33 +178,41 @@ export class OpenApiMingle {
     openApiDefinition: OpenApiSchema,
     jsonSchema: { schema?: SchemaTypeObject | undefined }
   ) {
-    if (
-      jsonSchema &&
-      jsonSchema.schema &&
-      (jsonSchema.schema.$ref ||
+    if (jsonSchema && jsonSchema.schema) {
+      // this checks referenced schemas and inner referenced schemas
+      if (
+        jsonSchema.schema.$ref ||
         (jsonSchema.schema.additionalProperties &&
-          jsonSchema.schema.additionalProperties.$ref))
-    ) {
-      const ref = (jsonSchema.schema.$ref ||
-        jsonSchema.schema.additionalProperties!.$ref)!;
+          jsonSchema.schema.additionalProperties.$ref)
+      ) {
+        const ref = (jsonSchema.schema.$ref ||
+          jsonSchema.schema.additionalProperties!.$ref)!;
 
-      this.log(
-        `\tChecking referenced schema ${ref} at ${verb.toUpperCase()} ${path}`
-      );
+        this.log(
+          `\tChecking referenced schema ${ref} at ${verb.toUpperCase()} ${path}`
+        );
 
-      const preparedSchema = this.checkReference(ref, openApiDefinition);
+        const preparedSchema = this.checkReference(ref, openApiDefinition);
 
-      // check inner references
-      const innerReferences = getPropertyValues(preparedSchema, "$ref");
+        // check inner references
+        this.checkInnerReferences(preparedSchema, openApiDefinition);
+      } else {
+        // this checks normal schemas with inner referenced schemas
+        this.checkInnerReferences(jsonSchema.schema, openApiDefinition);
+      }
+    }
+  }
 
-      while (innerReferences.length) {
-        const innerRef = innerReferences.pop()!;
-        const innerSchema = this.checkReference(innerRef, openApiDefinition);
-        const innerSchemaRefs = getPropertyValues(innerSchema, "$ref");
+  private checkInnerReferences(schema: any, openApiDefinition: OpenApiSchema) {
+    const innerReferences = getPropertyValues(schema, "$ref");
 
-        if (innerSchemaRefs.length) {
-          innerReferences.push(...innerSchemaRefs);
-        }
+    while (innerReferences.length) {
+      const innerRef = innerReferences.pop()!;
+      const innerSchema = this.checkReference(innerRef, openApiDefinition);
+      const innerSchemaRefs = getPropertyValues(innerSchema, "$ref");
+
+      if (innerSchemaRefs.length) {
+        innerReferences.push(...innerSchemaRefs);
       }
     }
   }
@@ -246,6 +254,15 @@ export class OpenApiMingle {
                 referencedParameter.$ref
               } at ${verb.toUpperCase()} ${path}`
             );
+
+            if (
+              !referencedParameter.$ref.startsWith("#/components/parameters/")
+            ) {
+              throw new Error(
+                `Parameter reference ${referencedParameter.$ref} does not start with #/components/parameters/`
+              );
+            }
+
             const key = referencedParameter.$ref.substring(24);
 
             if (

@@ -727,6 +727,14 @@ Object {
 
 exports[`src/openapi/openapi-mingle Mingle services Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from file 1`] = `
 Object {
+  "components": Object {
+    "securitySchemes": Object {
+      "basicAuth": Object {
+        "scheme": "basic",
+        "type": "http",
+      },
+    },
+  },
   "info": Object {
     "contact": Object {
       "email": "nelson.ricardo.gomes@gmail.com",
@@ -850,6 +858,11 @@ Object {
       },
     },
   },
+  "security": Array [
+    Object {
+      "basicAuth": Array [],
+    },
+  ],
   "servers": Array [
     Object {
       "url": "https://explorer-eu.awesome-api.com",
