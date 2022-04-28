@@ -34,6 +34,7 @@ Object {
               "default": Array [
                 "c2FtcGxlMQ==",
               ],
+              "description": "bin array (minItems:10, maxItems:20)",
               "items": Object {
                 "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
                 "format": "binary",
@@ -97,6 +98,7 @@ Object {
             "name": "binaryArray",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description. (binary string)",
                 "format": "binary",

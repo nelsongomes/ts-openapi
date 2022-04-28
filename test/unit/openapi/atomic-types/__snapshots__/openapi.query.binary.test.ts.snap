@@ -90,6 +90,7 @@ Object {
         "name": "arrayParameter",
         "required": true,
         "schema": Object {
+          "description": "some string array parameter",
           "items": Object {
             "description": "Parameter without description.",
             "type": "string",

@@ -1,4 +1,4 @@
-import Joi, { ObjectSchema, Schema } from "joi";
+import Joi, { ArraySchema, ObjectSchema, Schema } from "joi";
 import { ApplicationError } from "../errors/application-error";
 import joiToSwagger, { SwaggerSchema } from "../joi-conversion";
 import {
@@ -308,7 +308,12 @@ export class OpenApi {
   }
 
   private arraySchema(parameter: any): TypedArray | ReferencedObject {
+    const description =
+      (parameter.description || "Parameter without description.") +
+      (limitations(parameter) || "");
+
     const output: TypedArray = {
+      description,
       ...(typeof parameter.default === "object" && {
         default: parameter.default
       }),
@@ -928,10 +933,10 @@ export class OpenApi {
   }
 
   private bodyParams(
-    schema: ObjectSchema
+    schema: ObjectSchema | ArraySchema
   ): {
     description: string;
-    schema: TypedObject | ReferencedObject;
+    schema: TypedObject | TypedArray | ReferencedObject;
     example: any;
     modelName?: string;
   } {
@@ -941,14 +946,28 @@ export class OpenApi {
     const key = Object.keys(query.swagger.properties)[0];
     const parameter = query.swagger.properties[key];
 
-    return {
-      description:
-        query.swagger.properties[key].description ||
-        "Body does not have a description.",
-      schema: this.objectSchema(parameter),
-      ...(parameter.example && { example: parameter.example }),
-      modelName: parameter.meta.modelName
-    };
+    switch (query.swagger.properties[key].type) {
+      case "object":
+        return {
+          description:
+            query.swagger.properties[key].description ||
+            "Body does not have a description.",
+          schema: this.objectSchema(parameter),
+          ...(parameter.example && { example: parameter.example }),
+          modelName: parameter.meta.modelName
+        };
+      case "array":
+        return {
+          description:
+            query.swagger.properties[key].description ||
+            "Body does not have a description.",
+          schema: this.arraySchema(parameter),
+          ...(parameter.example && { example: parameter.example }),
+          modelName: parameter.meta.modelName
+        };
+      default:
+        throw new Error("Body definition can only be an object or array");
+    }
   }
 }
 

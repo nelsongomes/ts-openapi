@@ -34,6 +34,7 @@ Object {
               "default": Array [
                 "b",
               ],
+              "description": "String array (minItems:1, maxItems:50)",
               "items": Object {
                 "description": "Parameter without description. (min:11 chars, max:20 chars)",
                 "type": "string",
@@ -96,6 +97,7 @@ Object {
             "name": "category",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description.",
                 "enum": Array [
@@ -168,6 +170,7 @@ Object {
               "default": Array [
                 "b",
               ],
+              "description": "array of category (minItems:1, maxItems:10)",
               "items": Object {
                 "description": "Enum of strings",
                 "enum": Array [
@@ -239,6 +242,7 @@ Object {
                 "a",
                 "b",
               ],
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description.",
                 "enum": Array [
@@ -303,6 +307,7 @@ Object {
             "name": "category",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description.",
                 "enum": Array [
@@ -367,6 +372,7 @@ Object {
             "name": "category",
             "required": true,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description.",
                 "enum": Array [
@@ -431,6 +437,7 @@ Object {
             "name": "category",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description.",
                 "type": "string",

@@ -46,6 +46,7 @@ Object {
             "name": "timestamps",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                 "format": "date",
@@ -131,6 +132,7 @@ Object {
                 "2020-10-14T22:12:53.065Z",
                 "2020-10-14T22:12:53.065Z",
               ],
+              "description": "date-time array (minItems:1, maxItems:100)",
               "items": Object {
                 "description": "ignore (max:25 chars, ISO8601 date-time format)",
                 "format": "date-time",
@@ -212,6 +214,7 @@ Object {
             "name": "timestamps",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                 "format": "date-time",

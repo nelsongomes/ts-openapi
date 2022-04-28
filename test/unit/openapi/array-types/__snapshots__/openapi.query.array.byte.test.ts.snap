@@ -52,6 +52,7 @@ Object {
               "default": Array [
                 "c2FtcGxlMQ==",
               ],
+              "description": "Parameter without description. (minItems:1, maxItems:10)",
               "items": Object {
                 "description": "some binary base64 value (min:512 chars, max:1024 chars, base64 encoded string)",
                 "format": "byte",
@@ -133,6 +134,7 @@ Object {
             "name": "base64array",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description. (base64 encoded string)",
                 "format": "byte",

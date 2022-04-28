@@ -38,6 +38,7 @@ Object {
                 2,
                 3,
               ],
+              "description": "Array of integers (minItems:1, maxItems:10)",
               "items": Object {
                 "description": "Integer description, age (min:1, max:50)",
                 "example": 1,
@@ -102,6 +103,7 @@ Object {
             "name": "integerList",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description.",
                 "format": "int64",

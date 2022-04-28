@@ -32,6 +32,7 @@ Object {
                 "description": "Full body description.",
                 "properties": Object {
                   "array": Object {
+                    "description": "Parameter without description.",
                     "items": Object {
                       "description": "Parameter without description.",
                       "type": "string",
@@ -39,6 +40,7 @@ Object {
                     "type": "array",
                   },
                   "arrayOfObjects": Object {
+                    "description": "Parameter without description.",
                     "items": Object {
                       "description": "Parameter without description.",
                       "properties": Object {

@@ -355,5 +355,61 @@ describe("src/openapi/openapi", () => {
       );
       expect(openApi.generateJson()).toMatchSnapshot();
     });
+
+    test("array in body", async () => {
+      const objectSchema = Types.Object({
+        properties: {
+          parameter1: Types.String({ description: "String parameter" })
+        },
+        required: true,
+        default: { parameter1: "default" },
+        example: { parameter1: "default" },
+        nullable: true,
+        description: "My body description"
+      });
+
+      const body = Types.Array({
+        description: "an array",
+        required: true,
+        arrayType: objectSchema
+      });
+
+      openApi.addPath(
+        "/test",
+        {
+          post: {
+            description: "Test endpoint",
+            operationId: "postid",
+            requestSchema: { body },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          },
+          patch: {
+            description: "Test endpoint",
+            operationId: "patchid",
+            requestSchema: { body },
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          },
+          get: {
+            description: "Test endpoint",
+            operationId: "getid",
+            responses: {
+              200: textPlain("Successful operation.")
+            },
+            summary: "Server Test",
+            tags: ["Internals"]
+          }
+        },
+        true
+      );
+      expect(openApi.generateJson()).toMatchSnapshot();
+    });
   });
 });

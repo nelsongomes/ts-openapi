@@ -102,6 +102,10 @@ export type TypedArray = {
   example?: string[] | number[];
   nullable?: boolean;
   $ref?: string;
+  description: string;
+  additionalProperties?: {
+    $ref?: string;
+  };
 };
 export type TypedObject = {
   type: "object";
@@ -114,7 +118,7 @@ export type TypedObject = {
     $ref?: string;
   };
 };
-export type SchemaTypeObject = TypedObject | ReferencedObject;
+export type SchemaTypeObject = TypedObject | TypedArray | ReferencedObject;
 export type SchemaTypes =
   | SchemaTypeString
   | SchemaTypeInteger
@@ -263,7 +267,7 @@ export type OpenApiSchema = {
 };
 
 export type WebRequestSchema = {
-  body?: Joi.ObjectSchema;
+  body?: Joi.ObjectSchema | Joi.ArraySchema;
   query?: Joi.SchemaMap<any>;
   params?: Joi.SchemaMap<any>;
   headers?: Joi.SchemaMap<any>;

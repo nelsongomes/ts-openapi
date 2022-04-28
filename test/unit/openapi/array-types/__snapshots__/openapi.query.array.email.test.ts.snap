@@ -53,6 +53,7 @@ Object {
                 "a@a.com",
                 "b@b.com",
               ],
+              "description": "Email array (minItems:1, maxItems:100)",
               "items": Object {
                 "description": "email (max:999 chars)",
                 "format": "email",
@@ -134,6 +135,7 @@ Object {
             "name": "emails",
             "required": false,
             "schema": Object {
+              "description": "Parameter without description.",
               "items": Object {
                 "description": "Parameter without description.",
                 "format": "email",
