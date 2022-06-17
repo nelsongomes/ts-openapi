@@ -376,6 +376,26 @@ export class OpenApi {
         // referenced object
         output.items = objSchema;
         break;
+      case "array":
+        const arrSchema = this.arraySchema(parameter.items);
+
+        if (!arrSchema.$ref) {
+          //TypedArray
+          const {
+            default: ignoreE1,
+            nullable: ignoreE2,
+            example: ignoreE3,
+            ...restOfArraySchema
+          } = arrSchema as TypedArray;
+
+          output.items = restOfArraySchema;
+        }
+
+        // referenced object
+        output.items = arrSchema;
+        break;
+
+
       default:
         throw new Error("not implemented");
     }
