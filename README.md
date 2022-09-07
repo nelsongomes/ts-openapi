@@ -138,6 +138,7 @@ Note that the paths just need to be added one time, during server init, after th
             message: Types.String({ description: "Error message" }),
             code: Types.Integer({ description: "Error code" }),
         },
+        example: { message: "Bad request": code: 400 }
     });
 
     // body response schema
@@ -156,6 +157,7 @@ Note that the paths just need to be added one time, during server init, after th
             }),
             birthdate: Types.Date({ description: "Birthdate" }),
         },
+        example: { id: "96efe677-f752-426f-a9b8-b9f33b286cc9", name: "customer model", type: "gold", birthdate: "11-11-1911" },
     });
 
     openApi.addPath(

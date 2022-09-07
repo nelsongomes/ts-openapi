@@ -62,7 +62,8 @@ describe("src/openapi/openapi", () => {
               maxLength: 100,
               required: true
             })
-          }
+          },
+          example: { id: 123, name: "customer name" }
         })
       );
 
@@ -142,7 +143,8 @@ describe("src/openapi/openapi", () => {
               required: true
             })
           },
-          modelName: "ErrorResponse"
+          modelName: "ErrorResponse",
+          example: { id: 123, name: "customer model" }
         })
       );
 
