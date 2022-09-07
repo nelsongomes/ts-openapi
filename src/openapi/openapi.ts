@@ -206,6 +206,8 @@ export class OpenApi {
       ...(typeof parameter.nullable === "boolean" && {
         nullable: parameter.nullable
       }),
+      ...(parameter.meta.modelName &&
+        parameter.example && { example: parameter.example }),
       type: "object",
       properties: {}
     };
@@ -380,7 +382,7 @@ export class OpenApi {
         const arrSchema = this.arraySchema(parameter.items);
 
         if (!arrSchema.$ref) {
-          //TypedArray
+          // TypedArray
           const {
             default: ignoreE1,
             nullable: ignoreE2,
@@ -394,7 +396,6 @@ export class OpenApi {
         // referenced object
         output.items = arrSchema;
         break;
-
 
       default:
         throw new Error("not implemented");
@@ -940,16 +941,16 @@ export class OpenApi {
   }
 
   declareSchema(description: string, outerSchema: ObjectSchema): Body {
-    const { schema, modelName } = this.bodyParams(outerSchema);
+    const { schema, example, modelName } = this.bodyParams(outerSchema);
 
-    if (modelName) {
-      return {
-        description,
-        content: { "application/json": { schema } }
-      };
-    }
-
-    return { description, content: { "application/json": { schema } } };
+    return {
+      description,
+      content: {
+        "application/json": {
+          schema: { ...schema, ...(example && !modelName && { example }) }
+        }
+      }
+    };
   }
 
   private bodyParams(

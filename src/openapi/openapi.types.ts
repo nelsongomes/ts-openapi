@@ -117,6 +117,7 @@ export type TypedObject = {
   additionalProperties?: {
     $ref?: string;
   };
+  example?: any;
 };
 export type SchemaTypeObject = TypedObject | TypedArray | ReferencedObject;
 export type SchemaTypes =
@@ -143,6 +144,7 @@ export type ReferencedParameter = {
   additionalProperties?: {
     $ref?: string;
   };
+  example?: any;
 };
 export type ReferencedObject = ReferencedParameter;
 export type Parameter = TypedParameter | ReferencedParameter;

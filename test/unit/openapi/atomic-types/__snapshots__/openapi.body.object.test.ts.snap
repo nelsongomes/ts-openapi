@@ -391,6 +391,10 @@ Object {
               "application/json": Object {
                 "schema": Object {
                   "description": "Error object",
+                  "example": Object {
+                    "id": 123,
+                    "name": "customer name",
+                  },
                   "properties": Object {
                     "id": Object {
                       "description": "Customer ID (min:36 chars, max:36 chars)",
@@ -1024,6 +1028,10 @@ Object {
     "schemas": Object {
       "ErrorResponse": Object {
         "description": "Error object",
+        "example": Object {
+          "id": 123,
+          "name": "customer model",
+        },
         "properties": Object {
           "id": Object {
             "description": "Customer ID (min:36 chars, max:36 chars)",
