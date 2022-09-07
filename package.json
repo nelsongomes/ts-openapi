@@ -59,7 +59,7 @@
     "url": "git+https://github.com/nelsongomes/ts-openapi.git"
   },
   "engines": {
-    "node": ">=12",
+    "node": ">=14",
     "npm": ">=7"
   },
   "jest": {
@@ -92,7 +92,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "check-node-version --node 12.21 && check-node-version --npm 7 && lint-staged && tsc --noEmit -p . && npm test"
+      "pre-commit": "check-node-version --node 14 && check-node-version --npm 7 && lint-staged && tsc --noEmit -p . && npm test"
     }
   },
   "lint-staged": {
