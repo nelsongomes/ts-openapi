@@ -213,5 +213,5 @@ When you declare your request you can use as inputs:
 
 ## Medium Articles
 
-[Maintaining REST API Documentation with Node.js — Part I](https://medium.com/p/65e9700e3b30) about documenting a single service
+[Maintaining REST API Documentation with Node.js — Part I](https://medium.com/p/65e9700e3b30) about documenting a single service<br/>
 [Maintaining REST API Documentation with Node.js — Part II](https://medium.com/p/26d1a622d3fe) about combining multiple services documentation
