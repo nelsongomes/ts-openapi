@@ -92,7 +92,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "check-node-version --node 16 && check-node-version --npm 7 && lint-staged && tsc --noEmit -p . && npm test"
+      "pre-commit": "check-node-version --node 16 && check-node-version --npm 8 && lint-staged && tsc --noEmit -p . && npm test"
     }
   },
   "lint-staged": {
