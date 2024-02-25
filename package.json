@@ -2,7 +2,7 @@
   "name": "ts-openapi",
   "author": "Nelson Gomes <nelson.ricardo.gomes@gmail.com>",
   "license": "ISC",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "An openapi json generator based on joi information about APIs that will help you to maintain your API documentation up to date.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -60,7 +60,7 @@
   },
   "engines": {
     "node": ">=18",
-    "npm": ">=7"
+    "npm": ">=8"
   },
   "jest": {
     "roots": [
@@ -95,7 +95,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "check-node-version --node 16 && check-node-version --npm 8 && lint-staged && tsc --noEmit -p . && npm test"
+      "pre-commit": "check-node-version --node 18 && check-node-version --npm 8 && lint-staged && tsc --noEmit -p . && npm test"
     }
   },
   "lint-staged": {
