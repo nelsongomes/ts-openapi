@@ -59,7 +59,7 @@
     "url": "git+https://github.com/nelsongomes/ts-openapi.git"
   },
   "engines": {
-    "node": ">=14",
+    "node": ">=18",
     "npm": ">=7"
   },
   "jest": {
