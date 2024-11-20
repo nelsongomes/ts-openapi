@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`src/openapi/openapi Date-time date-time all options 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -16,18 +16,18 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "When did it happen. (max:25 chars, ISO8601 date-time format)",
             "in": "query",
             "name": "timestamp",
             "required": true,
-            "schema": Object {
+            "schema": {
               "description": "When did it happen. (max:25 chars, ISO8601 date-time format)",
               "format": "date-time",
               "maxLength": 25,
@@ -37,23 +37,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -61,13 +61,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Date-time date-time downgrades to date if format = 'date' (2017-07-21) 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -76,18 +76,18 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
             "in": "query",
             "name": "timestamp",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
               "format": "date",
               "maxLength": 25,
@@ -96,23 +96,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -120,13 +120,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Date-time date-time simple 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -135,18 +135,18 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
             "in": "query",
             "name": "timestamp",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
               "format": "date-time",
               "maxLength": 25,
@@ -155,23 +155,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],

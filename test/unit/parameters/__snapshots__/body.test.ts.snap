@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`src/openapi/openapi Body parameters should succeed with an object with all types 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -16,35 +16,35 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "post": Object {
+  "paths": {
+    "/test": {
+      "post": {
         "description": "Test endpoint",
         "operationId": "id",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "example": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
                 "password": "*******",
                 "username": "johndoe@acme.com",
               },
-              "schema": Object {
+              "schema": {
                 "description": "Full body description.",
-                "properties": Object {
-                  "array": Object {
+                "properties": {
+                  "array": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
                       "type": "string",
                     },
                     "type": "array",
                   },
-                  "arrayOfObjects": Object {
+                  "arrayOfObjects": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
-                      "properties": Object {
-                        "internalString": Object {
+                      "properties": {
+                        "internalString": {
                           "description": "Parameter without description.",
                           "type": "string",
                         },
@@ -53,41 +53,41 @@ Object {
                     },
                     "type": "array",
                   },
-                  "boolean": Object {
+                  "boolean": {
                     "description": "Parameter without description.",
                     "type": "boolean",
                   },
-                  "date": Object {
+                  "date": {
                     "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
-                  "dateTime": Object {
+                  "dateTime": {
                     "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
-                  "integer": Object {
+                  "integer": {
                     "description": "Parameter without description.",
                     "format": "int64",
                     "type": "integer",
                   },
-                  "number": Object {
+                  "number": {
                     "description": "Parameter without description.",
                     "format": "double",
                     "type": "number",
                   },
-                  "object": Object {
+                  "object": {
                     "description": "Parameter without description.",
-                    "properties": Object {
-                      "internalString": Object {
+                    "properties": {
+                      "internalString": {
                         "description": "Parameter without description.",
                         "type": "string",
                       },
                     },
                     "type": "object",
                   },
-                  "string": Object {
+                  "string": {
                     "description": "Username",
                     "type": "string",
                   },
@@ -98,23 +98,23 @@ Object {
           },
           "description": "Full body description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -122,13 +122,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Body parameters should succeed with an object, without description 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -137,47 +137,47 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "post": Object {
+  "paths": {
+    "/test": {
+      "post": {
         "description": "Test endpoint",
         "operationId": "id",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "example": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
                 "password": "*******",
                 "username": "johndoe@acme.com",
               },
-              "schema": Object {
+              "schema": {
                 "description": "Parameter without description.",
-                "properties": Object {
-                  "hostname": Object {
+                "properties": {
+                  "hostname": {
                     "description": "server",
                     "format": "hostname",
                     "type": "string",
                   },
-                  "ipv4": Object {
+                  "ipv4": {
                     "description": "ip (min:7 chars, max:15 chars)",
                     "format": "ipv4",
                     "type": "string",
                   },
-                  "ipv6": Object {
+                  "ipv6": {
                     "description": "ip (min:3 chars, max:45 chars)",
                     "format": "ipv6",
                     "type": "string",
                   },
-                  "password": Object {
+                  "password": {
                     "description": "User password",
                     "format": "password",
                     "type": "string",
                   },
-                  "uri": Object {
+                  "uri": {
                     "description": "Uri",
                     "format": "uri",
                     "type": "string",
                   },
-                  "username": Object {
+                  "username": {
                     "description": "Username",
                     "type": "string",
                   },
@@ -188,23 +188,23 @@ Object {
           },
           "description": "Body does not have a description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],

@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`src/openapi/openapi Binary binary all options 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -16,37 +16,37 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "repeated",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
-    "/test": Object {
-      "get": Object {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
             "example": "c2FtcGxlMQ==",
             "in": "query",
             "name": "base64string",
             "required": true,
-            "schema": Object {
+            "schema": {
               "default": "c2FtcGxlMQ==",
               "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
               "format": "binary",
@@ -57,23 +57,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -81,17 +81,17 @@ Object {
 `;
 
 exports[`src/openapi/openapi Binary binary all options, declared as parameter 1`] = `
-Object {
-  "components": Object {
-    "parameters": Object {
-      "arrayParameter": Object {
+{
+  "components": {
+    "parameters": {
+      "arrayParameter": {
         "description": "some string array parameter",
         "in": "query",
         "name": "arrayParameter",
         "required": true,
-        "schema": Object {
+        "schema": {
           "description": "some string array parameter",
-          "items": Object {
+          "items": {
             "description": "Parameter without description.",
             "type": "string",
           },
@@ -99,13 +99,13 @@ Object {
           "type": "array",
         },
       },
-      "base64string": Object {
+      "base64string": {
         "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
         "example": "c2FtcGxlMQ==",
         "in": "query",
         "name": "base64string",
         "required": true,
-        "schema": Object {
+        "schema": {
           "default": "c2FtcGxlMQ==",
           "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
           "format": "binary",
@@ -115,13 +115,13 @@ Object {
           "type": "string",
         },
       },
-      "base64string2": Object {
+      "base64string2": {
         "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
         "example": "c2FtcGxlMQ==",
         "in": "query",
         "name": "base64string2",
         "required": true,
-        "schema": Object {
+        "schema": {
           "default": "c2FtcGxlMQ==",
           "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
           "format": "binary",
@@ -131,23 +131,23 @@ Object {
           "type": "string",
         },
       },
-      "booleanParameter": Object {
+      "booleanParameter": {
         "description": "some boolean parameter",
         "in": "query",
         "name": "booleanParameter",
         "required": true,
-        "schema": Object {
+        "schema": {
           "description": "some boolean parameter",
           "nullable": true,
           "type": "boolean",
         },
       },
-      "dateTimeParameter": Object {
+      "dateTimeParameter": {
         "description": "some datetime parameter (max:25 chars, ISO8601 date-time format)",
         "in": "query",
         "name": "dateTimeParameter",
         "required": true,
-        "schema": Object {
+        "schema": {
           "description": "some datetime parameter (max:25 chars, ISO8601 date-time format)",
           "format": "date-time",
           "maxLength": 25,
@@ -156,12 +156,12 @@ Object {
           "type": "string",
         },
       },
-      "numberParameter": Object {
+      "numberParameter": {
         "description": "some number parameter",
         "in": "query",
         "name": "numberParameter",
         "required": true,
-        "schema": Object {
+        "schema": {
           "description": "some number parameter",
           "format": "double",
           "nullable": true,
@@ -170,12 +170,12 @@ Object {
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -184,66 +184,66 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "repeated",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
-    "/test": Object {
-      "get": Object {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "$ref": "#/components/parameters/base64string",
           },
-          Object {
+          {
             "$ref": "#/components/parameters/base64string2",
           },
-          Object {
+          {
             "$ref": "#/components/parameters/dateTimeParameter",
           },
-          Object {
+          {
             "$ref": "#/components/parameters/numberParameter",
           },
-          Object {
+          {
             "$ref": "#/components/parameters/booleanParameter",
           },
-          Object {
+          {
             "$ref": "#/components/parameters/arrayParameter",
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -251,16 +251,16 @@ Object {
 `;
 
 exports[`src/openapi/openapi Binary binary all options, declared as parameter should throw an exception, because parameter has 2 variations 1`] = `
-Object {
-  "components": Object {
-    "parameters": Object {
-      "base64string": Object {
+{
+  "components": {
+    "parameters": {
+      "base64string": {
         "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
         "example": "c2FtcGxlMQ==",
         "in": "query",
         "name": "base64string",
         "required": true,
-        "schema": Object {
+        "schema": {
           "default": "c2FtcGxlMQ==",
           "description": "some binary base64 value (min:512 chars, max:1024 chars, binary string)",
           "format": "binary",
@@ -272,12 +272,12 @@ Object {
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -286,74 +286,74 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "repeated",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
-    "/test": Object {
-      "get": Object {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "$ref": "#/components/parameters/base64string",
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
-    "/testValid": Object {
-      "get": Object {
+    "/testValid": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id2",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "$ref": "#/components/parameters/base64string",
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -361,13 +361,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Binary binary simple 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -376,59 +376,59 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "repeated",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
-    "/test": Object {
-      "get": Object {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description. (binary string)",
             "in": "query",
             "name": "base64string",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Parameter without description. (binary string)",
               "format": "binary",
               "type": "string",
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],

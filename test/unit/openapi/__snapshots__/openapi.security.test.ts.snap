@@ -1,22 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`src/openapi/openapi Security Schemes Api Key Security (local) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "apiSecurity": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "apiSecurity": {
         "in": "header",
         "name": "X-API-KEY",
         "type": "apiKey",
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -25,33 +25,33 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
-        "security": Array [
-          Object {
-            "apiSecurity": Array [],
+        "security": [
+          {
+            "apiSecurity": [],
           },
         ],
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -59,21 +59,21 @@ Object {
 `;
 
 exports[`src/openapi/openapi Security Schemes Basic Security (global) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "basicSecurity": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "basicSecurity": {
         "scheme": "basic",
         "type": "http",
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -82,33 +82,33 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "security": Array [
-    Object {
-      "basicSecurity": Array [],
+  "security": [
+    {
+      "basicSecurity": [],
     },
   ],
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -116,21 +116,21 @@ Object {
 `;
 
 exports[`src/openapi/openapi Security Schemes Basic Security (local) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "basicSecurity": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "basicSecurity": {
         "scheme": "basic",
         "type": "http",
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -139,34 +139,34 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "deprecated": true,
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
-        "security": Array [
-          Object {
-            "basicSecurity": Array [],
+        "security": [
+          {
+            "basicSecurity": [],
           },
         ],
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -174,21 +174,21 @@ Object {
 `;
 
 exports[`src/openapi/openapi Security Schemes Bearer Security (local) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "bearerSecurity": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "bearerSecurity": {
         "scheme": "bearer",
         "type": "http",
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -197,33 +197,33 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
-        "security": Array [
-          Object {
-            "bearerSecurity": Array [],
+        "security": [
+          {
+            "bearerSecurity": [],
           },
         ],
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -231,22 +231,22 @@ Object {
 `;
 
 exports[`src/openapi/openapi Security Schemes Bearer Security with bearerFormat (local) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "bearerJwtSecurity": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "bearerJwtSecurity": {
         "bearerFormat": "JWT",
         "scheme": "bearer",
         "type": "http",
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -255,33 +255,33 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
-        "security": Array [
-          Object {
-            "bearerJwtSecurity": Array [],
+        "security": [
+          {
+            "bearerJwtSecurity": [],
           },
         ],
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -289,22 +289,22 @@ Object {
 `;
 
 exports[`src/openapi/openapi Security Schemes Cookie Security (local) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "cookieSecurity": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "cookieSecurity": {
         "in": "cookie",
         "name": "JSESSIONID",
         "type": "apiKey",
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -313,33 +313,33 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
-        "security": Array [
-          Object {
-            "cookieSecurity": Array [],
+        "security": [
+          {
+            "cookieSecurity": [],
           },
         ],
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -347,16 +347,16 @@ Object {
 `;
 
 exports[`src/openapi/openapi Security Schemes Oauth2 Security authorizationCode (local) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "oauth2Security": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "oauth2Security": {
         "description": "This API uses OAuth 2 with the authorizationCode grant flow. [More info](https://api.example.com/docs/auth)",
-        "flows": Object {
-          "authorizationCode": Object {
+        "flows": {
+          "authorizationCode": {
             "authorizationUrl": "https://api.example.com/oauth2/authorize",
             "refreshUrl": "https://www.domain.com/refreshUrl",
-            "scopes": Object {
+            "scopes": {
               "read_pets": "Read your pets",
               "write_pets": "Modify pets in your account",
             },
@@ -367,12 +367,12 @@ Object {
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -381,35 +381,35 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
-        "security": Array [
-          Object {
-            "oauth2Security": Array [
+        "security": [
+          {
+            "oauth2Security": [
               "read_pets",
             ],
           },
         ],
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -417,15 +417,15 @@ Object {
 `;
 
 exports[`src/openapi/openapi Security Schemes Oauth2 Security clientCredentials (local) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "oauth2Security": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "oauth2Security": {
         "description": "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
-        "flows": Object {
-          "clientCredentials": Object {
+        "flows": {
+          "clientCredentials": {
             "refreshUrl": "https://www.domain.com/refreshUrl",
-            "scopes": Object {
+            "scopes": {
               "read_pets": "Read your pets",
               "write_pets": "Modify pets in your account",
             },
@@ -436,12 +436,12 @@ Object {
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -450,35 +450,35 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
-        "security": Array [
-          Object {
-            "oauth2Security": Array [
+        "security": [
+          {
+            "oauth2Security": [
               "read_pets",
             ],
           },
         ],
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -486,16 +486,16 @@ Object {
 `;
 
 exports[`src/openapi/openapi Security Schemes Oauth2 Security implicit (local) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "oauth2Security": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "oauth2Security": {
         "description": "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
-        "flows": Object {
-          "implicit": Object {
+        "flows": {
+          "implicit": {
             "authorizationUrl": "https://api.example.com/oauth2/authorize",
             "refreshUrl": "https://www.domain.com/refreshUrl",
-            "scopes": Object {
+            "scopes": {
               "read_pets": "Read your pets",
               "write_pets": "Modify pets in your account",
             },
@@ -505,12 +505,12 @@ Object {
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -519,35 +519,35 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
-        "security": Array [
-          Object {
-            "oauth2Security": Array [
+        "security": [
+          {
+            "oauth2Security": [
               "read_pets",
             ],
           },
         ],
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -555,15 +555,15 @@ Object {
 `;
 
 exports[`src/openapi/openapi Security Schemes Oauth2 Security password (local) 1`] = `
-Object {
-  "components": Object {
-    "securitySchemes": Object {
-      "oauth2Security": Object {
+{
+  "components": {
+    "securitySchemes": {
+      "oauth2Security": {
         "description": "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
-        "flows": Object {
-          "password": Object {
+        "flows": {
+          "password": {
             "refreshUrl": "https://www.domain.com/refreshUrl",
-            "scopes": Object {
+            "scopes": {
               "read_pets": "Read your pets",
               "write_pets": "Modify pets in your account",
             },
@@ -574,12 +574,12 @@ Object {
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -588,35 +588,35 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/health": Object {
-      "get": Object {
+  "paths": {
+    "/health": {
+      "get": {
         "description": "Service healthcheck endpoint",
         "operationId": "healthcheck",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
-        "security": Array [
-          Object {
-            "oauth2Security": Array [
+        "security": [
+          {
+            "oauth2Security": [
               "read_pets",
             ],
           },
         ],
         "summary": "Server Healthcheck",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
