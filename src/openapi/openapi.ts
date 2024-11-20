@@ -7,7 +7,7 @@ import {
   numberSchema,
   integerSchema,
   booleanSchema,
-  openapiEscapeChars
+  openapiEscapeChars,
 } from "./openapi-functions";
 import { validateParameters } from "./openapi-validation";
 import {
@@ -29,8 +29,9 @@ import {
   TypedObject,
   TypedArray,
   SchemaTypeString,
-  ReferencedObject
+  ReferencedObject,
 } from "./openapi.types";
+import { forEach } from "lodash";
 // tslint:disable:no-var-requires
 const hasher = require("node-object-hash")();
 // tslint:enable:no-var-requires
@@ -53,20 +54,20 @@ export class OpenApi {
     this.schema = {
       info: {
         contact: {
-          email
+          email,
         },
         description,
         license: {
           name: "Apache 2.0",
-          url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+          url: "http://www.apache.org/licenses/LICENSE-2.0.html",
         },
         termsOfService: "http://swagger.io/terms/",
         title,
-        version
+        version,
       },
       openapi: "3.0.3",
       paths: {},
-      servers: []
+      servers: [],
     };
   }
 
@@ -134,7 +135,7 @@ export class OpenApi {
     Object.getOwnPropertyNames(inputDefinition).forEach((method: string) => {
       methods.push([
         method,
-        (inputDefinition as any)[method] as PathInputDefinition
+        (inputDefinition as any)[method] as PathInputDefinition,
       ]);
     });
 
@@ -150,7 +151,7 @@ export class OpenApi {
       const definition: PathDefinition = {
         ...remainder,
         ...(parameters && { parameters }),
-        ...(requestBody && { requestBody })
+        ...(requestBody && { requestBody }),
       };
 
       this.checkParameters(checkParams, definition);
@@ -182,7 +183,7 @@ export class OpenApi {
         // add a secondary method on path
         this.schema.paths[path] = {
           [method]: definition,
-          ...this.schema.paths[path]
+          ...this.schema.paths[path],
         };
       } else {
         // add first method in this path
@@ -199,17 +200,17 @@ export class OpenApi {
     const output: TypedObject = {
       description,
       ...(typeof parameter.default === "object" && {
-        default: parameter.default
+        default: parameter.default,
       }),
       ...(parameter.minItems && { minItems: parameter.minItems }),
       ...(parameter.maxItems && { maxItems: parameter.maxItems }),
       ...(typeof parameter.nullable === "boolean" && {
-        nullable: parameter.nullable
+        nullable: parameter.nullable,
       }),
       ...(parameter.meta.modelName &&
         parameter.example && { example: parameter.example }),
       type: "object",
-      properties: {}
+      properties: {},
     };
 
     for (const propertyKey of Object.keys(parameter.properties)) {
@@ -317,14 +318,14 @@ export class OpenApi {
     const output: TypedArray = {
       description,
       ...(typeof parameter.default === "object" && {
-        default: parameter.default
+        default: parameter.default,
       }),
       ...(parameter.minItems && { minItems: parameter.minItems }),
       ...(parameter.maxItems && { maxItems: parameter.maxItems }),
       ...(typeof parameter.nullable === "boolean" && {
-        nullable: parameter.nullable
+        nullable: parameter.nullable,
       }),
-      type: "array"
+      type: "array",
     };
 
     switch (parameter.items.type) {
@@ -405,9 +406,7 @@ export class OpenApi {
       // default values must be part of enum
       if (
         output.default instanceof Array &&
-        !output.default.every((element: any, _index: number, _array: any[]) =>
-          parameter.items.enum.includes(element)
-        )
+        !this.checkAllExist(output.default, parameter.items.enum)
       ) {
         delete output.default;
       }
@@ -426,6 +425,22 @@ export class OpenApi {
     }
 
     return output;
+  }
+
+  private checkAllExist(
+    elements: (string | number)[],
+    arrayEnum: Array<string | number>
+  ): boolean {
+    let result = true;
+
+    forEach(elements, (element: string | number) => {
+      if (!arrayEnum.includes(element)) {
+        result = false;
+      }
+      result = result && true;
+    });
+
+    return result;
   }
 
   private checkSecurityDefinition(security: SecuritySchemeArray) {
@@ -448,7 +463,7 @@ export class OpenApi {
           );
         }
 
-        scopes.forEach(scope => {
+        scopes.forEach((scope) => {
           const flowName = Object.getOwnPropertyNames(
             schemeDefinition.flows
           )[0];
@@ -458,7 +473,7 @@ export class OpenApi {
               "authorizationCode",
               "implicit",
               "password",
-              "clientCredentials"
+              "clientCredentials",
             ].includes(flowName)
           ) {
             throw new Error(
@@ -485,7 +500,7 @@ export class OpenApi {
         throw new Error("Parameters in path must be declared"); // TEST
       }
 
-      checkParams.forEach(paramCheck => {
+      checkParams.forEach((paramCheck) => {
         let found = false;
 
         definition.parameters?.forEach((detectedParam: any) => {
@@ -581,10 +596,10 @@ export class OpenApi {
             content: {
               "application/json": {
                 schema: { $ref: reference },
-                ...(example && { example })
-              }
-            }
-          }
+                ...(example && { example }),
+              },
+            },
+          },
         };
       }
 
@@ -595,16 +610,16 @@ export class OpenApi {
           content: {
             "application/json": {
               schema,
-              ...(example && { example })
-            }
-          }
-        }
+              ...(example && { example }),
+            },
+          },
+        },
       };
     }
 
     return {
       parameters: parameters.length > 0 ? parameters : undefined,
-      requestBody: undefined
+      requestBody: undefined,
     };
   }
 
@@ -785,7 +800,7 @@ export class OpenApi {
 
       if (!this.schema.components.parameters) {
         this.schema.components.parameters = {
-          [key]: preparedParameter
+          [key]: preparedParameter,
         };
       }
 
@@ -839,7 +854,7 @@ export class OpenApi {
       name,
       required: isRequiredParameter(required, type),
       schema: stringSchema(parameter),
-      ...(parameter.example && { example: parameter.example })
+      ...(parameter.example && { example: parameter.example }),
     };
 
     return p;
@@ -865,7 +880,7 @@ export class OpenApi {
       name,
       required: isRequiredParameter(required, type),
       schema: numberSchema(parameter),
-      ...(parameter.example && { example: parameter.example })
+      ...(parameter.example && { example: parameter.example }),
     };
 
     return p;
@@ -887,7 +902,7 @@ export class OpenApi {
       name,
       required: isRequiredParameter(required, type),
       schema: integerSchema(parameter),
-      ...(parameter.example && { example: parameter.example })
+      ...(parameter.example && { example: parameter.example }),
     };
 
     return p;
@@ -910,8 +925,8 @@ export class OpenApi {
       required: isRequiredParameter(required, type),
       schema: booleanSchema(parameter),
       ...(typeof parameter.example === "boolean" && {
-        example: parameter.example
-      })
+        example: parameter.example,
+      }),
     };
 
     return p;
@@ -934,7 +949,7 @@ export class OpenApi {
       name,
       required: isRequiredParameter(required, type),
       schema,
-      ...(parameter.example && { example: parameter.example })
+      ...(parameter.example && { example: parameter.example }),
     };
 
     return p;
@@ -947,9 +962,9 @@ export class OpenApi {
       description,
       content: {
         "application/json": {
-          schema: { ...schema, ...(example && !modelName && { example }) }
-        }
-      }
+          schema: { ...schema, ...(example && !modelName && { example }) },
+        },
+      },
     };
   }
 
@@ -975,7 +990,7 @@ export class OpenApi {
             "Body does not have a description.",
           schema: this.objectSchema(parameter),
           ...(parameter.example && { example: parameter.example }),
-          modelName: parameter.meta.modelName
+          modelName: parameter.meta.modelName,
         };
       case "array":
         return {
@@ -984,7 +999,7 @@ export class OpenApi {
             "Body does not have a description.",
           schema: this.arraySchema(parameter),
           ...(parameter.example && { example: parameter.example }),
-          modelName: parameter.meta.modelName
+          modelName: parameter.meta.modelName,
         };
       default:
         throw new Error("Body definition can only be an object or array");
