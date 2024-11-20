@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`src/openapi/openapi Object array in body 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -16,40 +16,40 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "getid",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
-      "patch": Object {
+      "patch": {
         "description": "Test endpoint",
         "operationId": "patchid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "description": "an array",
-                "items": Object {
-                  "default": Object {
+                "items": {
+                  "default": {
                     "parameter1": "default",
                   },
                   "description": "My body description",
                   "nullable": true,
-                  "properties": Object {
-                    "parameter1": Object {
+                  "properties": {
+                    "parameter1": {
                       "description": "String parameter",
                       "type": "string",
                     },
@@ -62,35 +62,35 @@ Object {
           },
           "description": "an array",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
-      "post": Object {
+      "post": {
         "description": "Test endpoint",
         "operationId": "postid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "description": "an array",
-                "items": Object {
-                  "default": Object {
+                "items": {
+                  "default": {
                     "parameter1": "default",
                   },
                   "description": "My body description",
                   "nullable": true,
-                  "properties": Object {
-                    "parameter1": Object {
+                  "properties": {
+                    "parameter1": {
                       "description": "String parameter",
                       "type": "string",
                     },
@@ -103,23 +103,23 @@ Object {
           },
           "description": "an array",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -127,13 +127,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Object object all options 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -142,41 +142,41 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "getid",
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
-      "patch": Object {
+      "patch": {
         "description": "Test endpoint",
         "operationId": "patchid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "example": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
                 "parameter1": "default",
               },
-              "schema": Object {
-                "default": Object {
+              "schema": {
+                "default": {
                   "parameter1": "default",
                 },
                 "description": "My body description",
                 "nullable": true,
-                "properties": Object {
-                  "parameter1": Object {
+                "properties": {
+                  "parameter1": {
                     "description": "String parameter",
                     "type": "string",
                   },
@@ -187,36 +187,36 @@ Object {
           },
           "description": "My body description",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
-      "post": Object {
+      "post": {
         "description": "Test endpoint",
         "operationId": "postid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "example": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
                 "parameter1": "default",
               },
-              "schema": Object {
-                "default": Object {
+              "schema": {
+                "default": {
                   "parameter1": "default",
                 },
                 "description": "My body description",
                 "nullable": true,
-                "properties": Object {
-                  "parameter1": Object {
+                "properties": {
+                  "parameter1": {
                     "description": "String parameter",
                     "type": "string",
                   },
@@ -227,23 +227,23 @@ Object {
           },
           "description": "My body description",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -251,13 +251,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Object object simple 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -266,68 +266,68 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "patch": Object {
+  "paths": {
+    "/test": {
+      "patch": {
         "description": "Test endpoint",
         "operationId": "patchid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "description": "Parameter without description.",
-                "properties": Object {
-                  "base64array": Object {
+                "properties": {
+                  "base64array": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description. (base64 encoded string)",
                       "format": "byte",
                       "type": "string",
                     },
                     "type": "array",
                   },
-                  "binary": Object {
+                  "binary": {
                     "description": "Parameter without description. (binary string)",
                     "format": "binary",
                     "type": "string",
                   },
-                  "boolean": Object {
+                  "boolean": {
                     "description": "Parameter without description.",
                     "type": "boolean",
                   },
-                  "byte": Object {
+                  "byte": {
                     "description": "Parameter without description. (base64 encoded string)",
                     "format": "byte",
                     "type": "string",
                   },
-                  "date": Object {
+                  "date": {
                     "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
-                  "dateTime": Object {
+                  "dateTime": {
                     "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
-                  "float": Object {
+                  "float": {
                     "description": "Parameter without description.",
                     "format": "double",
                     "type": "number",
                   },
-                  "integer": Object {
+                  "integer": {
                     "description": "Parameter without description.",
                     "format": "int64",
                     "type": "integer",
                   },
-                  "internalobject": Object {
+                  "internalobject": {
                     "description": "Parameter without description.",
-                    "properties": Object {
-                      "boolean": Object {
+                    "properties": {
+                      "boolean": {
                         "description": "Parameter without description.",
                         "type": "boolean",
                       },
-                      "uuid": Object {
+                      "uuid": {
                         "description": "Parameter without description. (min:36 chars, max:36 chars)",
                         "format": "uuid",
                         "type": "string",
@@ -335,19 +335,19 @@ Object {
                     },
                     "type": "object",
                   },
-                  "objectArray": Object {
+                  "objectArray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
-                      "properties": Object {
-                        "obj": Object {
+                      "properties": {
+                        "obj": {
                           "description": "Parameter without description.",
-                          "properties": Object {
-                            "boolean": Object {
+                          "properties": {
+                            "boolean": {
                               "description": "Parameter without description.",
                               "type": "boolean",
                             },
-                            "uuid": Object {
+                            "uuid": {
                               "description": "Parameter without description. (min:36 chars, max:36 chars)",
                               "format": "uuid",
                               "type": "string",
@@ -360,13 +360,13 @@ Object {
                     },
                     "type": "array",
                   },
-                  "string": Object {
+                  "string": {
                     "description": "Parameter without description.",
                     "type": "string",
                   },
-                  "stringarray": Object {
+                  "stringarray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
                       "type": "string",
                     },
@@ -379,29 +379,29 @@ Object {
           },
           "description": "Body does not have a description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
-          "400": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
                   "description": "Error object",
-                  "example": Object {
+                  "example": {
                     "id": 123,
                     "name": "customer name",
                   },
-                  "properties": Object {
-                    "id": Object {
+                  "properties": {
+                    "id": {
                       "description": "Customer ID (min:36 chars, max:36 chars)",
                       "format": "uuid",
                       "type": "string",
                     },
-                    "name": Object {
+                    "name": {
                       "description": "Customer name (max:100 chars)",
                       "type": "string",
                     },
@@ -414,70 +414,70 @@ Object {
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
-      "post": Object {
+      "post": {
         "description": "Test endpoint",
         "operationId": "postid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "description": "Parameter without description.",
-                "properties": Object {
-                  "base64array": Object {
+                "properties": {
+                  "base64array": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description. (base64 encoded string)",
                       "format": "byte",
                       "type": "string",
                     },
                     "type": "array",
                   },
-                  "binary": Object {
+                  "binary": {
                     "description": "Parameter without description. (binary string)",
                     "format": "binary",
                     "type": "string",
                   },
-                  "boolean": Object {
+                  "boolean": {
                     "description": "Parameter without description.",
                     "type": "boolean",
                   },
-                  "byte": Object {
+                  "byte": {
                     "description": "Parameter without description. (base64 encoded string)",
                     "format": "byte",
                     "type": "string",
                   },
-                  "date": Object {
+                  "date": {
                     "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
-                  "dateTime": Object {
+                  "dateTime": {
                     "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
-                  "float": Object {
+                  "float": {
                     "description": "Parameter without description.",
                     "format": "double",
                     "type": "number",
                   },
-                  "integer": Object {
+                  "integer": {
                     "description": "Parameter without description.",
                     "format": "int64",
                     "type": "integer",
                   },
-                  "internalobject": Object {
+                  "internalobject": {
                     "description": "Parameter without description.",
-                    "properties": Object {
-                      "boolean": Object {
+                    "properties": {
+                      "boolean": {
                         "description": "Parameter without description.",
                         "type": "boolean",
                       },
-                      "uuid": Object {
+                      "uuid": {
                         "description": "Parameter without description. (min:36 chars, max:36 chars)",
                         "format": "uuid",
                         "type": "string",
@@ -485,19 +485,19 @@ Object {
                     },
                     "type": "object",
                   },
-                  "objectArray": Object {
+                  "objectArray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
-                      "properties": Object {
-                        "obj": Object {
+                      "properties": {
+                        "obj": {
                           "description": "Parameter without description.",
-                          "properties": Object {
-                            "boolean": Object {
+                          "properties": {
+                            "boolean": {
                               "description": "Parameter without description.",
                               "type": "boolean",
                             },
-                            "uuid": Object {
+                            "uuid": {
                               "description": "Parameter without description. (min:36 chars, max:36 chars)",
                               "format": "uuid",
                               "type": "string",
@@ -510,13 +510,13 @@ Object {
                     },
                     "type": "array",
                   },
-                  "string": Object {
+                  "string": {
                     "description": "Parameter without description.",
                     "type": "string",
                   },
-                  "stringarray": Object {
+                  "stringarray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
                       "type": "string",
                     },
@@ -529,23 +529,23 @@ Object {
           },
           "description": "Body does not have a description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -553,13 +553,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Object object simple 2`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -568,68 +568,68 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "patch": Object {
+  "paths": {
+    "/test": {
+      "patch": {
         "description": "Test endpoint",
         "operationId": "patchid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "description": "Parameter without description.",
-                "properties": Object {
-                  "base64array": Object {
+                "properties": {
+                  "base64array": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description. (base64 encoded string)",
                       "format": "byte",
                       "type": "string",
                     },
                     "type": "array",
                   },
-                  "binary": Object {
+                  "binary": {
                     "description": "Parameter without description. (binary string)",
                     "format": "binary",
                     "type": "string",
                   },
-                  "boolean": Object {
+                  "boolean": {
                     "description": "Parameter without description.",
                     "type": "boolean",
                   },
-                  "byte": Object {
+                  "byte": {
                     "description": "Parameter without description. (base64 encoded string)",
                     "format": "byte",
                     "type": "string",
                   },
-                  "date": Object {
+                  "date": {
                     "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
-                  "dateTime": Object {
+                  "dateTime": {
                     "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
-                  "float": Object {
+                  "float": {
                     "description": "Parameter without description.",
                     "format": "double",
                     "type": "number",
                   },
-                  "integer": Object {
+                  "integer": {
                     "description": "Parameter without description.",
                     "format": "int64",
                     "type": "integer",
                   },
-                  "internalobject": Object {
+                  "internalobject": {
                     "description": "Parameter without description.",
-                    "properties": Object {
-                      "boolean": Object {
+                    "properties": {
+                      "boolean": {
                         "description": "Parameter without description.",
                         "type": "boolean",
                       },
-                      "uuid": Object {
+                      "uuid": {
                         "description": "Parameter without description. (min:36 chars, max:36 chars)",
                         "format": "uuid",
                         "type": "string",
@@ -637,19 +637,19 @@ Object {
                     },
                     "type": "object",
                   },
-                  "objectArray": Object {
+                  "objectArray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
-                      "properties": Object {
-                        "obj": Object {
+                      "properties": {
+                        "obj": {
                           "description": "Parameter without description.",
-                          "properties": Object {
-                            "boolean": Object {
+                          "properties": {
+                            "boolean": {
                               "description": "Parameter without description.",
                               "type": "boolean",
                             },
-                            "uuid": Object {
+                            "uuid": {
                               "description": "Parameter without description. (min:36 chars, max:36 chars)",
                               "format": "uuid",
                               "type": "string",
@@ -662,13 +662,13 @@ Object {
                     },
                     "type": "array",
                   },
-                  "string": Object {
+                  "string": {
                     "description": "Parameter without description.",
                     "type": "string",
                   },
-                  "stringarray": Object {
+                  "stringarray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
                       "type": "string",
                     },
@@ -681,79 +681,79 @@ Object {
           },
           "description": "Body does not have a description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
-      "post": Object {
+      "post": {
         "description": "Test endpoint",
         "operationId": "postid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "description": "Parameter without description.",
-                "properties": Object {
-                  "base64array": Object {
+                "properties": {
+                  "base64array": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description. (base64 encoded string)",
                       "format": "byte",
                       "type": "string",
                     },
                     "type": "array",
                   },
-                  "binary": Object {
+                  "binary": {
                     "description": "Parameter without description. (binary string)",
                     "format": "binary",
                     "type": "string",
                   },
-                  "boolean": Object {
+                  "boolean": {
                     "description": "Parameter without description.",
                     "type": "boolean",
                   },
-                  "byte": Object {
+                  "byte": {
                     "description": "Parameter without description. (base64 encoded string)",
                     "format": "byte",
                     "type": "string",
                   },
-                  "date": Object {
+                  "date": {
                     "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
-                  "dateTime": Object {
+                  "dateTime": {
                     "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
-                  "float": Object {
+                  "float": {
                     "description": "Parameter without description.",
                     "format": "double",
                     "type": "number",
                   },
-                  "integer": Object {
+                  "integer": {
                     "description": "Parameter without description.",
                     "format": "int64",
                     "type": "integer",
                   },
-                  "internalobject": Object {
+                  "internalobject": {
                     "description": "Parameter without description.",
-                    "properties": Object {
-                      "boolean": Object {
+                    "properties": {
+                      "boolean": {
                         "description": "Parameter without description.",
                         "type": "boolean",
                       },
-                      "uuid": Object {
+                      "uuid": {
                         "description": "Parameter without description. (min:36 chars, max:36 chars)",
                         "format": "uuid",
                         "type": "string",
@@ -761,19 +761,19 @@ Object {
                     },
                     "type": "object",
                   },
-                  "objectArray": Object {
+                  "objectArray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
-                      "properties": Object {
-                        "obj": Object {
+                      "properties": {
+                        "obj": {
                           "description": "Parameter without description.",
-                          "properties": Object {
-                            "boolean": Object {
+                          "properties": {
+                            "boolean": {
                               "description": "Parameter without description.",
                               "type": "boolean",
                             },
-                            "uuid": Object {
+                            "uuid": {
                               "description": "Parameter without description. (min:36 chars, max:36 chars)",
                               "format": "uuid",
                               "type": "string",
@@ -786,13 +786,13 @@ Object {
                     },
                     "type": "array",
                   },
-                  "string": Object {
+                  "string": {
                     "description": "Parameter without description.",
                     "type": "string",
                   },
-                  "stringarray": Object {
+                  "stringarray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
                       "type": "string",
                     },
@@ -805,23 +805,23 @@ Object {
           },
           "description": "Body does not have a description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -829,17 +829,17 @@ Object {
 `;
 
 exports[`src/openapi/openapi Object object simple, with models 1`] = `
-Object {
-  "components": Object {
-    "schemas": Object {
-      "InternalObject": Object {
+{
+  "components": {
+    "schemas": {
+      "InternalObject": {
         "description": "Parameter without description.",
-        "properties": Object {
-          "boolean": Object {
+        "properties": {
+          "boolean": {
             "description": "Parameter without description.",
             "type": "boolean",
           },
-          "uuid": Object {
+          "uuid": {
             "description": "Parameter without description. (min:36 chars, max:36 chars)",
             "format": "uuid",
             "type": "string",
@@ -847,65 +847,65 @@ Object {
         },
         "type": "object",
       },
-      "ObjectSimple": Object {
+      "ObjectSimple": {
         "description": "Parameter without description.",
-        "properties": Object {
-          "base64array": Object {
+        "properties": {
+          "base64array": {
             "description": "Parameter without description.",
-            "items": Object {
+            "items": {
               "description": "Parameter without description. (base64 encoded string)",
               "format": "byte",
               "type": "string",
             },
             "type": "array",
           },
-          "binary": Object {
+          "binary": {
             "description": "Parameter without description. (binary string)",
             "format": "binary",
             "type": "string",
           },
-          "boolean": Object {
+          "boolean": {
             "description": "Parameter without description.",
             "type": "boolean",
           },
-          "byte": Object {
+          "byte": {
             "description": "Parameter without description. (base64 encoded string)",
             "format": "byte",
             "type": "string",
           },
-          "date": Object {
+          "date": {
             "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
             "format": "date",
             "type": "string",
           },
-          "dateTime": Object {
+          "dateTime": {
             "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
             "format": "date-time",
             "type": "string",
           },
-          "float": Object {
+          "float": {
             "description": "Parameter without description.",
             "format": "double",
             "type": "number",
           },
-          "integer": Object {
+          "integer": {
             "description": "Parameter without description.",
             "format": "int64",
             "type": "integer",
           },
-          "internalobject": Object {
+          "internalobject": {
             "$ref": "#/components/schemas/InternalObject",
           },
-          "objectArray": Object {
+          "objectArray": {
             "$ref": "#/components/schemas/UuidList",
           },
-          "string": Object {
+          "string": {
             "description": "Parameter without description.",
             "type": "string",
           },
-          "stringarray": Object {
+          "stringarray": {
             "description": "Parameter without description.",
-            "items": Object {
+            "items": {
               "description": "Parameter without description.",
               "type": "string",
             },
@@ -914,24 +914,24 @@ Object {
         },
         "type": "object",
       },
-      "UuidList": Object {
+      "UuidList": {
         "description": "Parameter without description.",
-        "items": Object {
+        "items": {
           "$ref": "#/components/schemas/UuidObject",
         },
         "type": "array",
       },
-      "UuidObject": Object {
+      "UuidObject": {
         "description": "Parameter without description.",
-        "properties": Object {
-          "obj": Object {
+        "properties": {
+          "obj": {
             "description": "Parameter without description.",
-            "properties": Object {
-              "boolean": Object {
+            "properties": {
+              "boolean": {
                 "description": "Parameter without description.",
                 "type": "boolean",
               },
-              "uuid": Object {
+              "uuid": {
                 "description": "Parameter without description. (min:36 chars, max:36 chars)",
                 "format": "uuid",
                 "type": "string",
@@ -944,12 +944,12 @@ Object {
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -958,64 +958,64 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "patch": Object {
+  "paths": {
+    "/test": {
+      "patch": {
         "description": "Test endpoint",
         "operationId": "patchid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "$ref": "#/components/schemas/ObjectSimple",
               },
             },
           },
           "description": "Body does not have a description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
-      "post": Object {
+      "post": {
         "description": "Test endpoint",
         "operationId": "postid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "$ref": "#/components/schemas/ObjectSimple",
               },
             },
           },
           "description": "Body does not have a description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -1023,22 +1023,22 @@ Object {
 `;
 
 exports[`src/openapi/openapi Object object simple, with named response model 1`] = `
-Object {
-  "components": Object {
-    "schemas": Object {
-      "ErrorResponse": Object {
+{
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
         "description": "Error object",
-        "example": Object {
+        "example": {
           "id": 123,
           "name": "customer model",
         },
-        "properties": Object {
-          "id": Object {
+        "properties": {
+          "id": {
             "description": "Customer ID (min:36 chars, max:36 chars)",
             "format": "uuid",
             "type": "string",
           },
-          "name": Object {
+          "name": {
             "description": "Customer name (max:100 chars)",
             "type": "string",
           },
@@ -1047,12 +1047,12 @@ Object {
       },
     },
   },
-  "info": Object {
-    "contact": Object {
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -1061,68 +1061,68 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "patch": Object {
+  "paths": {
+    "/test": {
+      "patch": {
         "description": "Test endpoint",
         "operationId": "patchid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "description": "Parameter without description.",
-                "properties": Object {
-                  "base64array": Object {
+                "properties": {
+                  "base64array": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description. (base64 encoded string)",
                       "format": "byte",
                       "type": "string",
                     },
                     "type": "array",
                   },
-                  "binary": Object {
+                  "binary": {
                     "description": "Parameter without description. (binary string)",
                     "format": "binary",
                     "type": "string",
                   },
-                  "boolean": Object {
+                  "boolean": {
                     "description": "Parameter without description.",
                     "type": "boolean",
                   },
-                  "byte": Object {
+                  "byte": {
                     "description": "Parameter without description. (base64 encoded string)",
                     "format": "byte",
                     "type": "string",
                   },
-                  "date": Object {
+                  "date": {
                     "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
-                  "dateTime": Object {
+                  "dateTime": {
                     "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
-                  "float": Object {
+                  "float": {
                     "description": "Parameter without description.",
                     "format": "double",
                     "type": "number",
                   },
-                  "integer": Object {
+                  "integer": {
                     "description": "Parameter without description.",
                     "format": "int64",
                     "type": "integer",
                   },
-                  "internalobject": Object {
+                  "internalobject": {
                     "description": "Parameter without description.",
-                    "properties": Object {
-                      "boolean": Object {
+                    "properties": {
+                      "boolean": {
                         "description": "Parameter without description.",
                         "type": "boolean",
                       },
-                      "uuid": Object {
+                      "uuid": {
                         "description": "Parameter without description. (min:36 chars, max:36 chars)",
                         "format": "uuid",
                         "type": "string",
@@ -1130,19 +1130,19 @@ Object {
                     },
                     "type": "object",
                   },
-                  "objectArray": Object {
+                  "objectArray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
-                      "properties": Object {
-                        "obj": Object {
+                      "properties": {
+                        "obj": {
                           "description": "Parameter without description.",
-                          "properties": Object {
-                            "boolean": Object {
+                          "properties": {
+                            "boolean": {
                               "description": "Parameter without description.",
                               "type": "boolean",
                             },
-                            "uuid": Object {
+                            "uuid": {
                               "description": "Parameter without description. (min:36 chars, max:36 chars)",
                               "format": "uuid",
                               "type": "string",
@@ -1155,13 +1155,13 @@ Object {
                     },
                     "type": "array",
                   },
-                  "string": Object {
+                  "string": {
                     "description": "Parameter without description.",
                     "type": "string",
                   },
-                  "stringarray": Object {
+                  "stringarray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
                       "type": "string",
                     },
@@ -1174,17 +1174,17 @@ Object {
           },
           "description": "Body does not have a description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
-          "400": Object {
-            "content": Object {
-              "application/json": Object {
-                "schema": Object {
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
                   "$ref": "#/components/schemas/ErrorResponse",
                 },
               },
@@ -1193,70 +1193,70 @@ Object {
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
-      "post": Object {
+      "post": {
         "description": "Test endpoint",
         "operationId": "postid",
-        "requestBody": Object {
-          "content": Object {
-            "application/json": Object {
-              "schema": Object {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "description": "Parameter without description.",
-                "properties": Object {
-                  "base64array": Object {
+                "properties": {
+                  "base64array": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description. (base64 encoded string)",
                       "format": "byte",
                       "type": "string",
                     },
                     "type": "array",
                   },
-                  "binary": Object {
+                  "binary": {
                     "description": "Parameter without description. (binary string)",
                     "format": "binary",
                     "type": "string",
                   },
-                  "boolean": Object {
+                  "boolean": {
                     "description": "Parameter without description.",
                     "type": "boolean",
                   },
-                  "byte": Object {
+                  "byte": {
                     "description": "Parameter without description. (base64 encoded string)",
                     "format": "byte",
                     "type": "string",
                   },
-                  "date": Object {
+                  "date": {
                     "description": "Parameter without description. (min:10 chars, max:25 chars, date:yyyy-mm-dd)",
                     "format": "date",
                     "type": "string",
                   },
-                  "dateTime": Object {
+                  "dateTime": {
                     "description": "Parameter without description. (max:25 chars, ISO8601 date-time format)",
                     "format": "date-time",
                     "type": "string",
                   },
-                  "float": Object {
+                  "float": {
                     "description": "Parameter without description.",
                     "format": "double",
                     "type": "number",
                   },
-                  "integer": Object {
+                  "integer": {
                     "description": "Parameter without description.",
                     "format": "int64",
                     "type": "integer",
                   },
-                  "internalobject": Object {
+                  "internalobject": {
                     "description": "Parameter without description.",
-                    "properties": Object {
-                      "boolean": Object {
+                    "properties": {
+                      "boolean": {
                         "description": "Parameter without description.",
                         "type": "boolean",
                       },
-                      "uuid": Object {
+                      "uuid": {
                         "description": "Parameter without description. (min:36 chars, max:36 chars)",
                         "format": "uuid",
                         "type": "string",
@@ -1264,19 +1264,19 @@ Object {
                     },
                     "type": "object",
                   },
-                  "objectArray": Object {
+                  "objectArray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
-                      "properties": Object {
-                        "obj": Object {
+                      "properties": {
+                        "obj": {
                           "description": "Parameter without description.",
-                          "properties": Object {
-                            "boolean": Object {
+                          "properties": {
+                            "boolean": {
                               "description": "Parameter without description.",
                               "type": "boolean",
                             },
-                            "uuid": Object {
+                            "uuid": {
                               "description": "Parameter without description. (min:36 chars, max:36 chars)",
                               "format": "uuid",
                               "type": "string",
@@ -1289,13 +1289,13 @@ Object {
                     },
                     "type": "array",
                   },
-                  "string": Object {
+                  "string": {
                     "description": "Parameter without description.",
                     "type": "string",
                   },
-                  "stringarray": Object {
+                  "stringarray": {
                     "description": "Parameter without description.",
-                    "items": Object {
+                    "items": {
                       "description": "Parameter without description.",
                       "type": "string",
                     },
@@ -1308,23 +1308,23 @@ Object {
           },
           "description": "Body does not have a description.",
         },
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],

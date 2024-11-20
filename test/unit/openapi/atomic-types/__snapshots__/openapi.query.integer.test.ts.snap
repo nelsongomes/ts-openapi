@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`src/openapi/openapi Integer integer enum 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -16,20 +16,20 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Integer options from enum",
             "in": "query",
             "name": "option",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Integer options from enum",
-              "enum": Array [
+              "enum": [
                 5,
                 10,
                 20,
@@ -39,23 +39,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -63,13 +63,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Integer integer enum all options 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -78,22 +78,22 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Integer options from enum",
             "example": 20,
             "in": "query",
             "name": "option",
             "required": true,
-            "schema": Object {
+            "schema": {
               "default": 5,
               "description": "Integer options from enum",
-              "enum": Array [
+              "enum": [
                 5,
                 10,
                 20,
@@ -105,23 +105,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -129,13 +129,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Integer integer enum default is part of enum 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -144,21 +144,21 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Integer options from enum",
             "in": "query",
             "name": "option",
             "required": false,
-            "schema": Object {
+            "schema": {
               "default": 20,
               "description": "Integer options from enum",
-              "enum": Array [
+              "enum": [
                 10,
                 20,
                 30,
@@ -168,23 +168,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -192,13 +192,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Integer integer enum default is undefined because is NOT in enum 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -207,20 +207,20 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Integer options from enum",
             "in": "query",
             "name": "option",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Integer options from enum",
-              "enum": Array [
+              "enum": [
                 10,
                 20,
                 30,
@@ -230,23 +230,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -254,13 +254,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Integer integer enum min and max should be skipped (the values are already limited) 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -269,20 +269,20 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Integer options from enum",
             "in": "query",
             "name": "option",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Integer options from enum",
-              "enum": Array [
+              "enum": [
                 3,
                 6,
                 9,
@@ -292,23 +292,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -316,13 +316,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Integer integer simple 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -331,41 +331,41 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description.",
             "in": "query",
             "name": "user_name",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Parameter without description.",
               "format": "int64",
               "type": "integer",
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -373,13 +373,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Integer integer simple all options 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -388,19 +388,19 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Some integer value (min:5, max:100)",
             "example": 5,
             "in": "query",
             "name": "user_name",
             "required": true,
-            "schema": Object {
+            "schema": {
               "default": 99,
               "description": "Some integer value (min:5, max:100)",
               "example": 5,
@@ -412,23 +412,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -436,13 +436,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Integer integer simple, 0-valued 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -451,18 +451,18 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description. (min:0, max:0)",
             "in": "query",
             "name": "user_name",
             "required": false,
-            "schema": Object {
+            "schema": {
               "default": 0,
               "description": "Parameter without description. (min:0, max:0)",
               "example": 0,
@@ -473,23 +473,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],

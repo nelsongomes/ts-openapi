@@ -22,11 +22,11 @@ describe("src/openapi/openapi", () => {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
@@ -34,7 +34,7 @@ describe("src/openapi/openapi", () => {
 
     test("binary simple", async () => {
       const query = {
-        base64string: Types.Binary()
+        base64string: Types.Binary(),
       };
 
       openApi.addPath(
@@ -45,11 +45,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             requestSchema: { query },
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Test",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
@@ -65,8 +65,8 @@ describe("src/openapi/openapi", () => {
           maxLength: 1024,
           default: "c2FtcGxlMQ==",
           example: "c2FtcGxlMQ==",
-          nullable: true
-        })
+          nullable: true,
+        }),
       };
 
       openApi.addPath(
@@ -77,11 +77,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             requestSchema: { query },
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Test",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
@@ -98,7 +98,7 @@ describe("src/openapi/openapi", () => {
           default: "c2FtcGxlMQ==",
           example: "c2FtcGxlMQ==",
           nullable: true,
-          isParameter: true
+          isParameter: true,
         }),
         base64string2: Types.Binary({
           description: "some binary base64 value",
@@ -108,33 +108,33 @@ describe("src/openapi/openapi", () => {
           default: "c2FtcGxlMQ==",
           example: "c2FtcGxlMQ==",
           nullable: true,
-          isParameter: true
+          isParameter: true,
         }),
         dateTimeParameter: Types.DateTime({
           description: "some datetime parameter",
           required: true,
           nullable: true,
-          isParameter: true
+          isParameter: true,
         }),
         numberParameter: Types.Number({
           description: "some number parameter",
           required: true,
           nullable: true,
-          isParameter: true
+          isParameter: true,
         }),
         booleanParameter: Types.Boolean({
           description: "some boolean parameter",
           required: true,
           nullable: true,
-          isParameter: true
+          isParameter: true,
         }),
         arrayParameter: Types.Array({
           arrayType: Types.String(),
           description: "some string array parameter",
           required: true,
           nullable: true,
-          isParameter: true
-        })
+          isParameter: true,
+        }),
       };
 
       openApi.addPath(
@@ -145,11 +145,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             requestSchema: { query },
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Test",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
@@ -166,8 +166,8 @@ describe("src/openapi/openapi", () => {
           default: "c2FtcGxlMQ==",
           example: "c2FtcGxlMQ==",
           nullable: true,
-          isParameter: true
-        })
+          isParameter: true,
+        }),
       };
 
       const queryVariation = {
@@ -179,8 +179,8 @@ describe("src/openapi/openapi", () => {
           default: "c2FtcGxlMQ==",
           example: "c2FtcGxlMQ==",
           nullable: true,
-          isParameter: true
-        })
+          isParameter: true,
+        }),
       };
 
       openApi.addPath(
@@ -191,11 +191,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             requestSchema: { query },
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Test",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
@@ -208,11 +208,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id2",
             requestSchema: { query },
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Test",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
@@ -226,18 +226,18 @@ describe("src/openapi/openapi", () => {
               operationId: "id3",
               requestSchema: { query: queryVariation },
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Test",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
         fail("Should have thrown exception");
       } catch (e) {
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "There is a conflicting declaration of base64string parameter, the parameter cannot change."
         );
       }

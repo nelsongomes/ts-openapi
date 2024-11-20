@@ -17,9 +17,9 @@ describe("src/openapi/openapi", () => {
       openApi.setServers([{ url: "https://server.com" }]);
     });
 
-    test("should succeed", done => {
+    test("should succeed", () => {
       const params = {
-        username: Types.String({ required: true, isParameter: true })
+        username: Types.String({ required: true, isParameter: true }),
       };
 
       openApi.addPath(
@@ -30,23 +30,21 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             requestSchema: { params },
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Test",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
 
       expect(openApi.generateJson()).toMatchSnapshot();
-
-      done();
     });
 
-    test("should fail because path param does not exist", done => {
+    test("should fail because path param does not exist", () => {
       const params = {
-        username: Types.String({ required: true })
+        username: Types.String({ required: true }),
       };
 
       try {
@@ -58,28 +56,26 @@ describe("src/openapi/openapi", () => {
               operationId: "id",
               requestSchema: { params },
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Test",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
         fail("Should have thrown exception");
       } catch (e) {
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "Parameters in path must be declared, missing usernameFail"
         );
       }
-
-      done();
     });
 
-    test("should throw an exception if path parameter name is not made up of “word characters” ([A-Za-z0-9_])", done => {
+    test("should throw an exception if path parameter name is not made up of “word characters” ([A-Za-z0-9_])", () => {
       const params = {
-        "user#name": Types.String()
+        "user#name": Types.String(),
       };
 
       try {
@@ -91,32 +87,29 @@ describe("src/openapi/openapi", () => {
               operationId: "id",
               requestSchema: { params },
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Test",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
-        done.fail(
-          "It should have thrown an exception because name is not valid"
-        );
+        fail("It should have thrown an exception because name is not valid");
       } catch (e) {
         expect(e).toBeInstanceOf(Error);
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "Path param 'user#name' name does not match [A-Za-z0-9_]"
         );
-        done();
       }
     });
 
-    test("should throw an exception if path parameter is an object or array", done => {
+    test("should throw an exception if path parameter is an object or array", () => {
       const params = {
         stringArray: Types.Array({
-          arrayType: Types.Object({ properties: { list: Types.String() } })
-        })
+          arrayType: Types.Object({ properties: { list: Types.String() } }),
+        }),
       };
 
       try {
@@ -128,30 +121,29 @@ describe("src/openapi/openapi", () => {
               operationId: "id",
               requestSchema: { params },
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Test",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
-        done.fail(
+        fail(
           "It should have thrown an exception because param cannot be object or array"
         );
       } catch (e) {
         expect(e).toBeInstanceOf(Error);
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "Path param 'stringArray' cannot be an object or an array."
         );
-        done();
       }
     });
 
-    test("should throw an exception if path parameter is not required", done => {
+    test("should throw an exception if path parameter is not required", () => {
       const params = {
-        someString: Types.String()
+        someString: Types.String(),
       };
 
       try {
@@ -163,24 +155,21 @@ describe("src/openapi/openapi", () => {
               operationId: "id",
               requestSchema: { params },
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Test",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
-        done.fail(
-          "It should have thrown an exception because name is not valid"
-        );
+        fail("It should have thrown an exception because name is not valid");
       } catch (e) {
         expect(e).toBeInstanceOf(Error);
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "Path param 'someString' must be required because it is a path parameter."
         );
-        done();
       }
     });
   });

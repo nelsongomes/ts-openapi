@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`src/openapi/openapi Array of string string array all options 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -16,26 +16,26 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "String array (minItems:1, maxItems:50)",
-            "example": Array [
+            "example": [
               "a",
             ],
             "in": "query",
             "name": "category",
             "required": true,
-            "schema": Object {
-              "default": Array [
+            "schema": {
+              "default": [
                 "b",
               ],
               "description": "String array (minItems:1, maxItems:50)",
-              "items": Object {
+              "items": {
                 "description": "Parameter without description. (min:11 chars, max:20 chars)",
                 "type": "string",
               },
@@ -46,23 +46,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -70,13 +70,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Array of string string array enum 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -85,22 +85,22 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description.",
             "in": "query",
             "name": "category",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Parameter without description.",
-              "items": Object {
+              "items": {
                 "description": "Parameter without description.",
-                "enum": Array [
+                "enum": [
                   "a",
                   "b",
                   "c",
@@ -111,23 +111,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -135,13 +135,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Array of string string array enum all options 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -150,15 +150,15 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "array of category (minItems:1, maxItems:10)",
-            "example": Array [
+            "example": [
               "a",
               "b",
               "c",
@@ -166,14 +166,14 @@ Object {
             "in": "query",
             "name": "category",
             "required": true,
-            "schema": Object {
-              "default": Array [
+            "schema": {
+              "default": [
                 "b",
               ],
               "description": "array of category (minItems:1, maxItems:10)",
-              "items": Object {
+              "items": {
                 "description": "Enum of strings",
-                "enum": Array [
+                "enum": [
                   "a",
                   "b",
                   "c",
@@ -187,23 +187,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -211,13 +211,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Array of string string array enum default is part of enum 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -226,26 +226,26 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description.",
             "in": "query",
             "name": "category",
             "required": false,
-            "schema": Object {
-              "default": Array [
+            "schema": {
+              "default": [
                 "a",
                 "b",
               ],
               "description": "Parameter without description.",
-              "items": Object {
+              "items": {
                 "description": "Parameter without description.",
-                "enum": Array [
+                "enum": [
                   "a",
                   "b",
                   "c",
@@ -256,23 +256,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -280,13 +280,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Array of string string array enum default is undefined because is NOT in enum 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -295,22 +295,22 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description.",
             "in": "query",
             "name": "category",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Parameter without description.",
-              "items": Object {
+              "items": {
                 "description": "Parameter without description.",
-                "enum": Array [
+                "enum": [
                   "a",
                   "b",
                   "c",
@@ -321,23 +321,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -345,13 +345,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Array of string string array enum min and max (string length) should be skipped (the values are already limited) 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -360,22 +360,22 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description.",
             "in": "query",
             "name": "category",
             "required": true,
-            "schema": Object {
+            "schema": {
               "description": "Parameter without description.",
-              "items": Object {
+              "items": {
                 "description": "Parameter without description.",
-                "enum": Array [
+                "enum": [
                   "a",
                   "b",
                   "c",
@@ -386,23 +386,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],
@@ -410,13 +410,13 @@ Object {
 `;
 
 exports[`src/openapi/openapi Array of string string array simple 1`] = `
-Object {
-  "info": Object {
-    "contact": Object {
+{
+  "info": {
+    "contact": {
       "email": "nelson.ricardo.gomes@gmail.com",
     },
     "description": "Some test api",
-    "license": Object {
+    "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html",
     },
@@ -425,20 +425,20 @@ Object {
     "version": "1.0.0",
   },
   "openapi": "3.0.3",
-  "paths": Object {
-    "/test": Object {
-      "get": Object {
+  "paths": {
+    "/test": {
+      "get": {
         "description": "Test endpoint",
         "operationId": "id",
-        "parameters": Array [
-          Object {
+        "parameters": [
+          {
             "description": "Parameter without description.",
             "in": "query",
             "name": "category",
             "required": false,
-            "schema": Object {
+            "schema": {
               "description": "Parameter without description.",
-              "items": Object {
+              "items": {
                 "description": "Parameter without description.",
                 "type": "string",
               },
@@ -446,23 +446,23 @@ Object {
             },
           },
         ],
-        "responses": Object {
-          "200": Object {
-            "content": Object {
-              "text-plain": Object {},
+        "responses": {
+          "200": {
+            "content": {
+              "text-plain": {},
             },
             "description": "Successful operation.",
           },
         },
         "summary": "Server Test",
-        "tags": Array [
+        "tags": [
           "Internals",
         ],
       },
     },
   },
-  "servers": Array [
-    Object {
+  "servers": [
+    {
       "url": "https://server.com",
     },
   ],

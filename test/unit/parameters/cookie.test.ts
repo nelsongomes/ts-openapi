@@ -17,9 +17,9 @@ describe("src/openapi/openapi", () => {
       openApi.setServers([{ url: "https://server.com" }]);
     });
 
-    test("should succeed", done => {
+    test("should succeed", (done) => {
       const cookie = {
-        username: Types.String({ required: true })
+        username: Types.String({ required: true }),
       };
 
       openApi.addPath(
@@ -30,11 +30,11 @@ describe("src/openapi/openapi", () => {
             operationId: "id",
             requestSchema: { cookie },
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Test",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
@@ -42,9 +42,9 @@ describe("src/openapi/openapi", () => {
       done();
     });
 
-    test("should throw an exception if cookie parameter is an object or an array", done => {
+    test("should throw an exception if cookie parameter is an object or an array", () => {
       const cookie = {
-        someObject: Types.Object({ properties: { test: Types.String() } })
+        someObject: Types.Object({ properties: { test: Types.String() } }),
       };
 
       try {
@@ -56,24 +56,23 @@ describe("src/openapi/openapi", () => {
               operationId: "id",
               requestSchema: { cookie },
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Test",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
-        done.fail(
+        fail(
           "It should have thrown an exception because it cannot be object or array"
         );
       } catch (e) {
         expect(e).toBeInstanceOf(Error);
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "Cookie param 'someObject' cannot be an object or an array."
         );
-        done();
       }
     });
   });

@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
   OpenApiMingle,
-  ServiceList
+  ServiceList,
 } from "../../../src/openapi/openapi-mingle";
 import { OpenApiSchema } from "../../../src/openapi/openapi.types";
 
@@ -23,7 +23,7 @@ function log(_message: string, _e?: Error) {
 
 describe("src/openapi/openapi-mingle", () => {
   describe("Constructor", () => {
-    test("Create class", async done => {
+    test("Create class", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -34,19 +34,17 @@ describe("src/openapi/openapi-mingle", () => {
       serviceMingle.setServers([
         {
           url: "https://explorer-eu.awesome-api.com",
-          description: "EU Server"
+          description: "EU Server",
         },
         {
           url: "https://explorer-us.awesome-api.com",
-          description: "US Server"
-        }
+          description: "US Server",
+        },
       ]);
 
       serviceMingle.setLicense("license", "http://license", "http://terms");
 
       expect(serviceMingle instanceof OpenApiMingle).toBe(true);
-
-      done();
     });
   });
 
@@ -55,7 +53,7 @@ describe("src/openapi/openapi-mingle", () => {
       jest.restoreAllMocks();
     });
 
-    test("Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from file", async done => {
+    test("Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from file", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -70,13 +68,13 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       serviceMingle.declareSecurityScheme("basicAuth", basicAuth());
@@ -92,11 +90,9 @@ describe("src/openapi/openapi-mingle", () => {
       expect(Object.getOwnPropertyNames(json.paths)[0]).toBe("/users/{userId}");
 
       expect(json).toMatchSnapshot();
-
-      done();
     });
 
-    test("Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from remote", async done => {
+    test("Simple service remap from private path /public/:userId to public /users/{userId}, skipping other methods, from remote", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -111,13 +107,13 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "http://www.server.test/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       // mock axios get request
@@ -137,11 +133,9 @@ describe("src/openapi/openapi-mingle", () => {
       expect(Object.getOwnPropertyNames(json.paths)[0]).toBe("/users/{userId}");
 
       expect(json).toMatchSnapshot();
-
-      done();
     });
 
-    test("Simple service remap from local file and remote uri", async done => {
+    test("Simple service remap from local file and remote uri", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -157,19 +151,19 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
+          type: "consul",
         },
         demo: {
           schemaUrl: "https://generator3.swagger.io/openapi.json",
           publicPrefix: "/openapi/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       // mock axios get request
@@ -189,11 +183,9 @@ describe("src/openapi/openapi-mingle", () => {
       expect(Object.getOwnPropertyNames(json.paths).length).toBe(8);
 
       expect(json).toMatchSnapshot();
-
-      done();
     });
 
-    test("Should throw error because schema reference does not start with #/components/schemas/", async done => {
+    test("Should throw error because schema reference does not start with #/components/schemas/", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -209,19 +201,19 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
+          type: "consul",
         },
         demo: {
           schemaUrl: "https://generator3.swagger.io/openapi.json",
           publicPrefix: "/openapi/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       // delete schema GenerationRequest
@@ -241,16 +233,14 @@ describe("src/openapi/openapi-mingle", () => {
         await serviceMingle.combineServices(services);
 
         fail("Should have thrown an exception");
-      } catch (error) {
-        expect(error.message).toBe(
+      } catch (e) {
+        expect((e as Error).message).toBe(
           "Schema reference #/components/invalid/GenerationRequest does not start with #/components/schemas/"
         );
       }
-
-      done();
     });
 
-    test("Should throw error because schema reference is missing", async done => {
+    test("Should throw error because schema reference is missing", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -266,24 +256,24 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
+          type: "consul",
         },
         demo: {
           schemaUrl: "https://generator3.swagger.io/openapi.json",
           publicPrefix: "/openapi/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       // delete schema GenerationRequest
       const missingModelOpenapi = _.cloneDeep(openapiData);
-      delete missingModelOpenapi.components.schemas.GenerationRequest;
+      delete (missingModelOpenapi.components.schemas as any).GenerationRequest;
 
       // mock axios get request
       jest
@@ -296,16 +286,14 @@ describe("src/openapi/openapi-mingle", () => {
         await serviceMingle.combineServices(services);
 
         fail("Should have thrown an exception");
-      } catch (error) {
-        expect(error.message).toBe(
+      } catch (e) {
+        expect((e as Error).message).toBe(
           "Failed to find schema for key GenerationRequest"
         );
       }
-
-      done();
     });
 
-    test("Should throw error because parameter reference does not start with #/components/parameters/", async done => {
+    test("Should throw error because parameter reference does not start with #/components/parameters/", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -321,19 +309,19 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
+          type: "consul",
         },
         demo: {
           schemaUrl: "https://generator3.swagger.io/openapi.json",
           publicPrefix: "/openapi/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       // delete schema GenerationRequest
@@ -352,16 +340,14 @@ describe("src/openapi/openapi-mingle", () => {
         await serviceMingle.combineServices(services);
 
         fail("Should have thrown an exception");
-      } catch (error) {
-        expect(error.message).toBe(
+      } catch (e) {
+        expect((e as Error).message).toBe(
           "Parameter reference #/components/invalid/GenerationRequest does not start with #/components/parameters/"
         );
       }
-
-      done();
     });
 
-    test("Should throw error because parameter reference is missing", async done => {
+    test("Should throw error because parameter reference is missing", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -377,24 +363,24 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
+          type: "consul",
         },
         demo: {
           schemaUrl: "https://generator3.swagger.io/openapi.json",
           publicPrefix: "/openapi/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       // delete schema GenerationRequest
       const missingModelOpenapi = _.cloneDeep(openapiData);
-      delete missingModelOpenapi.components.parameters.version;
+      delete (missingModelOpenapi as any).components.parameters.version;
 
       // mock axios get request
       jest
@@ -407,16 +393,14 @@ describe("src/openapi/openapi-mingle", () => {
         await serviceMingle.combineServices(services);
 
         fail("Should have thrown an exception");
-      } catch (error) {
-        expect(error.message).toBe(
+      } catch (e) {
+        expect((e as Error).message).toBe(
           "Couldn't find definition for parameter version in #/components/parameters/version in path /openapi/clients, verb get"
         );
       }
-
-      done();
     });
 
-    test("Should throw error because schema version is not 3.0.x", async done => {
+    test("Should throw error because schema version is not 3.0.x", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -432,19 +416,19 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
+          type: "consul",
         },
         demo: {
           schemaUrl: "https://generator3.swagger.io/openapi.json",
           publicPrefix: "/openapi/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       // delete schema GenerationRequest
@@ -462,16 +446,14 @@ describe("src/openapi/openapi-mingle", () => {
         await serviceMingle.combineServices(services);
 
         fail("Should have thrown an exception");
-      } catch (error) {
-        expect(error.message).toBe(
+      } catch (e) {
+        expect((e as Error).message).toBe(
           "We only support OpenApi version 3.0.x, not 3.1.0"
         );
       }
-
-      done();
     });
 
-    test("Should check all scopes are valid", async done => {
+    test("Should check all scopes are valid", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -487,20 +469,20 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "https://editor.swagger.io/openapi.json",
           publicPrefix: "/users/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       serviceMingle.declareSecurityScheme(
         "petstore_auth",
         oauth2PasswordAuth("Oauth2 auth", "http://", {
           "read:pets": "test scope",
-          "write:pets": "test scope"
+          "write:pets": "test scope",
         })
       );
       serviceMingle.declareSecurityScheme("api_key", basicAuth());
@@ -513,11 +495,9 @@ describe("src/openapi/openapi-mingle", () => {
         );
 
       await serviceMingle.combineServices(services);
-
-      done();
     });
 
-    test("Should throw error because security scheme scope is unknown", async done => {
+    test("Should throw error because security scheme scope is unknown", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -533,19 +513,19 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "https://editor.swagger.io/openapi.json",
           publicPrefix: "/users/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       serviceMingle.declareSecurityScheme(
         "petstore_auth",
         oauth2PasswordAuth("Oauth2 auth", "http://", {
-          "scope:read": "test scope"
+          "scope:read": "test scope",
         })
       );
       serviceMingle.declareSecurityScheme("api_key", basicAuth());
@@ -561,16 +541,14 @@ describe("src/openapi/openapi-mingle", () => {
         await serviceMingle.combineServices(services);
 
         fail("Should have thrown an exception");
-      } catch (error) {
-        expect(error.message).toBe(
+      } catch (e) {
+        expect((e as Error).message).toBe(
           "Security scope 'write:pets' does not have exist in petstore_auth flow 'password' declaration."
         );
       }
-
-      done();
     });
 
-    test("Should throw error because same path was already declared", async done => {
+    test("Should throw error because same path was already declared", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -586,26 +564,26 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "https://editor.swagger.io/openapi.json",
           publicPrefix: "/users/",
           privatePrefix: "/",
-          type: "consul"
+          type: "consul",
         },
         users2: {
           schemaUrl: "https://editor.swagger.io/openapi.json",
           publicPrefix: "/users/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       serviceMingle.declareSecurityScheme(
         "petstore_auth",
         oauth2PasswordAuth("Oauth2 auth", "http://", {
           "read:pets": "test scope",
-          "write:pets": "test scope"
+          "write:pets": "test scope",
         })
       );
       serviceMingle.declareSecurityScheme("api_key", basicAuth());
@@ -621,14 +599,14 @@ describe("src/openapi/openapi-mingle", () => {
         await serviceMingle.combineServices(services);
 
         fail("Should have thrown an exception");
-      } catch (error) {
-        expect(error.message).toBe("Path /users/pet was already declared.");
+      } catch (e) {
+        expect((e as Error).message).toBe(
+          "Path /users/pet was already declared."
+        );
       }
-
-      done();
     });
 
-    test("Should throw error because security scheme named does not have scopes", async done => {
+    test("Should throw error because security scheme named does not have scopes", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -644,13 +622,13 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "https://editor.swagger.io/openapi.json",
           publicPrefix: "/users/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       serviceMingle.declareSecurityScheme("petstore_auth", basicAuth());
@@ -668,15 +646,13 @@ describe("src/openapi/openapi-mingle", () => {
 
         fail("Should have thrown an exception");
       } catch (e) {
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "Security scheme 'petstore_auth' does not have scopes"
         );
       }
-
-      done();
     });
 
-    test("Should throw error because security scheme is unknown", async done => {
+    test("Should throw error because security scheme is unknown", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -692,13 +668,13 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "https://editor.swagger.io/openapi.json",
           publicPrefix: "/users/",
           privatePrefix: "/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       serviceMingle.declareSecurityScheme("basicSecurity", basicAuth());
@@ -715,13 +691,13 @@ describe("src/openapi/openapi-mingle", () => {
 
         fail("Should have thrown an exception");
       } catch (e) {
-        expect(e.message).toBe("Unknown security scheme 'petstore_auth'");
+        expect((e as Error).message).toBe(
+          "Unknown security scheme 'petstore_auth'"
+        );
       }
-
-      done();
     });
 
-    test("Should throw because remote uri does not exist", async done => {
+    test("Should throw because remote uri does not exist", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -736,13 +712,13 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "http://www.server.test/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       // mock axios get request
@@ -757,13 +733,13 @@ describe("src/openapi/openapi-mingle", () => {
 
         fail("Should have thrown");
       } catch (e) {
-        expect(e.message).toBe("Request failed with status code 404");
+        expect((e as Error).message).toBe(
+          "Request failed with status code 404"
+        );
       }
-
-      done();
     });
 
-    test("Should throw because there are 2 operations with same id", async done => {
+    test("Should throw because there are 2 operations with same id", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -778,20 +754,20 @@ describe("src/openapi/openapi-mingle", () => {
           schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
+          type: "consul",
         },
 
         duplicateUsers: {
           schemaUrl: "file://test/unit/openapi-mingle/samples/sample1.json",
           publicPrefix: "/usersDuplicate/",
           privatePrefix: "/public/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       try {
@@ -799,15 +775,13 @@ describe("src/openapi/openapi-mingle", () => {
 
         fail("Should have thrown exception");
       } catch (e) {
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "Operations must have unique operationIds, id 'id' already exists."
         );
       }
-
-      done();
     });
 
-    test("Should throw because path parameter not declared", async done => {
+    test("Should throw because path parameter not declared", async () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -821,13 +795,13 @@ describe("src/openapi/openapi-mingle", () => {
             "file://test/unit/openapi-mingle/samples/sample1-error.json",
           publicPrefix: "/users/",
           privatePrefix: "/public/",
-          type: "consul"
-        }
+          type: "consul",
+        },
       };
 
       serviceMingle.setServers([
         { url: "https://explorer-eu.awesome-api.com" },
-        { url: "https://explorer-us.awesome-api.com" }
+        { url: "https://explorer-us.awesome-api.com" },
       ]);
 
       try {
@@ -835,15 +809,13 @@ describe("src/openapi/openapi-mingle", () => {
 
         fail("Expected to throw");
       } catch (e) {
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "Parameters in path must be declared, missing userId"
         );
       }
-
-      done();
     });
 
-    test("Should throw if combineServices was never called", async () => {
+    test("Should throw if combineServices was never called", () => {
       const serviceMingle = new OpenApiMingle(
         "1.0.0",
         "Server API",
@@ -855,7 +827,7 @@ describe("src/openapi/openapi-mingle", () => {
         expect(serviceMingle.generateJson()).toMatchSnapshot();
         fail("Expected to throw exception");
       } catch (e) {
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "JSON schema is not yet generated, you need to call combineServices at least once."
         );
       }

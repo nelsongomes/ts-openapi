@@ -7,13 +7,13 @@ import {
   oauth2AuthorizationCodeAuth,
   oauth2ClientCredentialsAuth,
   oauth2ImplicitAuth,
-  oauth2PasswordAuth
+  oauth2PasswordAuth,
 } from "../../../src/openapi/helpers/auth";
 import { textPlain } from "../../../src/openapi/helpers/body-mimetype";
 
 describe("src/openapi/openapi", () => {
   describe("Security Schemes", () => {
-    test("Basic Security (global)", async done => {
+    test("Basic Security (global)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -37,24 +37,22 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Basic Security (local)", async done => {
+    test("Basic Security (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -75,26 +73,24 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
               security: [{ basicSecurity: [] }],
-              deprecated: true
-            }
+              deprecated: true,
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Api Key Security (local)", async done => {
+    test("Api Key Security (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -118,25 +114,23 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ apiSecurity: [] }]
-            }
+              security: [{ apiSecurity: [] }],
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Cookie Security (local)", async done => {
+    test("Cookie Security (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -160,25 +154,23 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ cookieSecurity: [] }]
-            }
+              security: [{ cookieSecurity: [] }],
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Bearer Security (local)", async done => {
+    test("Bearer Security (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -199,25 +191,23 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ bearerSecurity: [] }]
-            }
+              security: [{ bearerSecurity: [] }],
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Oauth2 Security authorizationCode (local)", async done => {
+    test("Oauth2 Security authorizationCode (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -237,7 +227,7 @@ describe("src/openapi/openapi", () => {
             "https://api.example.com/oauth2/tokenUrl",
             {
               read_pets: "Read your pets",
-              write_pets: "Modify pets in your account"
+              write_pets: "Modify pets in your account",
             },
             "https://www.domain.com/refreshUrl"
           )
@@ -250,25 +240,23 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ oauth2Security: ["read_pets"] }]
-            }
+              security: [{ oauth2Security: ["read_pets"] }],
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Oauth2 Security implicit (local)", async done => {
+    test("Oauth2 Security implicit (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -287,7 +275,7 @@ describe("src/openapi/openapi", () => {
             "https://api.example.com/oauth2/authorize",
             {
               read_pets: "Read your pets",
-              write_pets: "Modify pets in your account"
+              write_pets: "Modify pets in your account",
             },
             "https://www.domain.com/refreshUrl"
           )
@@ -300,24 +288,23 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ oauth2Security: ["read_pets"] }]
-            }
+              security: [{ oauth2Security: ["read_pets"] }],
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Oauth2 Security password (local)", async done => {
+    test("Oauth2 Security password (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -336,7 +323,7 @@ describe("src/openapi/openapi", () => {
             "https://api.example.com/tokenUrl",
             {
               read_pets: "Read your pets",
-              write_pets: "Modify pets in your account"
+              write_pets: "Modify pets in your account",
             },
             "https://www.domain.com/refreshUrl"
           )
@@ -349,25 +336,23 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ oauth2Security: ["read_pets"] }]
-            }
+              security: [{ oauth2Security: ["read_pets"] }],
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Oauth2 Security clientCredentials (local)", async done => {
+    test("Oauth2 Security clientCredentials (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -386,7 +371,7 @@ describe("src/openapi/openapi", () => {
             "https://api.example.com/tokenUrl",
             {
               read_pets: "Read your pets",
-              write_pets: "Modify pets in your account"
+              write_pets: "Modify pets in your account",
             },
             "https://www.domain.com/refreshUrl"
           )
@@ -399,25 +384,23 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ oauth2Security: ["read_pets"] }]
-            }
+              security: [{ oauth2Security: ["read_pets"] }],
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Bearer Security with bearerFormat (local)", async done => {
+    test("Bearer Security with bearerFormat (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -438,25 +421,23 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ bearerJwtSecurity: [] }]
-            }
+              security: [{ bearerJwtSecurity: [] }],
+            },
           },
           true
         );
 
         expect(openApi.generateJson()).toMatchSnapshot();
-
-        done();
       } catch (e) {
         fail("No exception expected");
       }
     });
 
-    test("Should throw an error if security scheme does not exist (global)", async done => {
+    test("Should throw an error if security scheme does not exist (global)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -475,13 +456,11 @@ describe("src/openapi/openapi", () => {
 
         expect(openApi.generateJson()).toMatchSnapshot();
       } catch (e) {
-        expect(e.message).toBe("Unknown security scheme 'unknown'");
-
-        done();
+        expect((e as Error).message).toBe("Unknown security scheme 'unknown'");
       }
     });
 
-    test("Should throw an error if duplicate scheme", async done => {
+    test("Should throw an error if duplicate scheme", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -498,13 +477,13 @@ describe("src/openapi/openapi", () => {
         // try to redeclare security scheme
         openApi.declareSecurityScheme("basicSecurity", basicAuth());
       } catch (e) {
-        expect(e.message).toBe("Security scheme name already exists.");
-
-        done();
+        expect((e as Error).message).toBe(
+          "Security scheme name already exists."
+        );
       }
     });
 
-    test("Should throw an error if security scheme does not exist (local)", async done => {
+    test("Should throw an error if security scheme does not exist (local)", async () => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -525,19 +504,19 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
               tags: ["Internals"],
-              security: [{ bearerJwtSecurity: [] }]
-            }
+              security: [{ bearerJwtSecurity: [] }],
+            },
           },
           true
         );
       } catch (e) {
-        expect(e.message).toBe("Unknown security scheme 'bearerJwtSecurity'");
-
-        done();
+        expect((e as Error).message).toBe(
+          "Unknown security scheme 'bearerJwtSecurity'"
+        );
       }
     });
   });

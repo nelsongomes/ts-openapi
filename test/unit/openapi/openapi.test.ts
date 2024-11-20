@@ -25,9 +25,9 @@ describe("src/openapi/openapi", () => {
 
       const body = Types.Object({
         properties: {
-          username: Types.String()
+          username: Types.String(),
         },
-        description: "Sample body"
+        description: "Sample body",
       });
 
       openApi.setServers([{ url: "https://server.com" }]);
@@ -40,9 +40,9 @@ describe("src/openapi/openapi", () => {
             summary: "summary",
             tags: ["example"],
             responses: {
-              [200]: { description: "Success", content: { "plain/text": {} } }
+              [200]: { description: "Success", content: { "plain/text": {} } },
             },
-            requestSchema: { body }
+            requestSchema: { body },
           },
           patch: {
             operationId: "patchid",
@@ -50,10 +50,10 @@ describe("src/openapi/openapi", () => {
             summary: "summary",
             tags: ["example"],
             responses: {
-              [200]: { description: "Success", content: { "plain/text": {} } }
+              [200]: { description: "Success", content: { "plain/text": {} } },
             },
-            requestSchema: { body }
-          }
+            requestSchema: { body },
+          },
         },
         true
       );
@@ -71,10 +71,10 @@ describe("src/openapi/openapi", () => {
 
       const body = Types.Object({
         properties: {
-          username: Types.String()
+          username: Types.String(),
         },
         description: "Sample body",
-        modelName: "Username"
+        modelName: "Username",
       });
 
       openApi.setServers([{ url: "https://server.com" }]);
@@ -88,9 +88,9 @@ describe("src/openapi/openapi", () => {
             summary: "summary",
             tags: ["example"],
             responses: {
-              [200]: { description: "Success", content: { "plain/text": {} } }
+              [200]: { description: "Success", content: { "plain/text": {} } },
             },
-            requestSchema: { body }
+            requestSchema: { body },
           },
           patch: {
             operationId: "patchid",
@@ -98,10 +98,10 @@ describe("src/openapi/openapi", () => {
             summary: "summary",
             tags: ["example"],
             responses: {
-              [200]: { description: "Success", content: { "plain/text": {} } }
+              [200]: { description: "Success", content: { "plain/text": {} } },
             },
-            requestSchema: { body }
-          }
+            requestSchema: { body },
+          },
         },
         true
       );
@@ -121,11 +121,13 @@ describe("src/openapi/openapi", () => {
         openApi.generateJson();
         fail("Should have thrown exception");
       } catch (e) {
-        expect(e.message).toBe("No servers were added to OpenApi definition");
+        expect((e as Error).message).toBe(
+          "No servers were added to OpenApi definition"
+        );
       }
     });
 
-    test("simple, but no paths were added", done => {
+    test("simple, but no paths were added", (done) => {
       const openApi = new OpenApi(
         "1.0.0",
         "Server API",
@@ -139,7 +141,9 @@ describe("src/openapi/openapi", () => {
 
         done.fail("Should have thrown exception");
       } catch (e) {
-        expect(e.message).toBe("No paths were added to OpenApi definition.");
+        expect((e as Error).message).toBe(
+          "No paths were added to OpenApi definition."
+        );
 
         done();
       }
@@ -162,11 +166,11 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "healthcheck",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
@@ -187,9 +191,9 @@ describe("src/openapi/openapi", () => {
 
       const body = Types.Object({
         properties: {
-          username: Types.String()
+          username: Types.String(),
         },
-        description: "Sample body"
+        description: "Sample body",
       });
 
       try {
@@ -202,18 +206,20 @@ describe("src/openapi/openapi", () => {
               operationId: "healthcheck",
               requestSchema: { body },
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
         openApi.generateJson();
       } catch (e) {
-        expect(e.message).toBe("GET operations cannot have a requestBody.");
+        expect((e as Error).message).toBe(
+          "GET operations cannot have a requestBody."
+        );
       }
     });
 
@@ -233,18 +239,18 @@ describe("src/openapi/openapi", () => {
             get: {
               description: "Service healthcheck endpoint",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"]
-            } as any
+              tags: ["Internals"],
+            } as any,
           },
           true
         );
 
         fail("Expected to throw exception");
       } catch (e) {
-        expect(e.message).toBe("No operationId supplied.");
+        expect((e as Error).message).toBe("No operationId supplied.");
       }
     });
 
@@ -266,15 +272,17 @@ describe("src/openapi/openapi", () => {
               operationId: "",
               responses: {},
               summary: "Server Healthcheck",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
         fail("Expected to throw exception");
       } catch (e) {
-        expect(e.message).toBe("Should define at least one response.");
+        expect((e as Error).message).toBe(
+          "Should define at least one response."
+        );
       }
     });
 
@@ -295,11 +303,11 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "repeated",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
@@ -311,18 +319,18 @@ describe("src/openapi/openapi", () => {
               description: "Service healthcheck endpoint",
               operationId: "repeated",
               responses: {
-                200: textPlain("Successful operation.")
+                200: textPlain("Successful operation."),
               },
               summary: "Server Healthcheck",
-              tags: ["Internals"]
-            }
+              tags: ["Internals"],
+            },
           },
           true
         );
 
         fail("Expected to throw exception");
       } catch (e) {
-        expect(e.message).toBe(
+        expect((e as Error).message).toBe(
           "Operations must have unique operationIds, id 'repeated' already exists."
         );
       }
@@ -344,11 +352,11 @@ describe("src/openapi/openapi", () => {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
@@ -360,11 +368,11 @@ describe("src/openapi/openapi", () => {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         false
       );
@@ -388,11 +396,11 @@ describe("src/openapi/openapi", () => {
             description: "Service healthcheck endpoint",
             operationId: "repeated",
             responses: {
-              200: textPlain("Successful operation.")
+              200: textPlain("Successful operation."),
             },
             summary: "Server Healthcheck",
-            tags: ["Internals"]
-          }
+            tags: ["Internals"],
+          },
         },
         true
       );
