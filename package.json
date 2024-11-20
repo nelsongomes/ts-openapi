@@ -60,7 +60,7 @@
   },
   "engines": {
     "node": ">=18",
-    "npm": ">=8"
+    "npm": ">=9"
   },
   "jest": {
     "roots": [
@@ -92,7 +92,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "check-node-version --node 18 && check-node-version --npm 8 && lint-staged && tsc --noEmit -p . && npm test"
+      "pre-commit": "check-node-version --node 18 && check-node-version --npm 9 && lint-staged && tsc --noEmit -p . && npm test"
     }
   },
   "lint-staged": {
