@@ -30,7 +30,7 @@
     "release-dry-run": "release-it --dry-run"
   },
   "dependencies": {
-    "axios": "0.28.1",
+    "axios": "1.7.7",
     "joi": "17.3.0",
     "lodash": "4.17.21",
     "node-object-hash": "2.3.10"
@@ -80,9 +80,6 @@
     "coverageDirectory": "test-coverage/",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
-    },
-    "moduleNameMapper": {
-      "^axios$": "axios/dist/node/axios.cjs"
     },
     "moduleFileExtensions": [
       "ts",
