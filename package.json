@@ -2,7 +2,7 @@
   "name": "ts-openapi",
   "author": "Nelson Gomes <nelson.ricardo.gomes@gmail.com>",
   "license": "ISC",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "An openapi json generator based on joi information about APIs that will help you to maintain your API documentation up to date.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -30,7 +30,7 @@
     "release-dry-run": "release-it --dry-run"
   },
   "dependencies": {
-    "axios": "1.11.0",
+    "axios": "1.12.2",
     "joi": "17.3.0",
     "lodash": "4.17.21",
     "node-object-hash": "2.3.10"
