@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as fs from "fs";
+import * as path from "path";
 import * as _ from "lodash";
 import { OpenApi } from "..";
 import {
@@ -342,7 +343,18 @@ export class OpenApiMingle {
    */
   private async readJsonUrl(uri: string): Promise<OpenApiSchema | undefined> {
     if (uri.startsWith("file://")) {
-      return JSON.parse(fs.readFileSync(uri.substr(7), "utf8"));
+      const filePath = uri.slice(7);
+      // Validate and normalize the file path to prevent directory traversal
+      const resolvedPath = path.resolve(filePath);
+      const cwd = process.cwd();
+      const relativePath = path.relative(cwd, resolvedPath);
+
+      // Prevent directory traversal attempts
+      if (relativePath.startsWith("..")) {
+        throw new Error(`Invalid file path: ${filePath} is outside the working directory`);
+      }
+
+      return JSON.parse(fs.readFileSync(resolvedPath, "utf8"));
     }
 
     return this.readRemoteUri(uri);
@@ -352,7 +364,20 @@ export class OpenApiMingle {
    * This method tries to read a remote json file
    */
   private async readRemoteUri(url: string): Promise<OpenApiSchema> {
-    const result = await axios.get<OpenApiSchema>(url, {});
+    // Validate that URL is HTTPS for production or allows HTTP for localhost/test domains
+    const urlObj = new URL(url);
+    const isLocalhost = urlObj.hostname === "localhost" || urlObj.hostname === "127.0.0.1" || urlObj.hostname === "::1";
+    const isTestDomain = urlObj.hostname.endsWith(".test") || urlObj.hostname.endsWith(".local");
+
+    if (urlObj.protocol !== "https:" && !isLocalhost && !isTestDomain) {
+      throw new Error(`Insecure URL protocol. Only HTTPS is allowed for production URLs: ${url}`);
+    }
+
+    const result = await axios.get<OpenApiSchema>(url, {
+      timeout: 10000,
+      maxContentLength: 10 * 1024 * 1024, // 10MB limit
+      maxRedirects: 5
+    });
 
     return result.data;
   }
