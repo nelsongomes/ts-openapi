@@ -342,7 +342,7 @@ export class OpenApiMingle {
    */
   private async readJsonUrl(uri: string): Promise<OpenApiSchema | undefined> {
     if (uri.startsWith("file://")) {
-      return JSON.parse(fs.readFileSync(uri.substr(7), "utf8"));
+      return JSON.parse(fs.readFileSync(uri.slice(7), "utf8"));
     }
 
     return this.readRemoteUri(uri);
