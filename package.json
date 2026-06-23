@@ -60,14 +60,14 @@
   },
   "pnpm": {
     "overrides": {
-      "undici": ">=8.5.0",
+      "undici": "6.27.0",
       "uuid": ">=11.1.1",
       "js-yaml": ">=4.2.0",
       "form-data": ">=4.0.6"
     }
   },
   "engines": {
-    "node": ">=24",
+    "node": ">=20",
     "npm": ">=9"
   },
   "jest": {
